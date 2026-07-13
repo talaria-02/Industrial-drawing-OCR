@@ -1,0 +1,279 @@
+{
+  "id": "0041",
+  "image": "output_v5\\images\\drawing_0041.png",
+  "shapes": [
+    "rect_hole",
+    "l_shape",
+    "hexagon",
+    "hexagon",
+    "stepped"
+  ],
+  "n_shapes": 5,
+  "noise": "slight",
+  "titleblock": {
+    "title": "HOUSING-638",
+    "material": "SCM440",
+    "scale": "1:5",
+    "date": "2026-06-03",
+    "drawn": "SW.PARK",
+    "rev": "C"
+  },
+  "texts": [
+    {
+      "raw": "85.6+0,1",
+      "value": "85.6",
+      "type": "dimension_tol",
+      "x": 104.8,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "81,4",
+      "value": "81.4",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 433.4,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø8.7+0,1",
+      "value": "8.7",
+      "type": "diameter",
+      "x": 127.5,
+      "y": 454.1,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 120.6,
+      "y": 492.1,
+      "orient": "h"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 104.8,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "127.7",
+      "value": "127.7",
+      "type": "dimension",
+      "x": 423.9,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "111,1",
+      "value": "111.1",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 219.6,
+      "orient": "v"
+    },
+    {
+      "raw": "58,5+0,1",
+      "value": "58.5",
+      "type": "dimension_tol",
+      "x": 458.4,
+      "y": 258.1,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 493.7,
+      "y": 206.4,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø103,4+0,1",
+      "value": "103.4",
+      "type": "diameter",
+      "x": 129.8,
+      "y": 660.8,
+      "orient": "h"
+    },
+    {
+      "raw": "89.5 g6",
+      "value": "89.5",
+      "type": "dimension_fit",
+      "x": 50.1,
+      "y": 683.8,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 156.4,
+      "y": 764.3,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 762.3,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø51+0,1",
+      "value": "51",
+      "type": "diameter",
+      "x": 391.5,
+      "y": 625.3,
+      "orient": "h"
+    },
+    {
+      "raw": "44.2±0,2",
+      "value": "44.2",
+      "type": "dimension_tol",
+      "x": 338.0,
+      "y": 648.3,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 404.5,
+      "y": 693.2,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 691.2,
+      "orient": "h"
+    },
+    {
+      "raw": "122,4±0,1",
+      "value": "122.4",
+      "type": "dimension_tol",
+      "x": 123.2,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "125",
+      "value": "125",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 226.5,
+      "orient": "v"
+    },
+    {
+      "raw": "50.3",
+      "value": "50.3",
+      "type": "dimension",
+      "x": 101.7,
+      "y": 189.2,
+      "orient": "v"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 190.4,
+      "y": 226.7,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 123.2,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0041",
+      "value": "PART No. 0041",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  HOUSING-638",
+      "value": "TITLE  HOUSING-638",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SCM440",
+      "value": "MAT  SCM440",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:5",
+      "value": "SCALE 1:5",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-06-03",
+      "value": "DATE 2026-06-03",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN SW.PARK",
+      "value": "DRAWN SW.PARK",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV C",
+      "value": "REV C",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "85.6",
+    "81.4",
+    "8.7",
+    "127.7",
+    "111.1",
+    "58.5",
+    "103.4",
+    "89.5",
+    "51",
+    "44.2",
+    "122.4",
+    "125",
+    "50.3"
+  ],
+  "n_dimensions": 13
+}

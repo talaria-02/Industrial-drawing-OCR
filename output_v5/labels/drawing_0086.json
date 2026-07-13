@@ -1,0 +1,255 @@
+{
+  "id": "0086",
+  "image": "output_v5\\images\\drawing_0086.png",
+  "shapes": [
+    "rectangle",
+    "t_shape",
+    "hexagon",
+    "t_shape",
+    "l_shape"
+  ],
+  "n_shapes": 5,
+  "noise": "heavy",
+  "titleblock": {
+    "title": "COVER-184",
+    "material": "SS400",
+    "scale": "2:1",
+    "date": "2026-01-03",
+    "drawn": "SW.PARK",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "89.1±0,2",
+      "value": "89.1",
+      "type": "dimension_tol",
+      "x": 404.6,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "84,2 f7",
+      "value": "84.2",
+      "type": "dimension_fit",
+      "x": 334.0,
+      "y": 663.4,
+      "orient": "v"
+    },
+    {
+      "raw": "76.6±0,2",
+      "value": "76.6",
+      "type": "dimension_tol",
+      "x": 100.3,
+      "y": 188.0,
+      "orient": "h"
+    },
+    {
+      "raw": "69.4",
+      "value": "69.4",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 198.7,
+      "orient": "v"
+    },
+    {
+      "raw": "32.9±0,05",
+      "value": "32.9",
+      "type": "dimension_tol",
+      "x": 100.3,
+      "y": 149.0,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 113.1,
+      "y": 251.4,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 100.3,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø87.6",
+      "value": "87.6",
+      "type": "diameter",
+      "x": 425.1,
+      "y": 432.2,
+      "orient": "h"
+    },
+    {
+      "raw": "75.9+0,1",
+      "value": "75.9",
+      "type": "dimension_tol",
+      "x": 353.2,
+      "y": 455.2,
+      "orient": "v"
+    },
+    {
+      "raw": "56.4",
+      "value": "56.4",
+      "type": "dimension",
+      "x": 90.2,
+      "y": 401.5,
+      "orient": "h"
+    },
+    {
+      "raw": "45.3",
+      "value": "45.3",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 415.3,
+      "orient": "v"
+    },
+    {
+      "raw": "21.4",
+      "value": "21.4",
+      "type": "dimension",
+      "x": 90.2,
+      "y": 377.7,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 124.4,
+      "y": 414.9,
+      "orient": "h"
+    },
+    {
+      "raw": "104 g6",
+      "value": "104",
+      "type": "dimension_fit",
+      "x": 412.0,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "49,2",
+      "value": "49.2",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 188.6,
+      "orient": "v"
+    },
+    {
+      "raw": "42.1 k6",
+      "value": "42.1",
+      "type": "dimension_fit",
+      "x": 442.9,
+      "y": 196.2,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 409.6,
+      "y": 231.2,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 470.0,
+      "y": 193.4,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 229.2,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0086",
+      "value": "PART No. 0086",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  COVER-184",
+      "value": "TITLE  COVER-184",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SS400",
+      "value": "MAT  SS400",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 2:1",
+      "value": "SCALE 2:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-01-03",
+      "value": "DATE 2026-01-03",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN SW.PARK",
+      "value": "DRAWN SW.PARK",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "89.1",
+    "84.2",
+    "76.6",
+    "69.4",
+    "32.9",
+    "87.6",
+    "75.9",
+    "56.4",
+    "45.3",
+    "21.4",
+    "104",
+    "49.2",
+    "42.1"
+  ],
+  "n_dimensions": 13
+}

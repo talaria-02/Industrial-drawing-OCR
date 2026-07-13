@@ -1,0 +1,278 @@
+{
+  "id": "0099",
+  "image": "output_v5\\images\\drawing_0099.png",
+  "shapes": [
+    "rectangle",
+    "rectangle",
+    "stepped",
+    "rectangle",
+    "l_shape"
+  ],
+  "n_shapes": 5,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "PLATE-883",
+    "material": "S45C",
+    "scale": "1:1",
+    "date": "2026-12-14",
+    "drawn": "MJ.CHOI",
+    "rev": "C"
+  },
+  "texts": [
+    {
+      "raw": "123,6±0,1",
+      "value": "123.6",
+      "type": "dimension_tol",
+      "x": 123.8,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "88.7",
+      "value": "88.7",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 665.7,
+      "orient": "v"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 726.0,
+      "orient": "h"
+    },
+    {
+      "raw": "73,8",
+      "value": "73.8",
+      "type": "dimension",
+      "x": 98.9,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "54,7±0,15",
+      "value": "54.7",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 191.3,
+      "orient": "v"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 141.8,
+      "y": 194.7,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 234.7,
+      "orient": "h"
+    },
+    {
+      "raw": "52,6",
+      "value": "52.6",
+      "type": "dimension",
+      "x": 386.3,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "58.3 h6",
+      "value": "58.3",
+      "type": "dimension_fit",
+      "x": 334.0,
+      "y": 421.8,
+      "orient": "v"
+    },
+    {
+      "raw": "31.6+0,1",
+      "value": "31.6",
+      "type": "dimension_tol",
+      "x": 359.1,
+      "y": 408.5,
+      "orient": "v"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 387.9,
+      "y": 469.0,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 418.6,
+      "y": 425.3,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 467.0,
+      "orient": "h"
+    },
+    {
+      "raw": "100,9",
+      "value": "100.9",
+      "type": "dimension",
+      "x": 410.4,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "91.7±0,15",
+      "value": "91.7",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 667.2,
+      "orient": "v"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 393.4,
+      "y": 731.0,
+      "orient": "h"
+    },
+    {
+      "raw": "112.4",
+      "value": "112.4",
+      "type": "dimension",
+      "x": 416.2,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "123.3±0,05",
+      "value": "123.3",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 225.7,
+      "orient": "v"
+    },
+    {
+      "raw": "55,3",
+      "value": "55.3",
+      "type": "dimension",
+      "x": 444.8,
+      "y": 270.3,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 436.4,
+      "y": 305.3,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 478.4,
+      "y": 240.9,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 416.2,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0099",
+      "value": "PART No. 0099",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  PLATE-883",
+      "value": "TITLE  PLATE-883",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  S45C",
+      "value": "MAT  S45C",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:1",
+      "value": "SCALE 1:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-12-14",
+      "value": "DATE 2026-12-14",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN MJ.CHOI",
+      "value": "DRAWN MJ.CHOI",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV C",
+      "value": "REV C",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "123.6",
+    "88.7",
+    "73.8",
+    "54.7",
+    "52.6",
+    "58.3",
+    "31.6",
+    "100.9",
+    "91.7",
+    "112.4",
+    "123.3",
+    "55.3"
+  ],
+  "n_dimensions": 12
+}

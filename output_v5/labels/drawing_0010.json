@@ -1,0 +1,356 @@
+{
+  "id": "0010",
+  "image": "output_v5\\images\\drawing_0010.png",
+  "shapes": [
+    "l_shape",
+    "rectangle",
+    "rect_2holes",
+    "hexagon",
+    "t_shape",
+    "t_shape"
+  ],
+  "n_shapes": 6,
+  "noise": "clean",
+  "titleblock": {
+    "title": "BRACKET-968",
+    "material": "S45C",
+    "scale": "1:2",
+    "date": "2026-11-24",
+    "drawn": "MJ.CHOI",
+    "rev": "A"
+  },
+  "texts": [
+    {
+      "raw": "46.8",
+      "value": "46.8",
+      "type": "dimension",
+      "x": 383.4,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "68.7±0,15",
+      "value": "68.7",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 655.7,
+      "orient": "v"
+    },
+    {
+      "raw": "15.9±0,15",
+      "value": "15.9",
+      "type": "dimension_tol",
+      "x": 398.9,
+      "y": 673.0,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 412.8,
+      "y": 670.5,
+      "orient": "h"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 383.4,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 706.0,
+      "orient": "h"
+    },
+    {
+      "raw": "67.5",
+      "value": "67.5",
+      "type": "dimension",
+      "x": 95.8,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "64.6",
+      "value": "64.6",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 196.3,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 106.9,
+      "y": 246.6,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 95.8,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 244.6,
+      "orient": "h"
+    },
+    {
+      "raw": "54,3±0,1",
+      "value": "54.3",
+      "type": "dimension_tol",
+      "x": 411.1,
+      "y": 168.2,
+      "orient": "h"
+    },
+    {
+      "raw": "108+0,1",
+      "value": "108",
+      "type": "dimension_tol",
+      "x": 414.0,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "49,8",
+      "value": "49.8",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 188.9,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø5,7",
+      "value": "5.7",
+      "type": "diameter",
+      "x": 456.0,
+      "y": 204.6,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 415.2,
+      "y": 231.8,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽▽",
+      "value": "▽▽▽",
+      "type": "symbol",
+      "x": 474.0,
+      "y": 185.7,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø35,8±0,1",
+      "value": "35.8",
+      "type": "diameter",
+      "x": 385.4,
+      "y": 389.6,
+      "orient": "h"
+    },
+    {
+      "raw": "31 H7",
+      "value": "31",
+      "type": "dimension_fit",
+      "x": 339.6,
+      "y": 412.6,
+      "orient": "v"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 398.6,
+      "y": 450.5,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 448.5,
+      "orient": "h"
+    },
+    {
+      "raw": "72,9",
+      "value": "72.9",
+      "type": "dimension",
+      "x": 98.5,
+      "y": 403.9,
+      "orient": "h"
+    },
+    {
+      "raw": "60,6",
+      "value": "60.6",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 423.0,
+      "orient": "v"
+    },
+    {
+      "raw": "30,4",
+      "value": "30.4",
+      "type": "dimension",
+      "x": 98.5,
+      "y": 377.7,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 140.9,
+      "y": 426.1,
+      "orient": "h"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 98.5,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "82,9 H9",
+      "value": "82.9",
+      "type": "dimension_fit",
+      "x": 103.5,
+      "y": 674.2,
+      "orient": "h"
+    },
+    {
+      "raw": "101,9+0,1",
+      "value": "101.9",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 672.3,
+      "orient": "v"
+    },
+    {
+      "raw": "32.9±0.1",
+      "value": "32.9",
+      "type": "dimension_tol",
+      "x": 103.5,
+      "y": 606.3,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 115.3,
+      "y": 741.2,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 739.2,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0010",
+      "value": "PART No. 0010",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  BRACKET-968",
+      "value": "TITLE  BRACKET-968",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  S45C",
+      "value": "MAT  S45C",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:2",
+      "value": "SCALE 1:2",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-11-24",
+      "value": "DATE 2026-11-24",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN MJ.CHOI",
+      "value": "DRAWN MJ.CHOI",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV A",
+      "value": "REV A",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "46.8",
+    "68.7",
+    "15.9",
+    "67.5",
+    "64.6",
+    "54.3",
+    "108",
+    "49.8",
+    "5.7",
+    "35.8",
+    "31",
+    "72.9",
+    "60.6",
+    "30.4",
+    "82.9",
+    "101.9",
+    "32.9"
+  ],
+  "n_dimensions": 17
+}

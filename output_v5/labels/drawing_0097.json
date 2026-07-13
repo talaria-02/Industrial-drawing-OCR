@@ -1,0 +1,279 @@
+{
+  "id": "0097",
+  "image": "output_v5\\images\\drawing_0097.png",
+  "shapes": [
+    "rect_hole",
+    "hexagon",
+    "rect_hole",
+    "rectangle",
+    "rect_hole"
+  ],
+  "n_shapes": 5,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "SHAFT-645",
+    "material": "SCM440",
+    "scale": "1:5",
+    "date": "2026-10-07",
+    "drawn": "JH.KIM",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "80.3",
+      "value": "80.3",
+      "type": "dimension",
+      "x": 102.2,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "108.2 H7",
+      "value": "108.2",
+      "type": "dimension_fit",
+      "x": 36.0,
+      "y": 218.1,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø16.6±0,05",
+      "value": "16.6",
+      "type": "diameter",
+      "x": 132.8,
+      "y": 246.7,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽▽",
+      "value": "▽▽▽",
+      "type": "symbol",
+      "x": 148.3,
+      "y": 201.1,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø70.6+0,1",
+      "value": "70.6",
+      "type": "diameter",
+      "x": 402.9,
+      "y": 194.1,
+      "orient": "h"
+    },
+    {
+      "raw": "61.1",
+      "value": "61.1",
+      "type": "dimension",
+      "x": 339.6,
+      "y": 217.1,
+      "orient": "v"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 414.4,
+      "y": 288.1,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 402.9,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "110+0,1",
+      "value": "110",
+      "type": "dimension_tol",
+      "x": 415.0,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "99,2±0,15",
+      "value": "99.2",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 670.9,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø17.9 H9",
+      "value": "17.9",
+      "type": "dimension_fit",
+      "x": 446.9,
+      "y": 700.8,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 476.0,
+      "y": 659.3,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 736.5,
+      "orient": "h"
+    },
+    {
+      "raw": "65,1",
+      "value": "65.1",
+      "type": "dimension",
+      "x": 94.5,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "37.5",
+      "value": "37.5",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 411.4,
+      "orient": "v"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 133.1,
+      "y": 406.3,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 446.2,
+      "orient": "h"
+    },
+    {
+      "raw": "98,4±0,2",
+      "value": "98.4",
+      "type": "dimension_tol",
+      "x": 111.2,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "93,8±0.1",
+      "value": "93.8",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 668.2,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø11.2+0,1",
+      "value": "11.2",
+      "type": "diameter",
+      "x": 136.4,
+      "y": 691.4,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 130.1,
+      "y": 733.1,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 731.1,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0097",
+      "value": "PART No. 0097",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  SHAFT-645",
+      "value": "TITLE  SHAFT-645",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SCM440",
+      "value": "MAT  SCM440",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:5",
+      "value": "SCALE 1:5",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-10-07",
+      "value": "DATE 2026-10-07",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN JH.KIM",
+      "value": "DRAWN JH.KIM",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "80.3",
+    "108.2",
+    "16.6",
+    "70.6",
+    "61.1",
+    "110",
+    "99.2",
+    "17.9",
+    "65.1",
+    "37.5",
+    "98.4",
+    "93.8",
+    "11.2"
+  ],
+  "n_dimensions": 13
+}

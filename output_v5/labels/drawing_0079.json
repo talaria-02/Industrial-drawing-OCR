@@ -1,0 +1,263 @@
+{
+  "id": "0079",
+  "image": "output_v5\\images\\drawing_0079.png",
+  "shapes": [
+    "t_shape",
+    "t_shape",
+    "rect_hole",
+    "rectangle",
+    "rectangle"
+  ],
+  "n_shapes": 5,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "BRACKET-679",
+    "material": "FC250",
+    "scale": "1:2",
+    "date": "2026-09-20",
+    "drawn": "KS.LEE",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "139,6",
+      "value": "139.6",
+      "type": "dimension",
+      "x": 131.8,
+      "y": 218.6,
+      "orient": "h"
+    },
+    {
+      "raw": "108",
+      "value": "108",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 218.0,
+      "orient": "v"
+    },
+    {
+      "raw": "62,9",
+      "value": "62.9",
+      "type": "dimension",
+      "x": 131.8,
+      "y": 149.0,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽▽",
+      "value": "▽▽▽",
+      "type": "symbol",
+      "x": 207.6,
+      "y": 196.7,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 288.0,
+      "orient": "h"
+    },
+    {
+      "raw": "137.1±0,1",
+      "value": "137.1",
+      "type": "dimension_tol",
+      "x": 428.6,
+      "y": 214.8,
+      "orient": "h"
+    },
+    {
+      "raw": "109.5±0,05",
+      "value": "109.5",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 218.8,
+      "orient": "v"
+    },
+    {
+      "raw": "68,1 H7",
+      "value": "68.1",
+      "type": "dimension_fit",
+      "x": 428.6,
+      "y": 149.0,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 503.1,
+      "y": 198.1,
+      "orient": "h"
+    },
+    {
+      "raw": "75,3",
+      "value": "75.3",
+      "type": "dimension",
+      "x": 99.7,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "50,3",
+      "value": "50.3",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 646.5,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø7,1",
+      "value": "7.1",
+      "type": "diameter",
+      "x": 120.8,
+      "y": 665.6,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 101.4,
+      "y": 689.6,
+      "orient": "h"
+    },
+    {
+      "raw": "126.5",
+      "value": "126.5",
+      "type": "dimension",
+      "x": 423.2,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "83,6 k6",
+      "value": "83.6",
+      "type": "dimension_fit",
+      "x": 334.0,
+      "y": 434.5,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 402.0,
+      "y": 494.3,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 492.5,
+      "y": 418.0,
+      "orient": "h"
+    },
+    {
+      "raw": "81,2±0,05",
+      "value": "81.2",
+      "type": "dimension_tol",
+      "x": 400.6,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "108,2+0,1",
+      "value": "108.2",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 675.4,
+      "orient": "v"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 447.2,
+      "y": 665.9,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0079",
+      "value": "PART No. 0079",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  BRACKET-679",
+      "value": "TITLE  BRACKET-679",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  FC250",
+      "value": "MAT  FC250",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:2",
+      "value": "SCALE 1:2",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-09-20",
+      "value": "DATE 2026-09-20",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN KS.LEE",
+      "value": "DRAWN KS.LEE",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "139.6",
+    "108",
+    "62.9",
+    "137.1",
+    "109.5",
+    "68.1",
+    "75.3",
+    "50.3",
+    "7.1",
+    "126.5",
+    "83.6",
+    "81.2",
+    "108.2"
+  ],
+  "n_dimensions": 13
+}

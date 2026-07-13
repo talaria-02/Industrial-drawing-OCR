@@ -1,0 +1,325 @@
+{
+  "id": "0064",
+  "image": "output_v5\\images\\drawing_0064.png",
+  "shapes": [
+    "rect_2holes",
+    "l_shape",
+    "stepped",
+    "l_shape",
+    "t_shape",
+    "hexagon"
+  ],
+  "n_shapes": 6,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "HOUSING-595",
+    "material": "SUS304",
+    "scale": "1:2",
+    "date": "2026-06-18",
+    "drawn": "KS.LEE",
+    "rev": "A"
+  },
+  "texts": [
+    {
+      "raw": "36",
+      "value": "36",
+      "type": "dimension",
+      "x": 103.5,
+      "y": 191.6,
+      "orient": "h"
+    },
+    {
+      "raw": "91.4",
+      "value": "91.4",
+      "type": "dimension",
+      "x": 107.7,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "105.1+0,1",
+      "value": "105.1",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 216.6,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø10",
+      "value": "10",
+      "type": "diameter",
+      "x": 143.5,
+      "y": 236.6,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 159.4,
+      "y": 210.8,
+      "orient": "h"
+    },
+    {
+      "raw": "50,3+0,1",
+      "value": "50.3",
+      "type": "dimension_tol",
+      "x": 87.2,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "59±0,2",
+      "value": "59",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 650.8,
+      "orient": "v"
+    },
+    {
+      "raw": "21.5",
+      "value": "21.5",
+      "type": "dimension",
+      "x": 101.5,
+      "y": 663.3,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 118.3,
+      "y": 661.4,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 696.3,
+      "orient": "h"
+    },
+    {
+      "raw": "41,4",
+      "value": "41.4",
+      "type": "dimension",
+      "x": 380.7,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "64,5",
+      "value": "64.5",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 196.2,
+      "orient": "v"
+    },
+    {
+      "raw": "30,1+0,1",
+      "value": "30.1",
+      "type": "dimension_tol",
+      "x": 356.5,
+      "y": 179.1,
+      "orient": "v"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 407.4,
+      "y": 203.7,
+      "orient": "h"
+    },
+    {
+      "raw": "42,2±0,05",
+      "value": "42.2",
+      "type": "dimension_tol",
+      "x": 381.1,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "69.3",
+      "value": "69.3",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 656.0,
+      "orient": "v"
+    },
+    {
+      "raw": "17.6±0,05",
+      "value": "17.6",
+      "type": "dimension_tol",
+      "x": 393.4,
+      "y": 673.6,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 378.3,
+      "y": 708.6,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 408.2,
+      "y": 673.8,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 706.6,
+      "orient": "h"
+    },
+    {
+      "raw": "141,6",
+      "value": "141.6",
+      "type": "dimension",
+      "x": 430.8,
+      "y": 458.9,
+      "orient": "h"
+    },
+    {
+      "raw": "125",
+      "value": "125",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 455.2,
+      "orient": "v"
+    },
+    {
+      "raw": "48.4",
+      "value": "48.4",
+      "type": "dimension",
+      "x": 430.8,
+      "y": 377.7,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 458.4,
+      "y": 535.7,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 533.7,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø80.2",
+      "value": "80.2",
+      "type": "diameter",
+      "x": 116.0,
+      "y": 419.5,
+      "orient": "h"
+    },
+    {
+      "raw": "69,5",
+      "value": "69.5",
+      "type": "dimension",
+      "x": 47.9,
+      "y": 442.5,
+      "orient": "v"
+    },
+    {
+      "raw": "PART No. 0064",
+      "value": "PART No. 0064",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  HOUSING-595",
+      "value": "TITLE  HOUSING-595",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SUS304",
+      "value": "MAT  SUS304",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:2",
+      "value": "SCALE 1:2",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-06-18",
+      "value": "DATE 2026-06-18",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN KS.LEE",
+      "value": "DRAWN KS.LEE",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV A",
+      "value": "REV A",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "36",
+    "91.4",
+    "105.1",
+    "10",
+    "50.3",
+    "59",
+    "21.5",
+    "41.4",
+    "64.5",
+    "30.1",
+    "42.2",
+    "69.3",
+    "17.6",
+    "141.6",
+    "125",
+    "48.4",
+    "80.2",
+    "69.5"
+  ],
+  "n_dimensions": 18
+}

@@ -1,0 +1,264 @@
+{
+  "id": "0000",
+  "image": "output_v5\\images\\drawing_0000.png",
+  "shapes": [
+    "rectangle",
+    "rectangle",
+    "rect_2holes",
+    "t_shape",
+    "rect_hole"
+  ],
+  "n_shapes": 5,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "PLATE-254",
+    "material": "SUS304",
+    "scale": "1:1",
+    "date": "2026-02-27",
+    "drawn": "KS.LEE",
+    "rev": "C"
+  },
+  "texts": [
+    {
+      "raw": "112.1±0,15",
+      "value": "112.1",
+      "type": "dimension_tol",
+      "x": 118.0,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "115,5",
+      "value": "115.5",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 450.4,
+      "orient": "v"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 180.1,
+      "y": 458.9,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 524.2,
+      "orient": "h"
+    },
+    {
+      "raw": "140.6",
+      "value": "140.6",
+      "type": "dimension",
+      "x": 430.3,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "125±0,1",
+      "value": "125",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 683.8,
+      "orient": "v"
+    },
+    {
+      "raw": "17,7",
+      "value": "17.7",
+      "type": "dimension",
+      "x": 383.5,
+      "y": 399.4,
+      "orient": "h"
+    },
+    {
+      "raw": "41,8",
+      "value": "41.8",
+      "type": "dimension",
+      "x": 380.9,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "57,5±0,05",
+      "value": "57.5",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 421.4,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø7",
+      "value": "7",
+      "type": "diameter",
+      "x": 411.3,
+      "y": 438.4,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 386.6,
+      "y": 468.2,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽▽",
+      "value": "▽▽▽",
+      "type": "symbol",
+      "x": 407.8,
+      "y": 425.3,
+      "orient": "h"
+    },
+    {
+      "raw": "123.9",
+      "value": "123.9",
+      "type": "dimension",
+      "x": 124.0,
+      "y": 208.9,
+      "orient": "h"
+    },
+    {
+      "raw": "103,8",
+      "value": "103.8",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 215.9,
+      "orient": "v"
+    },
+    {
+      "raw": "47.1±0,2",
+      "value": "47.1",
+      "type": "dimension_tol",
+      "x": 124.0,
+      "y": 149.0,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 283.8,
+      "orient": "h"
+    },
+    {
+      "raw": "108±0,15",
+      "value": "108",
+      "type": "dimension_tol",
+      "x": 414.0,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "81.2",
+      "value": "81.2",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 204.6,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø7±0,05",
+      "value": "7",
+      "type": "diameter",
+      "x": 435.0,
+      "y": 223.6,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 261.2,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0000",
+      "value": "PART No. 0000",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  PLATE-254",
+      "value": "TITLE  PLATE-254",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SUS304",
+      "value": "MAT  SUS304",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:1",
+      "value": "SCALE 1:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-02-27",
+      "value": "DATE 2026-02-27",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN KS.LEE",
+      "value": "DRAWN KS.LEE",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV C",
+      "value": "REV C",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "112.1",
+    "115.5",
+    "140.6",
+    "125",
+    "17.7",
+    "41.8",
+    "57.5",
+    "7",
+    "123.9",
+    "103.8",
+    "47.1",
+    "108",
+    "81.2",
+    "7"
+  ],
+  "n_dimensions": 14
+}

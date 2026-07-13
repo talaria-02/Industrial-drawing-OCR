@@ -1,0 +1,227 @@
+{
+  "id": "0011",
+  "image": "output_v5\\images\\drawing_0011.png",
+  "shapes": [
+    "hexagon",
+    "hexagon",
+    "rectangle",
+    "rect_2holes"
+  ],
+  "n_shapes": 4,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "FLANGE-348",
+    "material": "SUS304",
+    "scale": "1:5",
+    "date": "2026-04-21",
+    "drawn": "SW.PARK",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "Ø58±0,1",
+      "value": "58",
+      "type": "diameter",
+      "x": 396.2,
+      "y": 182.7,
+      "orient": "h"
+    },
+    {
+      "raw": "50,2",
+      "value": "50.2",
+      "type": "dimension",
+      "x": 339.2,
+      "y": 205.7,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø45,2",
+      "value": "45.2",
+      "type": "diameter",
+      "x": 396.8,
+      "y": 394.3,
+      "orient": "h"
+    },
+    {
+      "raw": "39,1±0,2",
+      "value": "39.1",
+      "type": "dimension_tol",
+      "x": 346.1,
+      "y": 417.3,
+      "orient": "v"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 439.5,
+      "y": 429.9,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 457.9,
+      "orient": "h"
+    },
+    {
+      "raw": "101.7",
+      "value": "101.7",
+      "type": "dimension",
+      "x": 410.9,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "91.1 H7",
+      "value": "91.1",
+      "type": "dimension_fit",
+      "x": 334.0,
+      "y": 666.9,
+      "orient": "v"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 415.5,
+      "y": 730.4,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 728.4,
+      "orient": "h"
+    },
+    {
+      "raw": "16",
+      "value": "16",
+      "type": "dimension",
+      "x": 85.7,
+      "y": 615.5,
+      "orient": "h"
+    },
+    {
+      "raw": "45,9 g6",
+      "value": "45.9",
+      "type": "dimension_fit",
+      "x": 85.0,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "30±0,1",
+      "value": "30",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 636.3,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø5,8",
+      "value": "5.8",
+      "type": "diameter",
+      "x": 111.5,
+      "y": 652.1,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 113.9,
+      "y": 640.7,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 85.0,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0011",
+      "value": "PART No. 0011",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  FLANGE-348",
+      "value": "TITLE  FLANGE-348",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SUS304",
+      "value": "MAT  SUS304",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:5",
+      "value": "SCALE 1:5",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-04-21",
+      "value": "DATE 2026-04-21",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN SW.PARK",
+      "value": "DRAWN SW.PARK",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "58",
+    "50.2",
+    "45.2",
+    "39.1",
+    "101.7",
+    "91.1",
+    "16",
+    "45.9",
+    "30",
+    "5.8"
+  ],
+  "n_dimensions": 10
+}

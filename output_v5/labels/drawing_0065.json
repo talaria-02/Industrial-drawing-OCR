@@ -1,0 +1,261 @@
+{
+  "id": "0065",
+  "image": "output_v5\\images\\drawing_0065.png",
+  "shapes": [
+    "l_shape",
+    "rectangle",
+    "t_shape",
+    "rect_2holes"
+  ],
+  "n_shapes": 4,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "SHAFT-540",
+    "material": "FC250",
+    "scale": "2:1",
+    "date": "2026-04-12",
+    "drawn": "SW.PARK",
+    "rev": "A"
+  },
+  "texts": [
+    {
+      "raw": "141±0,15",
+      "value": "141",
+      "type": "dimension_tol",
+      "x": 430.5,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "90.3",
+      "value": "90.3",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 209.2,
+      "orient": "v"
+    },
+    {
+      "raw": "66±0,2",
+      "value": "66",
+      "type": "dimension_tol",
+      "x": 468.0,
+      "y": 237.3,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 507.0,
+      "y": 221.8,
+      "orient": "h"
+    },
+    {
+      "raw": "1x45°",
+      "value": "1x45°",
+      "type": "annotation",
+      "x": 430.5,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "74,7+0,1",
+      "value": "74.7",
+      "type": "dimension_tol",
+      "x": 99.3,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "61,2",
+      "value": "61.2",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 651.9,
+      "orient": "v"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 99.3,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 698.5,
+      "orient": "h"
+    },
+    {
+      "raw": "116.2±0,05",
+      "value": "116.2",
+      "type": "dimension_tol",
+      "x": 120.1,
+      "y": 456.7,
+      "orient": "h"
+    },
+    {
+      "raw": "125",
+      "value": "125",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 455.2,
+      "orient": "v"
+    },
+    {
+      "raw": "50.8+0,1",
+      "value": "50.8",
+      "type": "dimension_tol",
+      "x": 120.1,
+      "y": 377.7,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 131.1,
+      "y": 535.7,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽▽",
+      "value": "▽▽▽",
+      "type": "symbol",
+      "x": 184.2,
+      "y": 452.0,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 120.1,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "26",
+      "value": "26",
+      "type": "dimension",
+      "x": 395.2,
+      "y": 411.6,
+      "orient": "h"
+    },
+    {
+      "raw": "74 H9",
+      "value": "74",
+      "type": "dimension_fit",
+      "x": 397.0,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "93,5±0,2",
+      "value": "93.5",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 439.4,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø12,8",
+      "value": "12.8",
+      "type": "diameter",
+      "x": 433.0,
+      "y": 462.2,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 440.0,
+      "y": 458.4,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0065",
+      "value": "PART No. 0065",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  SHAFT-540",
+      "value": "TITLE  SHAFT-540",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  FC250",
+      "value": "MAT  FC250",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 2:1",
+      "value": "SCALE 2:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-04-12",
+      "value": "DATE 2026-04-12",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN SW.PARK",
+      "value": "DRAWN SW.PARK",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV A",
+      "value": "REV A",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "141",
+    "90.3",
+    "66",
+    "74.7",
+    "61.2",
+    "116.2",
+    "125",
+    "50.8",
+    "26",
+    "74",
+    "93.5",
+    "12.8"
+  ],
+  "n_dimensions": 12
+}

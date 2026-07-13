@@ -1,0 +1,215 @@
+{
+  "id": "0061",
+  "image": "output_v5\\images\\drawing_0061.png",
+  "shapes": [
+    "t_shape",
+    "hexagon",
+    "rectangle",
+    "l_shape",
+    "stepped"
+  ],
+  "n_shapes": 5,
+  "noise": "slight",
+  "titleblock": {
+    "title": "HOUSING-443",
+    "material": "AL6061",
+    "scale": "1:2",
+    "date": "2026-08-18",
+    "drawn": "KS.LEE",
+    "rev": "B"
+  },
+  "texts": [
+    {
+      "raw": "61,3±0.1",
+      "value": "61.3",
+      "type": "dimension_tol",
+      "x": 92.7,
+      "y": 389.8,
+      "orient": "h"
+    },
+    {
+      "raw": "30,6",
+      "value": "30.6",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 408.0,
+      "orient": "v"
+    },
+    {
+      "raw": "22 H9",
+      "value": "22",
+      "type": "dimension_fit",
+      "x": 92.7,
+      "y": 377.7,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø61,6±0,1",
+      "value": "61.6",
+      "type": "diameter",
+      "x": 100.0,
+      "y": 183.1,
+      "orient": "h"
+    },
+    {
+      "raw": "53,3+0,1",
+      "value": "53.3",
+      "type": "dimension_tol",
+      "x": 41.2,
+      "y": 206.1,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 97.3,
+      "y": 266.2,
+      "orient": "h"
+    },
+    {
+      "raw": "102.6",
+      "value": "102.6",
+      "type": "dimension",
+      "x": 113.3,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "67,8 g6",
+      "value": "67.8",
+      "type": "dimension_fit",
+      "x": 36.0,
+      "y": 655.2,
+      "orient": "v"
+    },
+    {
+      "raw": "70.3",
+      "value": "70.3",
+      "type": "dimension",
+      "x": 395.1,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "70,2",
+      "value": "70.2",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 427.8,
+      "orient": "v"
+    },
+    {
+      "raw": "34,6±0,05",
+      "value": "34.6",
+      "type": "dimension_tol",
+      "x": 413.0,
+      "y": 445.9,
+      "orient": "h"
+    },
+    {
+      "raw": "42,1±0,2",
+      "value": "42.1",
+      "type": "dimension_tol",
+      "x": 381.1,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "59+0,1",
+      "value": "59",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 650.8,
+      "orient": "v"
+    },
+    {
+      "raw": "21,6±0,05",
+      "value": "21.6",
+      "type": "dimension_tol",
+      "x": 364.0,
+      "y": 632.1,
+      "orient": "v"
+    },
+    {
+      "raw": "PART No. 0061",
+      "value": "PART No. 0061",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  HOUSING-443",
+      "value": "TITLE  HOUSING-443",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  AL6061",
+      "value": "MAT  AL6061",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:2",
+      "value": "SCALE 1:2",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-08-18",
+      "value": "DATE 2026-08-18",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN KS.LEE",
+      "value": "DRAWN KS.LEE",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV B",
+      "value": "REV B",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "61.3",
+    "30.6",
+    "22",
+    "61.6",
+    "53.3",
+    "102.6",
+    "67.8",
+    "70.3",
+    "70.2",
+    "34.6",
+    "42.1",
+    "59",
+    "21.6"
+  ],
+  "n_dimensions": 13
+}

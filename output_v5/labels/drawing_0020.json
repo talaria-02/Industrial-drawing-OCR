@@ -1,0 +1,235 @@
+{
+  "id": "0020",
+  "image": "output_v5\\images\\drawing_0020.png",
+  "shapes": [
+    "rect_hole",
+    "rect_hole",
+    "rectangle",
+    "rectangle"
+  ],
+  "n_shapes": 4,
+  "noise": "clean",
+  "titleblock": {
+    "title": "BRACKET-155",
+    "material": "SUS304",
+    "scale": "1:5",
+    "date": "2026-03-12",
+    "drawn": "SW.PARK",
+    "rev": "1"
+  },
+  "texts": [
+    {
+      "raw": "44,8+0,1",
+      "value": "44.8",
+      "type": "dimension_tol",
+      "x": 382.4,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "49.1±0,05",
+      "value": "49.1",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 417.2,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø9.4+0,1",
+      "value": "9.4",
+      "type": "diameter",
+      "x": 405.8,
+      "y": 438.6,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 387.3,
+      "y": 459.8,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 457.8,
+      "orient": "h"
+    },
+    {
+      "raw": "107,3±0.1",
+      "value": "107.3",
+      "type": "dimension_tol",
+      "x": 115.7,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "55,5",
+      "value": "55.5",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 649.1,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø10,5",
+      "value": "10.5",
+      "type": "diameter",
+      "x": 140.2,
+      "y": 671.6,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 125.6,
+      "y": 694.8,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 692.8,
+      "orient": "h"
+    },
+    {
+      "raw": "41.7",
+      "value": "41.7",
+      "type": "dimension",
+      "x": 82.8,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "36.1+0,1",
+      "value": "36.1",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 182.1,
+      "orient": "v"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 88.5,
+      "y": 218.1,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 109.7,
+      "y": 189.3,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 216.1,
+      "orient": "h"
+    },
+    {
+      "raw": "140.3",
+      "value": "140.3",
+      "type": "dimension",
+      "x": 430.1,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "120,3",
+      "value": "120.3",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 224.2,
+      "orient": "v"
+    },
+    {
+      "raw": "PART No. 0020",
+      "value": "PART No. 0020",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  BRACKET-155",
+      "value": "TITLE  BRACKET-155",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SUS304",
+      "value": "MAT  SUS304",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:5",
+      "value": "SCALE 1:5",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-03-12",
+      "value": "DATE 2026-03-12",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN SW.PARK",
+      "value": "DRAWN SW.PARK",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 1",
+      "value": "REV 1",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "44.8",
+    "49.1",
+    "9.4",
+    "107.3",
+    "55.5",
+    "10.5",
+    "41.7",
+    "36.1",
+    "140.3",
+    "120.3"
+  ],
+  "n_dimensions": 10
+}

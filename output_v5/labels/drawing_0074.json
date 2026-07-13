@@ -1,0 +1,372 @@
+{
+  "id": "0074",
+  "image": "output_v5\\images\\drawing_0074.png",
+  "shapes": [
+    "l_shape",
+    "l_shape",
+    "hexagon",
+    "l_shape",
+    "t_shape",
+    "stepped"
+  ],
+  "n_shapes": 6,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "FLANGE-702",
+    "material": "FC250",
+    "scale": "1:2",
+    "date": "2026-02-01",
+    "drawn": "MJ.CHOI",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "72.6+0,1",
+      "value": "72.6",
+      "type": "dimension_tol",
+      "x": 98.3,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "57,2 k6",
+      "value": "57.2",
+      "type": "dimension_fit",
+      "x": 36.0,
+      "y": 649.9,
+      "orient": "v"
+    },
+    {
+      "raw": "34.9±0,05",
+      "value": "34.9",
+      "type": "dimension_tol",
+      "x": 117.1,
+      "y": 661.5,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 99.3,
+      "y": 696.5,
+      "orient": "h"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 98.3,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "132.5",
+      "value": "132.5",
+      "type": "dimension",
+      "x": 128.2,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "96±0,15",
+      "value": "96",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 440.7,
+      "orient": "v"
+    },
+    {
+      "raw": "60,5+0,1",
+      "value": "60.5",
+      "type": "dimension_tol",
+      "x": 164.2,
+      "y": 471.7,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 153.7,
+      "y": 506.7,
+      "orient": "h"
+    },
+    {
+      "raw": "2x45°",
+      "value": "2x45°",
+      "type": "annotation",
+      "x": 128.2,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø87.2",
+      "value": "87.2",
+      "type": "diameter",
+      "x": 413.5,
+      "y": 650.9,
+      "orient": "h"
+    },
+    {
+      "raw": "75,5 k6",
+      "value": "75.5",
+      "type": "dimension_fit",
+      "x": 341.9,
+      "y": 673.9,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 428.7,
+      "y": 744.5,
+      "orient": "h"
+    },
+    {
+      "raw": "1x45°",
+      "value": "1x45°",
+      "type": "annotation",
+      "x": 413.5,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 742.5,
+      "orient": "h"
+    },
+    {
+      "raw": "105,1±0.1",
+      "value": "105.1",
+      "type": "dimension_tol",
+      "x": 412.6,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "99,8",
+      "value": "99.8",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 213.9,
+      "orient": "v"
+    },
+    {
+      "raw": "47,1±0,1",
+      "value": "47.1",
+      "type": "dimension_tol",
+      "x": 441.6,
+      "y": 246.8,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 413.2,
+      "y": 281.8,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 471.1,
+      "y": 194.4,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 279.8,
+      "orient": "h"
+    },
+    {
+      "raw": "107,1",
+      "value": "107.1",
+      "type": "dimension",
+      "x": 115.5,
+      "y": 169.8,
+      "orient": "h"
+    },
+    {
+      "raw": "52.1",
+      "value": "52.1",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 190.1,
+      "orient": "v"
+    },
+    {
+      "raw": "34+0,1",
+      "value": "34",
+      "type": "dimension_tol",
+      "x": 115.6,
+      "y": 149.0,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 125.2,
+      "y": 234.1,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 115.5,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 232.1,
+      "orient": "h"
+    },
+    {
+      "raw": "126.9",
+      "value": "126.9",
+      "type": "dimension",
+      "x": 423.4,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "78,1",
+      "value": "78.1",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 431.7,
+      "orient": "v"
+    },
+    {
+      "raw": "32.7+0,1",
+      "value": "32.7",
+      "type": "dimension_tol",
+      "x": 409.9,
+      "y": 409.0,
+      "orient": "v"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 406.1,
+      "y": 488.8,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 492.9,
+      "y": 447.3,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 486.8,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0074",
+      "value": "PART No. 0074",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  FLANGE-702",
+      "value": "TITLE  FLANGE-702",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  FC250",
+      "value": "MAT  FC250",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:2",
+      "value": "SCALE 1:2",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-02-01",
+      "value": "DATE 2026-02-01",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN MJ.CHOI",
+      "value": "DRAWN MJ.CHOI",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "72.6",
+    "57.2",
+    "34.9",
+    "132.5",
+    "96",
+    "60.5",
+    "87.2",
+    "75.5",
+    "105.1",
+    "99.8",
+    "47.1",
+    "107.1",
+    "52.1",
+    "34",
+    "126.9",
+    "78.1",
+    "32.7"
+  ],
+  "n_dimensions": 17
+}

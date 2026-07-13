@@ -1,0 +1,316 @@
+{
+  "id": "0080",
+  "image": "output_v5\\images\\drawing_0080.png",
+  "shapes": [
+    "l_shape",
+    "l_shape",
+    "stepped",
+    "rectangle",
+    "stepped",
+    "rect_hole"
+  ],
+  "n_shapes": 6,
+  "noise": "heavy",
+  "titleblock": {
+    "title": "SHAFT-202",
+    "material": "FC250",
+    "scale": "1:5",
+    "date": "2026-03-11",
+    "drawn": "JH.KIM",
+    "rev": "B"
+  },
+  "texts": [
+    {
+      "raw": "139",
+      "value": "139",
+      "type": "dimension",
+      "x": 429.5,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "115.1",
+      "value": "115.1",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 221.6,
+      "orient": "v"
+    },
+    {
+      "raw": "57.1",
+      "value": "57.1",
+      "type": "dimension",
+      "x": 470.4,
+      "y": 262.1,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 417.5,
+      "y": 297.1,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 505.0,
+      "y": 254.8,
+      "orient": "h"
+    },
+    {
+      "raw": "55.7",
+      "value": "55.7",
+      "type": "dimension",
+      "x": 387.9,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "58.8±0,1",
+      "value": "58.8",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 650.7,
+      "orient": "v"
+    },
+    {
+      "raw": "22,5+0,1",
+      "value": "22.5",
+      "type": "dimension_tol",
+      "x": 404.4,
+      "y": 663.1,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 391.8,
+      "y": 698.1,
+      "orient": "h"
+    },
+    {
+      "raw": "66,4±0,1",
+      "value": "66.4",
+      "type": "dimension_tol",
+      "x": 95.2,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "33,7±0.1",
+      "value": "33.7",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 409.5,
+      "orient": "v"
+    },
+    {
+      "raw": "10,5+0,1",
+      "value": "10.5",
+      "type": "dimension_tol",
+      "x": 67.5,
+      "y": 397.9,
+      "orient": "v"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 109.5,
+      "y": 444.4,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 95.2,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "107.7±0,05",
+      "value": "107.7",
+      "type": "dimension_tol",
+      "x": 115.8,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "103.5±0.1",
+      "value": "103.5",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 215.8,
+      "orient": "v"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 115.8,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "97,2",
+      "value": "97.2",
+      "type": "dimension",
+      "x": 408.6,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "61,9",
+      "value": "61.9",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 423.6,
+      "orient": "v"
+    },
+    {
+      "raw": "35,9",
+      "value": "35.9",
+      "type": "dimension",
+      "x": 384.3,
+      "y": 410.6,
+      "orient": "v"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 420.8,
+      "y": 472.6,
+      "orient": "h"
+    },
+    {
+      "raw": "82.8±0,1",
+      "value": "82.8",
+      "type": "dimension_tol",
+      "x": 103.4,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "78.9",
+      "value": "78.9",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 660.8,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø20,6 h6",
+      "value": "20.6",
+      "type": "dimension_fit",
+      "x": 138.0,
+      "y": 693.4,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 110.9,
+      "y": 718.2,
+      "orient": "h"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 103.4,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0080",
+      "value": "PART No. 0080",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  SHAFT-202",
+      "value": "TITLE  SHAFT-202",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  FC250",
+      "value": "MAT  FC250",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:5",
+      "value": "SCALE 1:5",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-03-11",
+      "value": "DATE 2026-03-11",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN JH.KIM",
+      "value": "DRAWN JH.KIM",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV B",
+      "value": "REV B",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "139",
+    "115.1",
+    "57.1",
+    "55.7",
+    "58.8",
+    "22.5",
+    "66.4",
+    "33.7",
+    "10.5",
+    "107.7",
+    "103.5",
+    "97.2",
+    "61.9",
+    "35.9",
+    "82.8",
+    "78.9",
+    "20.6"
+  ],
+  "n_dimensions": 17
+}

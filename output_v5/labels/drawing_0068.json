@@ -1,0 +1,305 @@
+{
+  "id": "0068",
+  "image": "output_v5\\images\\drawing_0068.png",
+  "shapes": [
+    "rect_hole",
+    "rect_2holes",
+    "stepped",
+    "hexagon",
+    "rect_hole"
+  ],
+  "n_shapes": 5,
+  "noise": "heavy",
+  "titleblock": {
+    "title": "FLANGE-698",
+    "material": "S45C",
+    "scale": "1:2",
+    "date": "2026-06-20",
+    "drawn": "KS.LEE",
+    "rev": "A"
+  },
+  "texts": [
+    {
+      "raw": "102",
+      "value": "102",
+      "type": "dimension",
+      "x": 113.0,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "106,8±0,15",
+      "value": "106.8",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 674.7,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø29,7",
+      "value": "29.7",
+      "type": "diameter",
+      "x": 156.7,
+      "y": 716.4,
+      "orient": "h"
+    },
+    {
+      "raw": "1x45°",
+      "value": "1x45°",
+      "type": "annotation",
+      "x": 113.0,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 744.1,
+      "orient": "h"
+    },
+    {
+      "raw": "21.1+0,1",
+      "value": "21.1",
+      "type": "dimension_tol",
+      "x": 383.1,
+      "y": 160.5,
+      "orient": "h"
+    },
+    {
+      "raw": "46.8",
+      "value": "46.8",
+      "type": "dimension",
+      "x": 383.4,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "33",
+      "value": "33",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 180.5,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø5",
+      "value": "5",
+      "type": "diameter",
+      "x": 410.7,
+      "y": 195.5,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 213.0,
+      "orient": "h"
+    },
+    {
+      "raw": "104,3 k6",
+      "value": "104.3",
+      "type": "dimension_fit",
+      "x": 412.1,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "57,4+0,1",
+      "value": "57.4",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 421.4,
+      "orient": "v"
+    },
+    {
+      "raw": "18,5 j6",
+      "value": "18.5",
+      "type": "dimension_fit",
+      "x": 395.7,
+      "y": 401.9,
+      "orient": "v"
+    },
+    {
+      "raw": "2x45°",
+      "value": "2x45°",
+      "type": "annotation",
+      "x": 412.1,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 466.1,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø57,4 H7",
+      "value": "57.4",
+      "type": "dimension_fit",
+      "x": 99.9,
+      "y": 190.5,
+      "orient": "h"
+    },
+    {
+      "raw": "49,7",
+      "value": "49.7",
+      "type": "dimension",
+      "x": 43.2,
+      "y": 213.5,
+      "orient": "v"
+    },
+    {
+      "raw": "2x45°",
+      "value": "2x45°",
+      "type": "annotation",
+      "x": 99.9,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 279.0,
+      "orient": "h"
+    },
+    {
+      "raw": "72,3±0,15",
+      "value": "72.3",
+      "type": "dimension_tol",
+      "x": 98.2,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "108.5",
+      "value": "108.5",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 446.9,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø12.7+0,1",
+      "value": "12.7",
+      "type": "diameter",
+      "x": 124.9,
+      "y": 471.6,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 106.4,
+      "y": 519.2,
+      "orient": "h"
+    },
+    {
+      "raw": "2x45°",
+      "value": "2x45°",
+      "type": "annotation",
+      "x": 98.2,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 517.2,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0068",
+      "value": "PART No. 0068",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  FLANGE-698",
+      "value": "TITLE  FLANGE-698",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  S45C",
+      "value": "MAT  S45C",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:2",
+      "value": "SCALE 1:2",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-06-20",
+      "value": "DATE 2026-06-20",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN KS.LEE",
+      "value": "DRAWN KS.LEE",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV A",
+      "value": "REV A",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "102",
+    "106.8",
+    "29.7",
+    "21.1",
+    "46.8",
+    "33",
+    "5",
+    "104.3",
+    "57.4",
+    "18.5",
+    "57.4",
+    "49.7",
+    "72.3",
+    "108.5",
+    "12.7"
+  ],
+  "n_dimensions": 15
+}

@@ -1,0 +1,298 @@
+{
+  "id": "0095",
+  "image": "output_v5\\images\\drawing_0095.png",
+  "shapes": [
+    "rect_2holes",
+    "t_shape",
+    "rect_hole",
+    "t_shape",
+    "t_shape"
+  ],
+  "n_shapes": 5,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "FLANGE-604",
+    "material": "SUS304",
+    "scale": "1:1",
+    "date": "2026-01-16",
+    "drawn": "SW.PARK",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "52.1±0,2",
+      "value": "52.1",
+      "type": "dimension_tol",
+      "x": 408.4,
+      "y": 193.6,
+      "orient": "h"
+    },
+    {
+      "raw": "111,3+0,1",
+      "value": "111.3",
+      "type": "dimension_tol",
+      "x": 415.6,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "112.9+0,1",
+      "value": "112.9",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 220.4,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø11,8",
+      "value": "11.8",
+      "type": "diameter",
+      "x": 458.3,
+      "y": 242.2,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 409.4,
+      "y": 294.9,
+      "orient": "h"
+    },
+    {
+      "raw": "47.5",
+      "value": "47.5",
+      "type": "dimension",
+      "x": 383.8,
+      "y": 415.0,
+      "orient": "h"
+    },
+    {
+      "raw": "64,4",
+      "value": "64.4",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 424.9,
+      "orient": "v"
+    },
+    {
+      "raw": "19,8±0,2",
+      "value": "19.8",
+      "type": "dimension_tol",
+      "x": 383.8,
+      "y": 377.7,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 383.8,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "115.7",
+      "value": "115.7",
+      "type": "dimension",
+      "x": 119.8,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "106.9+0,1",
+      "value": "106.9",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 674.8,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø17,4 h6",
+      "value": "17.4",
+      "type": "dimension_fit",
+      "x": 151.2,
+      "y": 704.2,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 183.7,
+      "y": 698.0,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 744.2,
+      "orient": "h"
+    },
+    {
+      "raw": "72+0,1",
+      "value": "72",
+      "type": "dimension_tol",
+      "x": 98.0,
+      "y": 417.4,
+      "orient": "h"
+    },
+    {
+      "raw": "65,7±0,2",
+      "value": "65.7",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 425.5,
+      "orient": "v"
+    },
+    {
+      "raw": "25.7+0,1",
+      "value": "25.7",
+      "type": "dimension_tol",
+      "x": 98.0,
+      "y": 377.7,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 110.7,
+      "y": 476.4,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 140.0,
+      "y": 435.0,
+      "orient": "h"
+    },
+    {
+      "raw": "84.4",
+      "value": "84.4",
+      "type": "dimension",
+      "x": 402.2,
+      "y": 663.8,
+      "orient": "h"
+    },
+    {
+      "raw": "90,9 h6",
+      "value": "90.9",
+      "type": "dimension_fit",
+      "x": 334.0,
+      "y": 666.8,
+      "orient": "v"
+    },
+    {
+      "raw": "38,6±0,15",
+      "value": "38.6",
+      "type": "dimension_tol",
+      "x": 402.2,
+      "y": 606.3,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 391.0,
+      "y": 730.2,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 728.2,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0095",
+      "value": "PART No. 0095",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  FLANGE-604",
+      "value": "TITLE  FLANGE-604",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SUS304",
+      "value": "MAT  SUS304",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:1",
+      "value": "SCALE 1:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-01-16",
+      "value": "DATE 2026-01-16",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN SW.PARK",
+      "value": "DRAWN SW.PARK",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "52.1",
+    "111.3",
+    "112.9",
+    "11.8",
+    "47.5",
+    "64.4",
+    "19.8",
+    "115.7",
+    "106.9",
+    "17.4",
+    "72",
+    "65.7",
+    "25.7",
+    "84.4",
+    "90.9",
+    "38.6"
+  ],
+  "n_dimensions": 16
+}

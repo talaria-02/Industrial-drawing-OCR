@@ -1,0 +1,254 @@
+{
+  "id": "0084",
+  "image": "output_v5\\images\\drawing_0084.png",
+  "shapes": [
+    "l_shape",
+    "rect_2holes",
+    "t_shape",
+    "stepped"
+  ],
+  "n_shapes": 4,
+  "noise": "heavy",
+  "titleblock": {
+    "title": "FLANGE-651",
+    "material": "S45C",
+    "scale": "2:1",
+    "date": "2026-01-27",
+    "drawn": "MJ.CHOI",
+    "rev": "1"
+  },
+  "texts": [
+    {
+      "raw": "101.7 j6",
+      "value": "101.7",
+      "type": "dimension_fit",
+      "x": 112.8,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "96.1 f7",
+      "value": "96.1",
+      "type": "dimension_fit",
+      "x": 36.0,
+      "y": 212.1,
+      "orient": "v"
+    },
+    {
+      "raw": "48.3 H9",
+      "value": "48.3",
+      "type": "dimension_fit",
+      "x": 139.5,
+      "y": 243.1,
+      "orient": "h"
+    },
+    {
+      "raw": "1x45°",
+      "value": "1x45°",
+      "type": "annotation",
+      "x": 112.8,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "29.8+0,1",
+      "value": "29.8",
+      "type": "dimension_tol",
+      "x": 400.4,
+      "y": 406.7,
+      "orient": "h"
+    },
+    {
+      "raw": "73,8+0,1",
+      "value": "73.8",
+      "type": "dimension_tol",
+      "x": 396.9,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "67.5±0,15",
+      "value": "67.5",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 426.4,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø4.7",
+      "value": "4.7",
+      "type": "diameter",
+      "x": 432.0,
+      "y": 441.1,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 386.7,
+      "y": 478.2,
+      "orient": "h"
+    },
+    {
+      "raw": "71,7+0,1",
+      "value": "71.7",
+      "type": "dimension_tol",
+      "x": 97.8,
+      "y": 663.1,
+      "orient": "h"
+    },
+    {
+      "raw": "104.1±0,1",
+      "value": "104.1",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 673.4,
+      "orient": "v"
+    },
+    {
+      "raw": "24,4+0,1",
+      "value": "24.4",
+      "type": "dimension_tol",
+      "x": 97.9,
+      "y": 606.3,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 139.7,
+      "y": 685.8,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 741.4,
+      "orient": "h"
+    },
+    {
+      "raw": "140.9",
+      "value": "140.9",
+      "type": "dimension",
+      "x": 430.4,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "98.3±0,15",
+      "value": "98.3",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 213.2,
+      "orient": "v"
+    },
+    {
+      "raw": "33,2 j6",
+      "value": "33.2",
+      "type": "dimension_fit",
+      "x": 417.3,
+      "y": 180.6,
+      "orient": "v"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 430.4,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 278.3,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0084",
+      "value": "PART No. 0084",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  FLANGE-651",
+      "value": "TITLE  FLANGE-651",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  S45C",
+      "value": "MAT  S45C",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 2:1",
+      "value": "SCALE 2:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-01-27",
+      "value": "DATE 2026-01-27",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN MJ.CHOI",
+      "value": "DRAWN MJ.CHOI",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 1",
+      "value": "REV 1",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "101.7",
+    "96.1",
+    "48.3",
+    "29.8",
+    "73.8",
+    "67.5",
+    "4.7",
+    "71.7",
+    "104.1",
+    "24.4",
+    "140.9",
+    "98.3",
+    "33.2"
+  ],
+  "n_dimensions": 13
+}

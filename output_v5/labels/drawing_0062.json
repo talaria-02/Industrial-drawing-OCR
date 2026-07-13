@@ -1,0 +1,270 @@
+{
+  "id": "0062",
+  "image": "output_v5\\images\\drawing_0062.png",
+  "shapes": [
+    "hexagon",
+    "l_shape",
+    "l_shape",
+    "hexagon",
+    "rectangle"
+  ],
+  "n_shapes": 5,
+  "noise": "slight",
+  "titleblock": {
+    "title": "FLANGE-607",
+    "material": "SCM440",
+    "scale": "1:1",
+    "date": "2026-11-17",
+    "drawn": "KS.LEE",
+    "rev": "A"
+  },
+  "texts": [
+    {
+      "raw": "Ø61,8",
+      "value": "61.8",
+      "type": "diameter",
+      "x": 117.9,
+      "y": 410.4,
+      "orient": "h"
+    },
+    {
+      "raw": "53.5±0,1",
+      "value": "53.5",
+      "type": "dimension_tol",
+      "x": 59.0,
+      "y": 433.4,
+      "orient": "v"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 117.9,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "50,8",
+      "value": "50.8",
+      "type": "dimension",
+      "x": 87.4,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "50.8",
+      "value": "50.8",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 189.4,
+      "orient": "v"
+    },
+    {
+      "raw": "18.8±0,1",
+      "value": "18.8",
+      "type": "dimension_tol",
+      "x": 103.4,
+      "y": 197.8,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 230.8,
+      "orient": "h"
+    },
+    {
+      "raw": "53.8+0,1",
+      "value": "53.8",
+      "type": "dimension_tol",
+      "x": 386.9,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "67.5",
+      "value": "67.5",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 426.4,
+      "orient": "v"
+    },
+    {
+      "raw": "17,9+0,1",
+      "value": "17.9",
+      "type": "dimension_tol",
+      "x": 404.9,
+      "y": 443.2,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 394.0,
+      "y": 478.2,
+      "orient": "h"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 386.9,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 476.2,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø52.2 H7",
+      "value": "52.2",
+      "type": "dimension_fit",
+      "x": 108.8,
+      "y": 629.7,
+      "orient": "h"
+    },
+    {
+      "raw": "45,2±0,15",
+      "value": "45.2",
+      "type": "dimension_tol",
+      "x": 54.7,
+      "y": 652.7,
+      "orient": "v"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 108.4,
+      "y": 702.0,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 700.0,
+      "orient": "h"
+    },
+    {
+      "raw": "136,3",
+      "value": "136.3",
+      "type": "dimension",
+      "x": 428.1,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "123,2",
+      "value": "123.2",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 225.6,
+      "orient": "v"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 449.7,
+      "y": 305.2,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 303.2,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0062",
+      "value": "PART No. 0062",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  FLANGE-607",
+      "value": "TITLE  FLANGE-607",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SCM440",
+      "value": "MAT  SCM440",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:1",
+      "value": "SCALE 1:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-11-17",
+      "value": "DATE 2026-11-17",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN KS.LEE",
+      "value": "DRAWN KS.LEE",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV A",
+      "value": "REV A",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "61.8",
+    "53.5",
+    "50.8",
+    "50.8",
+    "18.8",
+    "53.8",
+    "67.5",
+    "17.9",
+    "52.2",
+    "45.2",
+    "136.3",
+    "123.2"
+  ],
+  "n_dimensions": 12
+}

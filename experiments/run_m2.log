@@ -1,0 +1,132 @@
+C:\Users\zxc20\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.1) or chardet (7.4.3)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+C:\Users\zxc20\OneDrive\¹ÙÅÁ È­¸é\ÇöÀå¹Ì·¯Çü\paddle_rotate_merge.py:41: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  return PaddleOCR(
+Á¤º¸: Á¦°øµÈ ÆĞÅÏ¿¡ ÇØ´çµÇ´Â ÆÄÀÏÀ» Ã£Áö ¸øÇß½À´Ï´Ù.
+C:\Users\zxc20\AppData\Local\Programs\Python\Python311\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-OCRv5_mobile_rec`.[0m
+´ë»ó: 5Àå (3ÆĞ½º È¸Àü-º´ÇÕ)
+
+--- 01.png ---
+      (¼± ¿ÀÀÎ½Ä 84°³ Á¦°Å)
+    pass h: 13°³
+      (¼± ¿ÀÀÎ½Ä 31°³ Á¦°Å)
+    pass v_cw: 12°³
+      (¼± ¿ÀÀÎ½Ä 33°³ Á¦°Å)
+    pass v_ccw: 6°³
+    º´ÇÕ ÈÄ: 12°³
+    ÀúÀå: 01_v2.png
+
+--- 02.png ---
+      (¼± ¿ÀÀÎ½Ä 98°³ Á¦°Å)
+    pass h: 44°³
+      (¼± ¿ÀÀÎ½Ä 29°³ Á¦°Å)
+    pass v_cw: 32°³
+      (¼± ¿ÀÀÎ½Ä 35°³ Á¦°Å)
+    pass v_ccw: 33°³
+    º´ÇÕ ÈÄ: 51°³
+    ÀúÀå: 02_v2.png
+
+--- 03.png ---
+      (¼± ¿ÀÀÎ½Ä 101°³ Á¦°Å)
+    pass h: 43°³
+      (¼± ¿ÀÀÎ½Ä 34°³ Á¦°Å)
+    pass v_cw: 41°³
+      (¼± ¿ÀÀÎ½Ä 27°³ Á¦°Å)
+    pass v_ccw: 39°³
+    º´ÇÕ ÈÄ: 45°³
+    ÀúÀå: 03_v2.png
+
+--- 04.png ---
+      (¼± ¿ÀÀÎ½Ä 141°³ Á¦°Å)
+    pass h: 44°³
+      (¼± ¿ÀÀÎ½Ä 20°³ Á¦°Å)
+    pass v_cw: 34°³
+      (¼± ¿ÀÀÎ½Ä 30°³ Á¦°Å)
+    pass v_ccw: 39°³
+    º´ÇÕ ÈÄ: 45°³
+    ÀúÀå: 04_v2.png
+
+--- 05.png ---
+      (¼± ¿ÀÀÎ½Ä 138°³ Á¦°Å)
+    pass h: 47°³
+      (¼± ¿ÀÀÎ½Ä 19°³ Á¦°Å)
+    pass v_cw: 37°³
+      (¼± ¿ÀÀÎ½Ä 16°³ Á¦°Å)
+    pass v_ccw: 33°³
+    º´ÇÕ ÈÄ: 51°³
+    ÀúÀå: 05_v2.png
+
+¿Ï·á.
+C:\Users\zxc20\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.1) or chardet (7.4.3)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+[ÀüÃ³¸®] Á¡¼± Á¦°Å È°¼º (--clean)
+C:\Users\zxc20\OneDrive\¹ÙÅÁ È­¸é\ÇöÀå¹Ì·¯Çü\paddle_rotate_merge.py:41: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  return PaddleOCR(
+Á¤º¸: Á¦°øµÈ ÆĞÅÏ¿¡ ÇØ´çµÇ´Â ÆÄÀÏÀ» Ã£Áö ¸øÇß½À´Ï´Ù.
+C:\Users\zxc20\AppData\Local\Programs\Python\Python311\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-OCRv5_mobile_rec`.[0m
+´ë»ó: 5Àå (3ÆĞ½º È¸Àü-º´ÇÕ)
+
+--- 01.png ---
+      (¼± ¿ÀÀÎ½Ä 3°³ Á¦°Å)
+    pass h: 13°³
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass v_cw: 9°³
+      (¼± ¿ÀÀÎ½Ä 4°³ Á¦°Å)
+    pass v_ccw: 9°³
+    º´ÇÕ ÈÄ: 16°³
+    ÀúÀå: 01_v2.png
+
+--- 02.png ---
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass h: 38°³
+    pass v_cw: 40°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass v_ccw: 41°³
+    º´ÇÕ ÈÄ: 44°³
+    ÀúÀå: 02_v2.png
+
+--- 03.png ---
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass h: 35°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass v_cw: 31°³
+    pass v_ccw: 41°³
+    º´ÇÕ ÈÄ: 43°³
+    ÀúÀå: 03_v2.png
+
+--- 04.png ---
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass h: 41°³
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass v_cw: 38°³
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass v_ccw: 41°³
+    º´ÇÕ ÈÄ: 45°³
+    ÀúÀå: 04_v2.png
+
+--- 05.png ---
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass h: 45°³
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass v_cw: 36°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass v_ccw: 38°³
+    º´ÇÕ ÈÄ: 47°³
+    ÀúÀå: 05_v2.png
+
+¿Ï·á.
+EXPDONE

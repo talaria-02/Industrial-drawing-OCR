@@ -1,0 +1,253 @@
+{
+  "id": "0075",
+  "image": "output_v5\\images\\drawing_0075.png",
+  "shapes": [
+    "rect_2holes",
+    "t_shape",
+    "rectangle",
+    "t_shape"
+  ],
+  "n_shapes": 4,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "HOUSING-488",
+    "material": "SUS304",
+    "scale": "1:2",
+    "date": "2026-07-23",
+    "drawn": "MJ.CHOI",
+    "rev": "B"
+  },
+  "texts": [
+    {
+      "raw": "32.1±0,15",
+      "value": "32.1",
+      "type": "dimension_tol",
+      "x": 395.2,
+      "y": 647.8,
+      "orient": "h"
+    },
+    {
+      "raw": "75.8±0,05",
+      "value": "75.8",
+      "type": "dimension_tol",
+      "x": 397.9,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "93.8+0,1",
+      "value": "93.8",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 668.2,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø5,4",
+      "value": "5.4",
+      "type": "diameter",
+      "x": 428.7,
+      "y": 683.6,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 416.1,
+      "y": 733.1,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 731.1,
+      "orient": "h"
+    },
+    {
+      "raw": "105,7",
+      "value": "105.7",
+      "type": "dimension",
+      "x": 114.8,
+      "y": 190.4,
+      "orient": "h"
+    },
+    {
+      "raw": "83,7±0,2",
+      "value": "83.7",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 205.8,
+      "orient": "v"
+    },
+    {
+      "raw": "44,5±0,2",
+      "value": "44.5",
+      "type": "dimension_tol",
+      "x": 114.8,
+      "y": 149.0,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 122.7,
+      "y": 265.7,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 173.7,
+      "y": 220.2,
+      "orient": "h"
+    },
+    {
+      "raw": "104,7",
+      "value": "104.7",
+      "type": "dimension",
+      "x": 412.4,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "90,2±0,15",
+      "value": "90.2",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 209.1,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 425.7,
+      "y": 272.2,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 470.7,
+      "y": 233.4,
+      "orient": "h"
+    },
+    {
+      "raw": "84±0,1",
+      "value": "84",
+      "type": "dimension_tol",
+      "x": 104.0,
+      "y": 666.4,
+      "orient": "h"
+    },
+    {
+      "raw": "107.9 f7",
+      "value": "107.9",
+      "type": "dimension_fit",
+      "x": 36.0,
+      "y": 675.3,
+      "orient": "v"
+    },
+    {
+      "raw": "38,9",
+      "value": "38.9",
+      "type": "dimension",
+      "x": 104.0,
+      "y": 606.3,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 745.2,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0075",
+      "value": "PART No. 0075",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  HOUSING-488",
+      "value": "TITLE  HOUSING-488",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SUS304",
+      "value": "MAT  SUS304",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:2",
+      "value": "SCALE 1:2",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-07-23",
+      "value": "DATE 2026-07-23",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN MJ.CHOI",
+      "value": "DRAWN MJ.CHOI",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV B",
+      "value": "REV B",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "32.1",
+    "75.8",
+    "93.8",
+    "5.4",
+    "105.7",
+    "83.7",
+    "44.5",
+    "104.7",
+    "90.2",
+    "84",
+    "107.9",
+    "38.9"
+  ],
+  "n_dimensions": 12
+}

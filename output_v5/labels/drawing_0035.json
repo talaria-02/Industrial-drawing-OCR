@@ -1,0 +1,325 @@
+{
+  "id": "0035",
+  "image": "output_v5\\images\\drawing_0035.png",
+  "shapes": [
+    "rectangle",
+    "rect_2holes",
+    "rect_2holes",
+    "hexagon",
+    "stepped",
+    "l_shape"
+  ],
+  "n_shapes": 6,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "HOUSING-472",
+    "material": "SUS304",
+    "scale": "1:1",
+    "date": "2026-07-23",
+    "drawn": "JH.KIM",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "70,9 f7",
+      "value": "70.9",
+      "type": "dimension_fit",
+      "x": 395.4,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "93.9",
+      "value": "93.9",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 439.6,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 397.6,
+      "y": 504.6,
+      "orient": "h"
+    },
+    {
+      "raw": "41,9 j6",
+      "value": "41.9",
+      "type": "dimension_fit",
+      "x": 110.5,
+      "y": 646.0,
+      "orient": "h"
+    },
+    {
+      "raw": "106,8±0,2",
+      "value": "106.8",
+      "type": "dimension_tol",
+      "x": 115.4,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "107.2 g6",
+      "value": "107.2",
+      "type": "dimension_fit",
+      "x": 36.0,
+      "y": 674.9,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø13.9",
+      "value": "13.9",
+      "type": "diameter",
+      "x": 157.4,
+      "y": 698.8,
+      "orient": "h"
+    },
+    {
+      "raw": "44",
+      "value": "44",
+      "type": "dimension",
+      "x": 416.4,
+      "y": 637.3,
+      "orient": "h"
+    },
+    {
+      "raw": "109,9 j6",
+      "value": "109.9",
+      "type": "dimension_fit",
+      "x": 414.9,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "93.1±0,05",
+      "value": "93.1",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 667.9,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø15.6",
+      "value": "15.6",
+      "type": "diameter",
+      "x": 466.0,
+      "y": 693.5,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 419.0,
+      "y": 732.4,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 475.9,
+      "y": 683.1,
+      "orient": "h"
+    },
+    {
+      "raw": "1x45°",
+      "value": "1x45°",
+      "type": "annotation",
+      "x": 414.9,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø91.4+0,1",
+      "value": "91.4",
+      "type": "diameter",
+      "x": 428.8,
+      "y": 203.5,
+      "orient": "h"
+    },
+    {
+      "raw": "79,2",
+      "value": "79.2",
+      "type": "dimension",
+      "x": 355.1,
+      "y": 226.5,
+      "orient": "v"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 414.7,
+      "y": 307.0,
+      "orient": "h"
+    },
+    {
+      "raw": "55,8",
+      "value": "55.8",
+      "type": "dimension",
+      "x": 89.9,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "45.6±0.1",
+      "value": "45.6",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 415.5,
+      "orient": "v"
+    },
+    {
+      "raw": "18,5",
+      "value": "18.5",
+      "type": "dimension",
+      "x": 68.3,
+      "y": 401.9,
+      "orient": "v"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 123.8,
+      "y": 421.6,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 454.3,
+      "orient": "h"
+    },
+    {
+      "raw": "68+0,1",
+      "value": "68",
+      "type": "dimension_tol",
+      "x": 96.0,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "64.5+0,1",
+      "value": "64.5",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 196.2,
+      "orient": "v"
+    },
+    {
+      "raw": "32,3±0,1",
+      "value": "32.3",
+      "type": "dimension_tol",
+      "x": 113.8,
+      "y": 211.5,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 96.0,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 244.5,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0035",
+      "value": "PART No. 0035",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  HOUSING-472",
+      "value": "TITLE  HOUSING-472",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SUS304",
+      "value": "MAT  SUS304",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:1",
+      "value": "SCALE 1:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-07-23",
+      "value": "DATE 2026-07-23",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN JH.KIM",
+      "value": "DRAWN JH.KIM",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "70.9",
+    "93.9",
+    "41.9",
+    "106.8",
+    "107.2",
+    "13.9",
+    "44",
+    "109.9",
+    "93.1",
+    "15.6",
+    "91.4",
+    "79.2",
+    "55.8",
+    "45.6",
+    "18.5",
+    "68",
+    "64.5",
+    "32.3"
+  ],
+  "n_dimensions": 18
+}

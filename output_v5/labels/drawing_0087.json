@@ -1,0 +1,220 @@
+{
+  "id": "0087",
+  "image": "output_v5\\images\\drawing_0087.png",
+  "shapes": [
+    "rectangle",
+    "t_shape",
+    "stepped",
+    "t_shape"
+  ],
+  "n_shapes": 4,
+  "noise": "clean",
+  "titleblock": {
+    "title": "SHAFT-388",
+    "material": "SUS304",
+    "scale": "1:1",
+    "date": "2026-04-26",
+    "drawn": "MJ.CHOI",
+    "rev": "1"
+  },
+  "texts": [
+    {
+      "raw": "109,5±0,1",
+      "value": "109.5",
+      "type": "dimension_tol",
+      "x": 414.8,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "57.6",
+      "value": "57.6",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 192.8,
+      "orient": "v"
+    },
+    {
+      "raw": "40,8",
+      "value": "40.8",
+      "type": "dimension",
+      "x": 82.4,
+      "y": 636.3,
+      "orient": "h"
+    },
+    {
+      "raw": "67,2+0,1",
+      "value": "67.2",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 654.9,
+      "orient": "v"
+    },
+    {
+      "raw": "15,6±0,1",
+      "value": "15.6",
+      "type": "dimension_tol",
+      "x": 82.4,
+      "y": 606.3,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 704.5,
+      "orient": "h"
+    },
+    {
+      "raw": "49,7+0,1",
+      "value": "49.7",
+      "type": "dimension_tol",
+      "x": 384.9,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "68,6",
+      "value": "68.6",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 655.6,
+      "orient": "v"
+    },
+    {
+      "raw": "40,5+0,1",
+      "value": "40.5",
+      "type": "dimension_tol",
+      "x": 366.2,
+      "y": 641.6,
+      "orient": "v"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 384.9,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "94.2±0,05",
+      "value": "94.2",
+      "type": "dimension_tol",
+      "x": 407.1,
+      "y": 430.5,
+      "orient": "h"
+    },
+    {
+      "raw": "83.5+0,1",
+      "value": "83.5",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 434.4,
+      "orient": "v"
+    },
+    {
+      "raw": "45.2",
+      "value": "45.2",
+      "type": "dimension",
+      "x": 407.1,
+      "y": 377.7,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 408.0,
+      "y": 494.2,
+      "orient": "h"
+    },
+    {
+      "raw": "0,5x45°",
+      "value": "0,5x45°",
+      "type": "annotation",
+      "x": 407.1,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0087",
+      "value": "PART No. 0087",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  SHAFT-388",
+      "value": "TITLE  SHAFT-388",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SUS304",
+      "value": "MAT  SUS304",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:1",
+      "value": "SCALE 1:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-04-26",
+      "value": "DATE 2026-04-26",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN MJ.CHOI",
+      "value": "DRAWN MJ.CHOI",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 1",
+      "value": "REV 1",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "109.5",
+    "57.6",
+    "40.8",
+    "67.2",
+    "15.6",
+    "49.7",
+    "68.6",
+    "40.5",
+    "94.2",
+    "83.5",
+    "45.2"
+  ],
+  "n_dimensions": 11
+}

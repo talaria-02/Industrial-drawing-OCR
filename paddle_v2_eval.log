@@ -1,0 +1,530 @@
+C:\Users\zxc20\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.1) or chardet (7.4.3)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+C:\Users\zxc20\OneDrive\¹ÙÅÁ È­¸é\ÇöÀå¹Ì·¯Çü\paddle_rotate_merge.py:40: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  return PaddleOCR(
+Á¤º¸: Á¦°øµÈ ÆÐÅÏ¿¡ ÇØ´çµÇ´Â ÆÄÀÏÀ» Ã£Áö ¸øÇß½À´Ï´Ù.
+C:\Users\zxc20\AppData\Local\Programs\Python\Python311\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-OCRv5_mobile_rec`.[0m
+Ã¤Á¡ ´ë»ó: 100Àå (3ÆÐ½º + ¿µ¿ªºÐ¸®)
+    pass h: 25°³
+    pass v_cw: 17°³
+    pass v_ccw: 9°³
+    º´ÇÕ ÈÄ: 26°³
+  [1/100] drawing_0000.png gt=14 det=20/19 hit=12/12
+    pass h: 23°³
+    pass v_cw: 21°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 30°³
+  [2/100] drawing_0001.png gt=10 det=15/10 hit=9/9
+    pass h: 21°³
+    pass v_cw: 19°³
+    pass v_ccw: 12°³
+    º´ÇÕ ÈÄ: 24°³
+  [3/100] drawing_0002.png gt=14 det=18/13 hit=11/11
+    pass h: 32°³
+    pass v_cw: 25°³
+    pass v_ccw: 22°³
+    º´ÇÕ ÈÄ: 38°³
+  [4/100] drawing_0003.png gt=15 det=21/16 hit=13/13
+    pass h: 30°³
+    pass v_cw: 30°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 36°³
+  [5/100] drawing_0004.png gt=19 det=26/21 hit=18/18
+    pass h: 34°³
+    pass v_cw: 25°³
+    pass v_ccw: 27°³
+    º´ÇÕ ÈÄ: 42°³
+  [6/100] drawing_0005.png gt=17 det=24/19 hit=13/13
+    pass h: 21°³
+    pass v_cw: 22°³
+    pass v_ccw: 18°³
+    º´ÇÕ ÈÄ: 26°³
+  [7/100] drawing_0006.png gt=12 det=16/16 hit=10/10
+    pass h: 25°³
+    pass v_cw: 27°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 41°³
+  [8/100] drawing_0007.png gt=15 det=25/20 hit=14/14
+    pass h: 31°³
+    pass v_cw: 26°³
+    pass v_ccw: 18°³
+    º´ÇÕ ÈÄ: 36°³
+  [9/100] drawing_0008.png gt=14 det=25/24 hit=12/12
+    pass h: 30°³
+    pass v_cw: 29°³
+    pass v_ccw: 25°³
+    º´ÇÕ ÈÄ: 34°³
+  [10/100] drawing_0009.png gt=17 det=23/18 hit=17/17
+    pass h: 35°³
+    pass v_cw: 28°³
+    pass v_ccw: 24°³
+    º´ÇÕ ÈÄ: 40°³
+  [11/100] drawing_0010.png gt=17 det=26/21 hit=15/15
+    pass h: 18°³
+    pass v_cw: 17°³
+    pass v_ccw: 9°³
+    º´ÇÕ ÈÄ: 21°³
+  [12/100] drawing_0011.png gt=10 det=17/11 hit=9/9
+    pass h: 27°³
+    pass v_cw: 19°³
+    pass v_ccw: 10°³
+    º´ÇÕ ÈÄ: 29°³
+  [13/100] drawing_0012.png gt=13 det=21/20 hit=12/12
+    pass h: 19°³
+    pass v_cw: 17°³
+    pass v_ccw: 8°³
+    º´ÇÕ ÈÄ: 23°³
+  [14/100] drawing_0013.png gt=13 det=18/13 hit=11/11
+    pass h: 20°³
+    pass v_cw: 19°³
+    pass v_ccw: 11°³
+    º´ÇÕ ÈÄ: 21°³
+  [15/100] drawing_0014.png gt=11 det=17/11 hit=11/11
+    pass h: 20°³
+    pass v_cw: 19°³
+    pass v_ccw: 8°³
+    º´ÇÕ ÈÄ: 20°³
+  [16/100] drawing_0015.png gt=11 det=17/17 hit=9/9
+    pass h: 25°³
+    pass v_cw: 24°³
+    pass v_ccw: 14°³
+    º´ÇÕ ÈÄ: 31°³
+  [17/100] drawing_0016.png gt=14 det=18/12 hit=10/10
+    pass h: 32°³
+    pass v_cw: 29°³
+    pass v_ccw: 22°³
+    º´ÇÕ ÈÄ: 38°³
+  [18/100] drawing_0017.png gt=19 det=26/21 hit=17/17
+    pass h: 21°³
+    pass v_cw: 24°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 27°³
+  [19/100] drawing_0018.png gt=14 det=21/20 hit=13/13
+    pass h: 27°³
+    pass v_cw: 24°³
+    pass v_ccw: 14°³
+    º´ÇÕ ÈÄ: 30°³
+  [20/100] drawing_0019.png gt=14 det=21/16 hit=14/14
+    pass h: 26°³
+    pass v_cw: 20°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 35°³
+  [21/100] drawing_0020.png gt=10 det=16/10 hit=10/10
+    pass h: 31°³
+    pass v_cw: 28°³
+    pass v_ccw: 26°³
+    º´ÇÕ ÈÄ: 35°³
+  [22/100] drawing_0021.png gt=20 det=29/27 hit=20/20
+    pass h: 30°³
+    pass v_cw: 28°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 39°³
+  [23/100] drawing_0022.png gt=17 det=28/22 hit=16/16
+    pass h: 23°³
+    pass v_cw: 22°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 27°³
+  [24/100] drawing_0023.png gt=14 det=20/14 hit=13/13
+    pass h: 29°³
+    pass v_cw: 32°³
+    pass v_ccw: 21°³
+    º´ÇÕ ÈÄ: 34°³
+  [25/100] drawing_0024.png gt=20 det=27/27 hit=20/20
+    pass h: 20°³
+    pass v_cw: 22°³
+    pass v_ccw: 20°³
+    º´ÇÕ ÈÄ: 25°³
+  [26/100] drawing_0025.png gt=16 det=22/17 hit=14/14
+    pass h: 24°³
+    pass v_cw: 23°³
+    pass v_ccw: 15°³
+    º´ÇÕ ÈÄ: 28°³
+  [27/100] drawing_0026.png gt=14 det=22/21 hit=12/12
+    pass h: 25°³
+    pass v_cw: 18°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 29°³
+  [28/100] drawing_0027.png gt=13 det=20/20 hit=10/10
+    pass h: 39°³
+    pass v_cw: 29°³
+    pass v_ccw: 28°³
+    º´ÇÕ ÈÄ: 46°³
+  [29/100] drawing_0028.png gt=17 det=28/23 hit=17/17
+    pass h: 28°³
+    pass v_cw: 25°³
+    pass v_ccw: 13°³
+    º´ÇÕ ÈÄ: 29°³
+  [30/100] drawing_0029.png gt=13 det=19/18 hit=12/12
+    pass h: 24°³
+    pass v_cw: 22°³
+    pass v_ccw: 18°³
+    º´ÇÕ ÈÄ: 29°³
+  [31/100] drawing_0030.png gt=14 det=21/19 hit=13/13
+    pass h: 29°³
+    pass v_cw: 22°³
+    pass v_ccw: 13°³
+    º´ÇÕ ÈÄ: 33°³
+  [32/100] drawing_0031.png gt=13 det=19/14 hit=13/13
+    pass h: 25°³
+    pass v_cw: 21°³
+    pass v_ccw: 23°³
+    º´ÇÕ ÈÄ: 30°³
+  [33/100] drawing_0032.png gt=10 det=19/13 hit=9/9
+    pass h: 36°³
+    pass v_cw: 26°³
+    pass v_ccw: 11°³
+    º´ÇÕ ÈÄ: 41°³
+  [34/100] drawing_0033.png gt=17 det=28/23 hit=15/15
+    pass h: 23°³
+    pass v_cw: 22°³
+    pass v_ccw: 14°³
+    º´ÇÕ ÈÄ: 27°³
+  [35/100] drawing_0034.png gt=16 det=24/21 hit=16/16
+    pass h: 30°³
+    pass v_cw: 25°³
+    pass v_ccw: 21°³
+    º´ÇÕ ÈÄ: 32°³
+  [36/100] drawing_0035.png gt=18 det=25/23 hit=15/15
+    pass h: 21°³
+    pass v_cw: 20°³
+    pass v_ccw: 14°³
+    º´ÇÕ ÈÄ: 25°³
+  [37/100] drawing_0036.png gt=11 det=18/16 hit=11/11
+    pass h: 30°³
+    pass v_cw: 24°³
+    pass v_ccw: 21°³
+    º´ÇÕ ÈÄ: 36°³
+  [38/100] drawing_0037.png gt=14 det=24/18 hit=13/13
+    pass h: 29°³
+    pass v_cw: 21°³
+    pass v_ccw: 20°³
+    º´ÇÕ ÈÄ: 31°³
+  [39/100] drawing_0038.png gt=13 det=20/15 hit=13/13
+    pass h: 29°³
+    pass v_cw: 22°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 30°³
+  [40/100] drawing_0039.png gt=14 det=21/19 hit=14/14
+    pass h: 30°³
+    pass v_cw: 24°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 33°³
+  [41/100] drawing_0040.png gt=18 det=25/23 hit=16/16
+    pass h: 26°³
+    pass v_cw: 24°³
+    pass v_ccw: 15°³
+    º´ÇÕ ÈÄ: 29°³
+  [42/100] drawing_0041.png gt=13 det=20/15 hit=13/13
+    pass h: 31°³
+    pass v_cw: 29°³
+    pass v_ccw: 22°³
+    º´ÇÕ ÈÄ: 37°³
+  [43/100] drawing_0042.png gt=19 det=26/21 hit=19/19
+    pass h: 21°³
+    pass v_cw: 24°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 30°³
+  [44/100] drawing_0043.png gt=13 det=22/17 hit=9/9
+    pass h: 21°³
+    pass v_cw: 22°³
+    pass v_ccw: 18°³
+    º´ÇÕ ÈÄ: 27°³
+  [45/100] drawing_0044.png gt=17 det=22/17 hit=13/13
+    pass h: 20°³
+    pass v_cw: 18°³
+    pass v_ccw: 13°³
+    º´ÇÕ ÈÄ: 24°³
+  [46/100] drawing_0045.png gt=12 det=18/16 hit=12/12
+    pass h: 20°³
+    pass v_cw: 19°³
+    pass v_ccw: 11°³
+    º´ÇÕ ÈÄ: 24°³
+  [47/100] drawing_0046.png gt=11 det=16/15 hit=11/11
+    pass h: 36°³
+    pass v_cw: 27°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 37°³
+  [48/100] drawing_0047.png gt=18 det=26/24 hit=18/18
+    pass h: 25°³
+    pass v_cw: 21°³
+    pass v_ccw: 20°³
+    º´ÇÕ ÈÄ: 25°³
+  [49/100] drawing_0048.png gt=13 det=20/14 hit=12/12
+    pass h: 31°³
+    pass v_cw: 28°³
+    pass v_ccw: 24°³
+    º´ÇÕ ÈÄ: 38°³
+  [50/100] drawing_0049.png gt=19 det=26/25 hit=17/17
+    pass h: 19°³
+    pass v_cw: 22°³
+    pass v_ccw: 12°³
+    º´ÇÕ ÈÄ: 26°³
+  [51/100] drawing_0050.png gt=15 det=22/17 hit=12/12
+    pass h: 29°³
+    pass v_cw: 24°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 28°³
+  [52/100] drawing_0051.png gt=15 det=20/20 hit=13/13
+    pass h: 25°³
+    pass v_cw: 23°³
+    pass v_ccw: 23°³
+    º´ÇÕ ÈÄ: 33°³
+  [53/100] drawing_0052.png gt=12 det=21/16 hit=10/10
+    pass h: 29°³
+    pass v_cw: 27°³
+    pass v_ccw: 15°³
+    º´ÇÕ ÈÄ: 34°³
+  [54/100] drawing_0053.png gt=16 det=25/22 hit=14/14
+    pass h: 22°³
+    pass v_cw: 23°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 28°³
+  [55/100] drawing_0054.png gt=16 det=20/19 hit=13/13
+    pass h: 18°³
+    pass v_cw: 23°³
+    pass v_ccw: 13°³
+    º´ÇÕ ÈÄ: 24°³
+  [56/100] drawing_0055.png gt=12 det=20/14 hit=11/11
+    pass h: 33°³
+    pass v_cw: 29°³
+    pass v_ccw: 22°³
+    º´ÇÕ ÈÄ: 36°³
+  [57/100] drawing_0056.png gt=18 det=29/24 hit=16/16
+    pass h: 20°³
+    pass v_cw: 24°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 27°³
+  [58/100] drawing_0057.png gt=13 det=20/20 hit=13/13
+    pass h: 23°³
+    pass v_cw: 23°³
+    pass v_ccw: 20°³
+    º´ÇÕ ÈÄ: 28°³
+  [59/100] drawing_0058.png gt=12 det=18/18 hit=12/12
+    pass h: 19°³
+    pass v_cw: 20°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 23°³
+  [60/100] drawing_0059.png gt=11 det=19/18 hit=10/10
+    pass h: 22°³
+    pass v_cw: 20°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 26°³
+  [61/100] drawing_0060.png gt=11 det=18/17 hit=9/9
+    pass h: 17°³
+    pass v_cw: 17°³
+    pass v_ccw: 15°³
+    º´ÇÕ ÈÄ: 23°³
+  [62/100] drawing_0061.png gt=13 det=17/16 hit=11/11
+    pass h: 22°³
+    pass v_cw: 23°³
+    pass v_ccw: 14°³
+    º´ÇÕ ÈÄ: 28°³
+  [63/100] drawing_0062.png gt=12 det=18/13 hit=11/11
+    pass h: 27°³
+    pass v_cw: 23°³
+    pass v_ccw: 24°³
+    º´ÇÕ ÈÄ: 30°³
+  [64/100] drawing_0063.png gt=17 det=23/21 hit=16/16
+    pass h: 24°³
+    pass v_cw: 26°³
+    pass v_ccw: 13°³
+    º´ÇÕ ÈÄ: 30°³
+  [65/100] drawing_0064.png gt=18 det=23/22 hit=17/17
+    pass h: 25°³
+    pass v_cw: 20°³
+    pass v_ccw: 14°³
+    º´ÇÕ ÈÄ: 26°³
+  [66/100] drawing_0065.png gt=12 det=19/18 hit=12/12
+    pass h: 25°³
+    pass v_cw: 25°³
+    pass v_ccw: 21°³
+    º´ÇÕ ÈÄ: 32°³
+  [67/100] drawing_0066.png gt=13 det=22/16 hit=13/13
+    pass h: 21°³
+    pass v_cw: 19°³
+    pass v_ccw: 15°³
+    º´ÇÕ ÈÄ: 21°³
+  [68/100] drawing_0067.png gt=11 det=17/17 hit=10/10
+    pass h: 26°³
+    pass v_cw: 29°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 31°³
+  [69/100] drawing_0068.png gt=15 det=24/19 hit=12/12
+    pass h: 31°³
+    pass v_cw: 26°³
+    pass v_ccw: 18°³
+    º´ÇÕ ÈÄ: 33°³
+  [70/100] drawing_0069.png gt=17 det=23/23 hit=16/16
+    pass h: 20°³
+    pass v_cw: 19°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 22°³
+  [71/100] drawing_0070.png gt=15 det=17/17 hit=12/12
+    pass h: 27°³
+    pass v_cw: 19°³
+    pass v_ccw: 10°³
+    º´ÇÕ ÈÄ: 31°³
+  [72/100] drawing_0071.png gt=15 det=22/20 hit=11/11
+    pass h: 30°³
+    pass v_cw: 21°³
+    pass v_ccw: 17°³
+    º´ÇÕ ÈÄ: 34°³
+  [73/100] drawing_0072.png gt=14 det=20/15 hit=12/12
+    pass h: 18°³
+    pass v_cw: 21°³
+    pass v_ccw: 14°³
+    º´ÇÕ ÈÄ: 22°³
+  [74/100] drawing_0073.png gt=13 det=18/17 hit=12/12
+    pass h: 29°³
+    pass v_cw: 26°³
+    pass v_ccw: 16°³
+    º´ÇÕ ÈÄ: 33°³
+  [75/100] drawing_0074.png gt=17 det=26/25 hit=17/17
+    pass h: 22°³
+    pass v_cw: 20°³
+    pass v_ccw: 13°³
+    º´ÇÕ ÈÄ: 23°³
+  [76/100] drawing_0075.png gt=12 det=17/16 hit=12/12
+    pass h: 20°³
+    pass v_cw: 20°³
+    pass v_ccw: 13°³
+    º´ÇÕ ÈÄ: 25°³
+  [77/100] drawing_0076.png gt=11 det=18/16 hit=11/11
+    pass h: 27°³
+    pass v_cw: 25°³
+    pass v_ccw: 19°³
+    º´ÇÕ ÈÄ: 32°³
+  [78/100] drawing_0077.png gt=14 det=21/16 hit=14/14
+    pass h: 39°³
+    pass v_cw: 33°³
+    pass v_ccw: 28°³
+    º´ÇÕ ÈÄ: 44°³
+  [79/100] drawing_0078.png gt=18 det=33/31 hit=17/17
+    pass h: 22°³
+    pass v_cw: 22°³
+    pass v_ccw: 15°³
+    º´ÇÕ ÈÄ: 26°³
+  [80/100] drawing_0079.png gt=13 det=19/17 hit=13/13
+    pass h: 25°³
+    pass v_cw: 23°³
+    pass v_ccw: 18°³
+    º´ÇÕ ÈÄ: 31°³
+  [81/100] drawing_0080.png gt=17 det=24/23 hit=15/15
+    pass h: 26°³
+    pass v_cw: 23°³
+    pass v_ccw: 14°³
+    º´ÇÕ ÈÄ: 32°³
+  [82/100] drawing_0081.png gt=21 det=28/26 hit=17/17
+    pass h: 27°³
+    pass v_cw: 24°³
+    pass v_ccw: 20°³
+    º´ÇÕ ÈÄ: 33°³
+  [83/100] drawing_0082.png gt=15 det=23/22 hit=13/13
+    pass h: 28°³
+    pass v_cw: 22°³
+    pass v_ccw: 20°³
+    º´ÇÕ ÈÄ: 29°³
+  [84/100] drawing_0083.png gt=12 det=22/17 hit=12/12
+    pass h: 22°³
+    pass v_cw: 22°³
+    pass v_ccw: 16°³
+    º´ÇÕ ÈÄ: 24°³
+  [85/100] drawing_0084.png gt=13 det=21/19 hit=13/13
+    pass h: 33°³
+    pass v_cw: 27°³
+    pass v_ccw: 26°³
+    º´ÇÕ ÈÄ: 38°³
+  [86/100] drawing_0085.png gt=16 det=23/18 hit=15/15
+    pass h: 19°³
+    pass v_cw: 20°³
+    pass v_ccw: 11°³
+    º´ÇÕ ÈÄ: 23°³
+  [87/100] drawing_0086.png gt=13 det=19/17 hit=10/10
+    pass h: 23°³
+    pass v_cw: 22°³
+    pass v_ccw: 18°³
+    º´ÇÕ ÈÄ: 25°³
+  [88/100] drawing_0087.png gt=11 det=19/13 hit=9/9
+    pass h: 21°³
+    pass v_cw: 13°³
+    pass v_ccw: 15°³
+    º´ÇÕ ÈÄ: 24°³
+  [89/100] drawing_0088.png gt=10 det=14/9 hit=8/8
+    pass h: 23°³
+    pass v_cw: 21°³
+    pass v_ccw: 20°³
+    º´ÇÕ ÈÄ: 26°³
+  [90/100] drawing_0089.png gt=13 det=19/19 hit=12/12
+    pass h: 19°³
+    pass v_cw: 23°³
+    pass v_ccw: 11°³
+    º´ÇÕ ÈÄ: 27°³
+  [91/100] drawing_0090.png gt=17 det=21/20 hit=15/15
+    pass h: 29°³
+    pass v_cw: 20°³
+    pass v_ccw: 22°³
+    º´ÇÕ ÈÄ: 33°³
+  [92/100] drawing_0091.png gt=10 det=18/12 hit=9/9
+    pass h: 32°³
+    pass v_cw: 22°³
+    pass v_ccw: 25°³
+    º´ÇÕ ÈÄ: 43°³
+  [93/100] drawing_0092.png gt=14 det=26/20 hit=12/12
+    pass h: 28°³
+    pass v_cw: 22°³
+    pass v_ccw: 11°³
+    º´ÇÕ ÈÄ: 30°³
+  [94/100] drawing_0093.png gt=11 det=18/17 hit=11/11
+    pass h: 23°³
+    pass v_cw: 24°³
+    pass v_ccw: 15°³
+    º´ÇÕ ÈÄ: 28°³
+  [95/100] drawing_0094.png gt=15 det=23/18 hit=13/13
+    pass h: 21°³
+    pass v_cw: 23°³
+    pass v_ccw: 14°³
+    º´ÇÕ ÈÄ: 27°³
+  [96/100] drawing_0095.png gt=16 det=21/19 hit=14/14
+    pass h: 24°³
+    pass v_cw: 18°³
+    pass v_ccw: 13°³
+    º´ÇÕ ÈÄ: 27°³
+  [97/100] drawing_0096.png gt=15 det=19/14 hit=12/12
+    pass h: 24°³
+    pass v_cw: 24°³
+    pass v_ccw: 20°³
+    º´ÇÕ ÈÄ: 30°³
+  [98/100] drawing_0097.png gt=13 det=22/16 hit=12/12
+    pass h: 26°³
+    pass v_cw: 21°³
+    pass v_ccw: 18°³
+    º´ÇÕ ÈÄ: 33°³
+  [99/100] drawing_0098.png gt=11 det=20/15 hit=8/8
+    pass h: 22°³
+    pass v_cw: 22°³
+    pass v_ccw: 16°³
+    º´ÇÕ ÈÄ: 24°³
+  [100/100] drawing_0099.png gt=12 det=18/17 hit=11/11
+
+==============================================================
+  PaddleOCR v2 (3ÆÐ½º È¸Àü-º´ÇÕ) °á°ú
+==============================================================
+  Á¤´ä Ä¡¼ö ÃÑ°è     : 1426
+  recall (ÀüÃ¼°ËÃâ)  :  90.4%  (1289/1426)
+  precision (ÀüÃ¼)   :  60.4%  (1289/2133)
+  precision (drawing¸¸):  71.0%  (1289/1816)
+  recall (drawing¸¸) :  90.4%  (1289/1426)
+
+  [³ëÀÌÁî ·¹º§º° recall(ÀüÃ¼)]
+      clean:  87.8%  (208/237)
+     slight:  92.6%  (435/470)
+      noisy:  90.9%  (408/449)
+      heavy:  88.1%  (238/270)
+==============================================================

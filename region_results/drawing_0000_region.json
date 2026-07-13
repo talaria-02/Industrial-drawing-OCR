@@ -1,0 +1,19 @@
+{
+  "image": "drawing_0000.png",
+  "frame": [
+    12,
+    16,
+    914,
+    1213
+  ],
+  "frame_found": true,
+  "titleblock": [
+    430,
+    1054,
+    911,
+    1213
+  ],
+  "n_meta": 0,
+  "n_drawing": 0,
+  "detections": []
+}

@@ -1,0 +1,320 @@
+{
+  "id": "0018",
+  "image": "output_v5\\images\\drawing_0018.png",
+  "shapes": [
+    "l_shape",
+    "t_shape",
+    "l_shape",
+    "rect_hole",
+    "hexagon"
+  ],
+  "n_shapes": 5,
+  "noise": "heavy",
+  "titleblock": {
+    "title": "COVER-830",
+    "material": "AL6061",
+    "scale": "1:1",
+    "date": "2026-06-28",
+    "drawn": "JH.KIM",
+    "rev": "C"
+  },
+  "texts": [
+    {
+      "raw": "99,2±0,05",
+      "value": "99.2",
+      "type": "dimension_tol",
+      "x": 409.6,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "71 j6",
+      "value": "71",
+      "type": "dimension_fit",
+      "x": 334.0,
+      "y": 428.2,
+      "orient": "v"
+    },
+    {
+      "raw": "31 k6",
+      "value": "31",
+      "type": "dimension_fit",
+      "x": 443.7,
+      "y": 446.7,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 401.8,
+      "y": 481.7,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 465.2,
+      "y": 446.4,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 479.7,
+      "orient": "h"
+    },
+    {
+      "raw": "84,7±0.1",
+      "value": "84.7",
+      "type": "dimension_tol",
+      "x": 402.4,
+      "y": 662.5,
+      "orient": "h"
+    },
+    {
+      "raw": "106.5±0,15",
+      "value": "106.5",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 674.6,
+      "orient": "v"
+    },
+    {
+      "raw": "28,1±0,15",
+      "value": "28.1",
+      "type": "dimension_tol",
+      "x": 402.4,
+      "y": 606.3,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 402.4,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "94.2",
+      "value": "94.2",
+      "type": "dimension",
+      "x": 109.1,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "63.3±0,15",
+      "value": "63.3",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 424.3,
+      "orient": "v"
+    },
+    {
+      "raw": "32,3",
+      "value": "32.3",
+      "type": "dimension",
+      "x": 140.0,
+      "y": 439.0,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 109.9,
+      "y": 474.0,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽▽",
+      "value": "▽▽▽",
+      "type": "symbol",
+      "x": 162.2,
+      "y": 418.5,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 472.0,
+      "orient": "h"
+    },
+    {
+      "raw": "55,1+0,1",
+      "value": "55.1",
+      "type": "dimension_tol",
+      "x": 89.5,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "35,7",
+      "value": "35.7",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 181.8,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø7,2",
+      "value": "7.2",
+      "type": "diameter",
+      "x": 110.8,
+      "y": 201.0,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 89.5,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 215.7,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø70±0,2",
+      "value": "70",
+      "type": "diameter",
+      "x": 103.8,
+      "y": 651.6,
+      "orient": "h"
+    },
+    {
+      "raw": "60.6",
+      "value": "60.6",
+      "type": "dimension",
+      "x": 40.8,
+      "y": 674.6,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 103.0,
+      "y": 745.9,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽▽",
+      "value": "▽▽▽",
+      "type": "symbol",
+      "x": 151.6,
+      "y": 672.7,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 103.8,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 743.9,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0018",
+      "value": "PART No. 0018",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  COVER-830",
+      "value": "TITLE  COVER-830",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  AL6061",
+      "value": "MAT  AL6061",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:1",
+      "value": "SCALE 1:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-06-28",
+      "value": "DATE 2026-06-28",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN JH.KIM",
+      "value": "DRAWN JH.KIM",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV C",
+      "value": "REV C",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "99.2",
+    "71",
+    "31",
+    "84.7",
+    "106.5",
+    "28.1",
+    "94.2",
+    "63.3",
+    "32.3",
+    "55.1",
+    "35.7",
+    "7.2",
+    "70",
+    "60.6"
+  ],
+  "n_dimensions": 14
+}

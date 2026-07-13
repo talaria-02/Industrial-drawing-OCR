@@ -1,0 +1,155 @@
+C:\Users\zxc20\AppData\Local\Programs\Python\Python311\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.1) or chardet (7.4.3)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+C:\Users\zxc20\OneDrive\¹ÙÅÁ È­¸é\ÇöÀå¹Ì·¯Çü\paddle_rotate_merge.py:41: UserWarning: `lang` and `ocr_version` will be ignored when model names or model directories are not `None`.
+  return PaddleOCR(
+Á¤º¸: Á¦°øµÈ ÆĞÅÏ¿¡ ÇØ´çµÇ´Â ÆÄÀÏÀ» Ã£Áö ¸øÇß½À´Ï´Ù.
+C:\Users\zxc20\AppData\Local\Programs\Python\Python311\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_det', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-OCRv5_mobile_det`.[0m
+[32mCreating model: ('PP-OCRv5_mobile_rec', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\zxc20\.paddlex\official_models\PP-OCRv5_mobile_rec`.[0m
+´ë»ó: 11Àå (3ÆĞ½º È¸Àü-º´ÇÕ)
+
+--- 06.png ---
+      (¼± ¿ÀÀÎ½Ä 29°³ Á¦°Å)
+    pass h: 42°³
+      (¼± ¿ÀÀÎ½Ä 15°³ Á¦°Å)
+    pass v_cw: 38°³
+      (¼± ¿ÀÀÎ½Ä 17°³ Á¦°Å)
+    pass v_ccw: 35°³
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass a+45: 36°³
+      (¼± ¿ÀÀÎ½Ä 5°³ Á¦°Å)
+    pass a-45: 31°³
+    º´ÇÕ ÈÄ: 50°³
+    ÀúÀå: 06_v2.png
+
+--- 17.png ---
+      (¼± ¿ÀÀÎ½Ä 6°³ Á¦°Å)
+    pass h: 57°³
+      (¼± ¿ÀÀÎ½Ä 39°³ Á¦°Å)
+    pass v_cw: 40°³
+      (¼± ¿ÀÀÎ½Ä 47°³ Á¦°Å)
+    pass v_ccw: 39°³
+      (¼± ¿ÀÀÎ½Ä 8°³ Á¦°Å)
+    pass a+45: 41°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass a-45: 41°³
+    º´ÇÕ ÈÄ: 63°³
+    ÀúÀå: 17_v2.png
+
+--- BM_part.jpg ---
+    pass h: 48°³
+      (¼± ¿ÀÀÎ½Ä 3°³ Á¦°Å)
+    pass v_cw: 42°³
+      (¼± ¿ÀÀÎ½Ä 7°³ Á¦°Å)
+    pass v_ccw: 30°³
+    pass a+45: 32°³
+    pass a-45: 28°³
+    º´ÇÕ ÈÄ: 63°³
+    ÀúÀå: BM_part_v2.png
+
+--- cadA.png ---
+[33mResized image size (4961x3508) exceeds max_side_limit of 4000. Resizing to fit within limit.[0m
+      (¼± ¿ÀÀÎ½Ä 3°³ Á¦°Å)
+    pass h: 61°³
+[33mResized image size (3508x4961) exceeds max_side_limit of 4000. Resizing to fit within limit.[0m
+      (¼± ¿ÀÀÎ½Ä 4°³ Á¦°Å)
+    pass v_cw: 45°³
+[33mResized image size (3508x4961) exceeds max_side_limit of 4000. Resizing to fit within limit.[0m
+      (¼± ¿ÀÀÎ½Ä 4°³ Á¦°Å)
+    pass v_ccw: 44°³
+[33mResized image size (5988x5988) exceeds max_side_limit of 4000. Resizing to fit within limit.[0m
+      (¼± ¿ÀÀÎ½Ä 5°³ Á¦°Å)
+    pass a+45: 46°³
+[33mResized image size (5988x5988) exceeds max_side_limit of 4000. Resizing to fit within limit.[0m
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass a-45: 47°³
+    º´ÇÕ ÈÄ: 71°³
+    ÀúÀå: cadA_v2.png
+
+--- Candle_holder.jpg ---
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass h: 44°³
+    pass v_cw: 43°³
+    pass v_ccw: 42°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass a+45: 36°³
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass a-45: 41°³
+    º´ÇÕ ÈÄ: 49°³
+    ÀúÀå: Candle_holder_v2.png
+
+--- Gripper.jpg ---
+    pass h: 61°³
+      (¼± ¿ÀÀÎ½Ä 4°³ Á¦°Å)
+    pass v_cw: 45°³
+    pass v_ccw: 45°³
+    pass a+45: 31°³
+    pass a-45: 26°³
+    º´ÇÕ ÈÄ: 70°³
+    ÀúÀå: Gripper_v2.png
+
+--- halter.jpg ---
+      (¼± ¿ÀÀÎ½Ä 3°³ Á¦°Å)
+    pass h: 68°³
+      (¼± ¿ÀÀÎ½Ä 3°³ Á¦°Å)
+    pass v_cw: 44°³
+    pass v_ccw: 47°³
+    pass a+45: 31°³
+    pass a-45: 38°³
+    º´ÇÕ ÈÄ: 69°³
+    ÀúÀå: halter_v2.png
+
+--- LIU0010.jpg ---
+      (¼± ¿ÀÀÎ½Ä 5°³ Á¦°Å)
+    pass h: 58°³
+      (¼± ¿ÀÀÎ½Ä 3°³ Á¦°Å)
+    pass v_cw: 58°³
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass v_ccw: 59°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass a+45: 50°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass a-45: 51°³
+    º´ÇÕ ÈÄ: 74°³
+    ÀúÀå: LIU0010_v2.png
+
+--- photoA.jpg ---
+    pass h: 18°³
+    pass v_cw: 11°³
+    pass v_ccw: 11°³
+    pass a+45: 8°³
+    pass a-45: 8°³
+    º´ÇÕ ÈÄ: 20°³
+    ÀúÀå: photoA_v2.png
+
+--- scanA.png ---
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass h: 16°³
+    pass v_cw: 21°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass v_ccw: 18°³
+      (¼± ¿ÀÀÎ½Ä 2°³ Á¦°Å)
+    pass a+45: 15°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass a-45: 18°³
+    º´ÇÕ ÈÄ: 29°³
+    ÀúÀå: scanA_v2.png
+
+--- scanB.png ---
+    pass h: 16°³
+    pass v_cw: 23°³
+    pass v_ccw: 15°³
+      (¼± ¿ÀÀÎ½Ä 1°³ Á¦°Å)
+    pass a+45: 17°³
+      (¼± ¿ÀÀÎ½Ä 4°³ Á¦°Å)
+    pass a-45: 16°³
+    º´ÇÕ ÈÄ: 25°³
+    ÀúÀå: scanB_v2.png
+
+¿Ï·á.
+REPRANGDONE

@@ -1,0 +1,332 @@
+{
+  "id": "0056",
+  "image": "output_v5\\images\\drawing_0056.png",
+  "shapes": [
+    "rect_2holes",
+    "stepped",
+    "rect_2holes",
+    "rect_2holes",
+    "t_shape"
+  ],
+  "n_shapes": 5,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "PLATE-497",
+    "material": "AL6061",
+    "scale": "1:5",
+    "date": "2026-10-16",
+    "drawn": "MJ.CHOI",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "28,7",
+      "value": "28.7",
+      "type": "dimension",
+      "x": 388.8,
+      "y": 632.1,
+      "orient": "h"
+    },
+    {
+      "raw": "63,7",
+      "value": "63.7",
+      "type": "dimension",
+      "x": 391.9,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "67,2+0,1",
+      "value": "67.2",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 654.9,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø7,8",
+      "value": "7.8",
+      "type": "diameter",
+      "x": 422.9,
+      "y": 672.7,
+      "orient": "h"
+    },
+    {
+      "raw": "2x45°",
+      "value": "2x45°",
+      "type": "annotation",
+      "x": 391.9,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 704.5,
+      "orient": "h"
+    },
+    {
+      "raw": "41,2 f7",
+      "value": "41.2",
+      "type": "dimension_fit",
+      "x": 82.6,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "50,9+0,1",
+      "value": "50.9",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 646.8,
+      "orient": "v"
+    },
+    {
+      "raw": "18,9",
+      "value": "18.9",
+      "type": "dimension",
+      "x": 64.3,
+      "y": 630.8,
+      "orient": "v"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 80.7,
+      "y": 690.2,
+      "orient": "h"
+    },
+    {
+      "raw": "2x45°",
+      "value": "2x45°",
+      "type": "annotation",
+      "x": 82.6,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "69,5±0,15",
+      "value": "69.5",
+      "type": "dimension_tol",
+      "x": 130.4,
+      "y": 420.3,
+      "orient": "h"
+    },
+    {
+      "raw": "140.9",
+      "value": "140.9",
+      "type": "dimension",
+      "x": 132.4,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "121,7",
+      "value": "121.7",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 453.5,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø18,2±0,05",
+      "value": "18.2",
+      "type": "diameter",
+      "x": 195.4,
+      "y": 481.7,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 208.9,
+      "y": 432.6,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 132.4,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "44.4",
+      "value": "44.4",
+      "type": "dimension",
+      "x": 401.3,
+      "y": 419.0,
+      "orient": "h"
+    },
+    {
+      "raw": "80,5±0,05",
+      "value": "80.5",
+      "type": "dimension_tol",
+      "x": 400.2,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "100,8+0,1",
+      "value": "100.8",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 443.1,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø9,1",
+      "value": "9.1",
+      "type": "diameter",
+      "x": 444.6,
+      "y": 462.2,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 446.5,
+      "y": 445.3,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 400.2,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 509.5,
+      "orient": "h"
+    },
+    {
+      "raw": "43,2+0,1",
+      "value": "43.2",
+      "type": "dimension_tol",
+      "x": 381.6,
+      "y": 186.9,
+      "orient": "h"
+    },
+    {
+      "raw": "67.7",
+      "value": "67.7",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 197.8,
+      "orient": "v"
+    },
+    {
+      "raw": "15.2±0,1",
+      "value": "15.2",
+      "type": "dimension_tol",
+      "x": 381.6,
+      "y": 149.0,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 247.7,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0056",
+      "value": "PART No. 0056",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  PLATE-497",
+      "value": "TITLE  PLATE-497",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  AL6061",
+      "value": "MAT  AL6061",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:5",
+      "value": "SCALE 1:5",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-10-16",
+      "value": "DATE 2026-10-16",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN MJ.CHOI",
+      "value": "DRAWN MJ.CHOI",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "28.7",
+    "63.7",
+    "67.2",
+    "7.8",
+    "41.2",
+    "50.9",
+    "18.9",
+    "69.5",
+    "140.9",
+    "121.7",
+    "18.2",
+    "44.4",
+    "80.5",
+    "100.8",
+    "9.1",
+    "43.2",
+    "67.7",
+    "15.2"
+  ],
+  "n_dimensions": 18
+}

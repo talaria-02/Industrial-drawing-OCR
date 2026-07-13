@@ -1,0 +1,289 @@
+{
+  "id": "0070",
+  "image": "output_v5\\images\\drawing_0070.png",
+  "shapes": [
+    "rect_2holes",
+    "t_shape",
+    "t_shape",
+    "rect_hole",
+    "rectangle"
+  ],
+  "n_shapes": 5,
+  "noise": "slight",
+  "titleblock": {
+    "title": "SHAFT-484",
+    "material": "FC250",
+    "scale": "2:1",
+    "date": "2026-05-14",
+    "drawn": "SW.PARK",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "36,4",
+      "value": "36.4",
+      "type": "dimension",
+      "x": 117.8,
+      "y": 193.3,
+      "orient": "h"
+    },
+    {
+      "raw": "109±0,2",
+      "value": "109",
+      "type": "dimension_tol",
+      "x": 116.5,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "106,7",
+      "value": "106.7",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 217.3,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø9+0,1",
+      "value": "9",
+      "type": "diameter",
+      "x": 157.0,
+      "y": 236.3,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 286.7,
+      "orient": "h"
+    },
+    {
+      "raw": "89,6+0,1",
+      "value": "89.6",
+      "type": "dimension_tol",
+      "x": 404.8,
+      "y": 651.7,
+      "orient": "h"
+    },
+    {
+      "raw": "95.1±0,2",
+      "value": "95.1",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 668.9,
+      "orient": "v"
+    },
+    {
+      "raw": "29,4",
+      "value": "29.4",
+      "type": "dimension",
+      "x": 404.8,
+      "y": 606.3,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽▽",
+      "value": "▽▽▽",
+      "type": "symbol",
+      "x": 455.6,
+      "y": 692.2,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 732.4,
+      "orient": "h"
+    },
+    {
+      "raw": "58,3+0,1",
+      "value": "58.3",
+      "type": "dimension_tol",
+      "x": 91.2,
+      "y": 619.9,
+      "orient": "h"
+    },
+    {
+      "raw": "33,4",
+      "value": "33.4",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 638.0,
+      "orient": "v"
+    },
+    {
+      "raw": "22,7",
+      "value": "22.7",
+      "type": "dimension",
+      "x": 91.2,
+      "y": 606.3,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 126.3,
+      "y": 644.3,
+      "orient": "h"
+    },
+    {
+      "raw": "2x45°",
+      "value": "2x45°",
+      "type": "annotation",
+      "x": 91.2,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 670.7,
+      "orient": "h"
+    },
+    {
+      "raw": "129.3±0.1",
+      "value": "129.3",
+      "type": "dimension_tol",
+      "x": 126.7,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "85,2+0,1",
+      "value": "85.2",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 435.3,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø14,8+0,1",
+      "value": "14.8",
+      "type": "diameter",
+      "x": 155.5,
+      "y": 462.1,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 493.9,
+      "orient": "h"
+    },
+    {
+      "raw": "88,1±0,2",
+      "value": "88.1",
+      "type": "dimension_tol",
+      "x": 404.1,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "86.6±0,2",
+      "value": "86.6",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 207.3,
+      "orient": "v"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 454.1,
+      "y": 207.8,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0070",
+      "value": "PART No. 0070",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  SHAFT-484",
+      "value": "TITLE  SHAFT-484",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  FC250",
+      "value": "MAT  FC250",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 2:1",
+      "value": "SCALE 2:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-05-14",
+      "value": "DATE 2026-05-14",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN SW.PARK",
+      "value": "DRAWN SW.PARK",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "36.4",
+    "109",
+    "106.7",
+    "9",
+    "89.6",
+    "95.1",
+    "29.4",
+    "58.3",
+    "33.4",
+    "22.7",
+    "129.3",
+    "85.2",
+    "14.8",
+    "88.1",
+    "86.6"
+  ],
+  "n_dimensions": 15
+}

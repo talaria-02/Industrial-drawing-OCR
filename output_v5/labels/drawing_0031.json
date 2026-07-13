@@ -1,0 +1,286 @@
+{
+  "id": "0031",
+  "image": "output_v5\\images\\drawing_0031.png",
+  "shapes": [
+    "l_shape",
+    "rect_hole",
+    "rect_hole",
+    "rect_2holes"
+  ],
+  "n_shapes": 4,
+  "noise": "noisy",
+  "titleblock": {
+    "title": "BRACKET-319",
+    "material": "SUS304",
+    "scale": "1:1",
+    "date": "2026-04-04",
+    "drawn": "MJ.CHOI",
+    "rev": "A"
+  },
+  "texts": [
+    {
+      "raw": "61.4",
+      "value": "61.4",
+      "type": "dimension",
+      "x": 390.7,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "67,9",
+      "value": "67.9",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 655.3,
+      "orient": "v"
+    },
+    {
+      "raw": "22+0,1",
+      "value": "22",
+      "type": "dimension_tol",
+      "x": 410.4,
+      "y": 672.2,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 383.8,
+      "y": 707.2,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 705.2,
+      "orient": "h"
+    },
+    {
+      "raw": "63,4",
+      "value": "63.4",
+      "type": "dimension",
+      "x": 93.7,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "46.6±0,2",
+      "value": "46.6",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 644.6,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø10,3±0.1",
+      "value": "10.3",
+      "type": "diameter",
+      "x": 118.0,
+      "y": 666.9,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 96.0,
+      "y": 685.9,
+      "orient": "h"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 131.4,
+      "y": 648.0,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 683.9,
+      "orient": "h"
+    },
+    {
+      "raw": "103.4",
+      "value": "103.4",
+      "type": "dimension",
+      "x": 113.7,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "55,7±0,05",
+      "value": "55.7",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 420.5,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø12.4 H7",
+      "value": "12.4",
+      "type": "dimension_fit",
+      "x": 140.1,
+      "y": 444.9,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 130.7,
+      "y": 466.4,
+      "orient": "h"
+    },
+    {
+      "raw": "2x45°",
+      "value": "2x45°",
+      "type": "annotation",
+      "x": 113.7,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 464.4,
+      "orient": "h"
+    },
+    {
+      "raw": "30,8±0,05",
+      "value": "30.8",
+      "type": "dimension_tol",
+      "x": 89.8,
+      "y": 172.7,
+      "orient": "h"
+    },
+    {
+      "raw": "54.8",
+      "value": "54.8",
+      "type": "dimension",
+      "x": 89.4,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "68,5",
+      "value": "68.5",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 198.2,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø10,6±0,05",
+      "value": "10.6",
+      "type": "diameter",
+      "x": 127.8,
+      "y": 218.8,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 91.9,
+      "y": 250.5,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 248.5,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0031",
+      "value": "PART No. 0031",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  BRACKET-319",
+      "value": "TITLE  BRACKET-319",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  SUS304",
+      "value": "MAT  SUS304",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:1",
+      "value": "SCALE 1:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-04-04",
+      "value": "DATE 2026-04-04",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN MJ.CHOI",
+      "value": "DRAWN MJ.CHOI",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV A",
+      "value": "REV A",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "61.4",
+    "67.9",
+    "22",
+    "63.4",
+    "46.6",
+    "10.3",
+    "103.4",
+    "55.7",
+    "12.4",
+    "30.8",
+    "54.8",
+    "68.5",
+    "10.6"
+  ],
+  "n_dimensions": 13
+}

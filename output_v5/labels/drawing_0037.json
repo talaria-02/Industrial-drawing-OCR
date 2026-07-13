@@ -1,0 +1,265 @@
+{
+  "id": "0037",
+  "image": "output_v5\\images\\drawing_0037.png",
+  "shapes": [
+    "rectangle",
+    "l_shape",
+    "t_shape",
+    "rectangle",
+    "rectangle",
+    "rectangle"
+  ],
+  "n_shapes": 6,
+  "noise": "clean",
+  "titleblock": {
+    "title": "PLATE-425",
+    "material": "AL6061",
+    "scale": "1:2",
+    "date": "2026-06-24",
+    "drawn": "KS.LEE",
+    "rev": "1"
+  },
+  "texts": [
+    {
+      "raw": "92,2",
+      "value": "92.2",
+      "type": "dimension",
+      "x": 108.1,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "85,4",
+      "value": "85.4",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 435.4,
+      "orient": "v"
+    },
+    {
+      "raw": "▽",
+      "value": "▽",
+      "type": "symbol",
+      "x": 160.2,
+      "y": 443.3,
+      "orient": "h"
+    },
+    {
+      "raw": "99.8 k6",
+      "value": "99.8",
+      "type": "dimension_fit",
+      "x": 111.9,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "106,9 f7",
+      "value": "106.9",
+      "type": "dimension_fit",
+      "x": 36.0,
+      "y": 217.4,
+      "orient": "v"
+    },
+    {
+      "raw": "34.8",
+      "value": "34.8",
+      "type": "dimension",
+      "x": 144.4,
+      "y": 253.9,
+      "orient": "h"
+    },
+    {
+      "raw": "54,2",
+      "value": "54.2",
+      "type": "dimension",
+      "x": 89.1,
+      "y": 638.5,
+      "orient": "h"
+    },
+    {
+      "raw": "67,5+0,1",
+      "value": "67.5",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 655.1,
+      "orient": "v"
+    },
+    {
+      "raw": "22,3 H7",
+      "value": "22.3",
+      "type": "dimension_fit",
+      "x": 89.1,
+      "y": 606.3,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 704.8,
+      "orient": "h"
+    },
+    {
+      "raw": "102.7",
+      "value": "102.7",
+      "type": "dimension",
+      "x": 411.4,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "62,9 g6",
+      "value": "62.9",
+      "type": "dimension_fit",
+      "x": 334.0,
+      "y": 195.4,
+      "orient": "v"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 403.6,
+      "y": 244.9,
+      "orient": "h"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 411.4,
+      "y": 158.0,
+      "orient": "h"
+    },
+    {
+      "raw": "64.2",
+      "value": "64.2",
+      "type": "dimension",
+      "x": 392.1,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "68.1",
+      "value": "68.1",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 426.7,
+      "orient": "v"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 476.8,
+      "orient": "h"
+    },
+    {
+      "raw": "89+0,1",
+      "value": "89",
+      "type": "dimension_tol",
+      "x": 404.5,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "53.3",
+      "value": "53.3",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 648.0,
+      "orient": "v"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 404.5,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0037",
+      "value": "PART No. 0037",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  PLATE-425",
+      "value": "TITLE  PLATE-425",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  AL6061",
+      "value": "MAT  AL6061",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:2",
+      "value": "SCALE 1:2",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-06-24",
+      "value": "DATE 2026-06-24",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN KS.LEE",
+      "value": "DRAWN KS.LEE",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 1",
+      "value": "REV 1",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "92.2",
+    "85.4",
+    "99.8",
+    "106.9",
+    "34.8",
+    "54.2",
+    "67.5",
+    "22.3",
+    "102.7",
+    "62.9",
+    "64.2",
+    "68.1",
+    "89",
+    "53.3"
+  ],
+  "n_dimensions": 14
+}

@@ -1,0 +1,337 @@
+{
+  "id": "0082",
+  "image": "output_v5\\images\\drawing_0082.png",
+  "shapes": [
+    "rect_hole",
+    "rect_hole",
+    "t_shape",
+    "rect_2holes",
+    "hexagon"
+  ],
+  "n_shapes": 5,
+  "noise": "heavy",
+  "titleblock": {
+    "title": "PLATE-697",
+    "material": "S45C",
+    "scale": "1:1",
+    "date": "2026-09-03",
+    "drawn": "SW.PARK",
+    "rev": "C"
+  },
+  "texts": [
+    {
+      "raw": "90.3±0,15",
+      "value": "90.3",
+      "type": "dimension_tol",
+      "x": 107.2,
+      "y": 369.7,
+      "orient": "h"
+    },
+    {
+      "raw": "58.8+0,1",
+      "value": "58.8",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 422.1,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø11.3 f7",
+      "value": "11.3",
+      "type": "dimension_fit",
+      "x": 132.4,
+      "y": 445.4,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 121.7,
+      "y": 469.5,
+      "orient": "h"
+    },
+    {
+      "raw": "1x45°",
+      "value": "1x45°",
+      "type": "annotation",
+      "x": 107.2,
+      "y": 386.7,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 467.5,
+      "orient": "h"
+    },
+    {
+      "raw": "70",
+      "value": "70",
+      "type": "dimension",
+      "x": 97.0,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "67.4",
+      "value": "67.4",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 655.0,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø5.8",
+      "value": "5.8",
+      "type": "diameter",
+      "x": 116.8,
+      "y": 672.8,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 98.0,
+      "y": 706.7,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽▽",
+      "value": "▽▽▽",
+      "type": "symbol",
+      "x": 138.0,
+      "y": 641.7,
+      "orient": "h"
+    },
+    {
+      "raw": "2x45°",
+      "value": "2x45°",
+      "type": "annotation",
+      "x": 97.0,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "3",
+      "value": "3",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 704.7,
+      "orient": "h"
+    },
+    {
+      "raw": "106",
+      "value": "106",
+      "type": "dimension",
+      "x": 413.0,
+      "y": 183.3,
+      "orient": "h"
+    },
+    {
+      "raw": "57.7",
+      "value": "57.7",
+      "type": "dimension",
+      "x": 334.0,
+      "y": 192.8,
+      "orient": "v"
+    },
+    {
+      "raw": "51.5±0,15",
+      "value": "51.5",
+      "type": "dimension_tol",
+      "x": 413.0,
+      "y": 149.0,
+      "orient": "h"
+    },
+    {
+      "raw": "A",
+      "value": "A",
+      "type": "symbol",
+      "x": 425.2,
+      "y": 239.7,
+      "orient": "h"
+    },
+    {
+      "raw": "▽▽",
+      "value": "▽▽",
+      "type": "symbol",
+      "x": 472.0,
+      "y": 183.4,
+      "orient": "h"
+    },
+    {
+      "raw": "2",
+      "value": "2",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 237.7,
+      "orient": "h"
+    },
+    {
+      "raw": "24,4 j6",
+      "value": "24.4",
+      "type": "dimension_fit",
+      "x": 99.3,
+      "y": 193.0,
+      "orient": "h"
+    },
+    {
+      "raw": "76",
+      "value": "76",
+      "type": "dimension",
+      "x": 100.0,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "105,1±0.1",
+      "value": "105.1",
+      "type": "dimension_tol",
+      "x": 36.0,
+      "y": 216.6,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø8,6 g6",
+      "value": "8.6",
+      "type": "dimension_fit",
+      "x": 132.1,
+      "y": 235.2,
+      "orient": "h"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 103.9,
+      "y": 287.1,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 60.0,
+      "y": 285.1,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø67.6",
+      "value": "67.6",
+      "type": "diameter",
+      "x": 402.7,
+      "y": 409.2,
+      "orient": "h"
+    },
+    {
+      "raw": "58.5 f7",
+      "value": "58.5",
+      "type": "dimension_fit",
+      "x": 340.9,
+      "y": 432.2,
+      "orient": "v"
+    },
+    {
+      "raw": "B",
+      "value": "B",
+      "type": "symbol",
+      "x": 408.3,
+      "y": 489.8,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 487.8,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0082",
+      "value": "PART No. 0082",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  PLATE-697",
+      "value": "TITLE  PLATE-697",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  S45C",
+      "value": "MAT  S45C",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:1",
+      "value": "SCALE 1:1",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-09-03",
+      "value": "DATE 2026-09-03",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN SW.PARK",
+      "value": "DRAWN SW.PARK",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV C",
+      "value": "REV C",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "90.3",
+    "58.8",
+    "11.3",
+    "70",
+    "67.4",
+    "5.8",
+    "106",
+    "57.7",
+    "51.5",
+    "24.4",
+    "76",
+    "105.1",
+    "8.6",
+    "67.6",
+    "58.5"
+  ],
+  "n_dimensions": 15
+}

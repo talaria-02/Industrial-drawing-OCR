@@ -1,0 +1,236 @@
+{
+  "id": "0059",
+  "image": "output_v5\\images\\drawing_0059.png",
+  "shapes": [
+    "hexagon",
+    "rect_2holes",
+    "stepped",
+    "hexagon"
+  ],
+  "n_shapes": 4,
+  "noise": "slight",
+  "titleblock": {
+    "title": "SHAFT-738",
+    "material": "FC250",
+    "scale": "1:5",
+    "date": "2026-01-05",
+    "drawn": "SW.PARK",
+    "rev": "0"
+  },
+  "texts": [
+    {
+      "raw": "Ø55.6 f7",
+      "value": "55.6",
+      "type": "dimension_fit",
+      "x": 411.9,
+      "y": 403.5,
+      "orient": "h"
+    },
+    {
+      "raw": "48.2",
+      "value": "48.2",
+      "type": "dimension",
+      "x": 356.1,
+      "y": 426.5,
+      "orient": "v"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 419.2,
+      "y": 478.3,
+      "orient": "h"
+    },
+    {
+      "raw": "1",
+      "value": "1",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 476.3,
+      "orient": "h"
+    },
+    {
+      "raw": "46,2±0,1",
+      "value": "46.2",
+      "type": "dimension_tol",
+      "x": 415.9,
+      "y": 183.2,
+      "orient": "h"
+    },
+    {
+      "raw": "119.6±0,1",
+      "value": "119.6",
+      "type": "dimension_tol",
+      "x": 419.8,
+      "y": 141.0,
+      "orient": "h"
+    },
+    {
+      "raw": "103.6±0.1",
+      "value": "103.6",
+      "type": "dimension_tol",
+      "x": 334.0,
+      "y": 215.8,
+      "orient": "v"
+    },
+    {
+      "raw": "Ø17,6±0.1",
+      "value": "17.6",
+      "type": "diameter",
+      "x": 468.6,
+      "y": 243.4,
+      "orient": "h"
+    },
+    {
+      "raw": "C",
+      "value": "C",
+      "type": "symbol",
+      "x": 423.9,
+      "y": 285.6,
+      "orient": "h"
+    },
+    {
+      "raw": "95,5+0,1",
+      "value": "95.5",
+      "type": "dimension_tol",
+      "x": 109.8,
+      "y": 598.3,
+      "orient": "h"
+    },
+    {
+      "raw": "56,3",
+      "value": "56.3",
+      "type": "dimension",
+      "x": 36.0,
+      "y": 649.5,
+      "orient": "v"
+    },
+    {
+      "raw": "25.9",
+      "value": "25.9",
+      "type": "dimension",
+      "x": 95.7,
+      "y": 634.3,
+      "orient": "v"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 109.8,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "Ø48.4±0,1",
+      "value": "48.4",
+      "type": "diameter",
+      "x": 395.5,
+      "y": 632.3,
+      "orient": "h"
+    },
+    {
+      "raw": "41.9",
+      "value": "41.9",
+      "type": "dimension",
+      "x": 343.3,
+      "y": 655.3,
+      "orient": "v"
+    },
+    {
+      "raw": "3x45°",
+      "value": "3x45°",
+      "type": "annotation",
+      "x": 395.5,
+      "y": 615.3,
+      "orient": "h"
+    },
+    {
+      "raw": "4",
+      "value": "4",
+      "type": "symbol",
+      "x": 358.0,
+      "y": 705.3,
+      "orient": "h"
+    },
+    {
+      "raw": "PART No. 0059",
+      "value": "PART No. 0059",
+      "type": "info",
+      "x": 18.0,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "TITLE  SHAFT-738",
+      "value": "TITLE  SHAFT-738",
+      "type": "info",
+      "x": 18.0,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "MAT  FC250",
+      "value": "MAT  FC250",
+      "type": "info",
+      "x": 18.0,
+      "y": 44.0,
+      "orient": "h"
+    },
+    {
+      "raw": "SCALE 1:5",
+      "value": "SCALE 1:5",
+      "type": "info",
+      "x": 184.9,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "UNIT mm",
+      "value": "UNIT mm",
+      "type": "info",
+      "x": 184.9,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DATE 2026-01-05",
+      "value": "DATE 2026-01-05",
+      "type": "info",
+      "x": 345.8,
+      "y": 92.0,
+      "orient": "h"
+    },
+    {
+      "raw": "DRAWN SW.PARK",
+      "value": "DRAWN SW.PARK",
+      "type": "info",
+      "x": 345.8,
+      "y": 68.0,
+      "orient": "h"
+    },
+    {
+      "raw": "REV 0",
+      "value": "REV 0",
+      "type": "info",
+      "x": 482.9,
+      "y": 80.0,
+      "orient": "h"
+    }
+  ],
+  "dimension_values": [
+    "55.6",
+    "48.2",
+    "46.2",
+    "119.6",
+    "103.6",
+    "17.6",
+    "95.5",
+    "56.3",
+    "25.9",
+    "48.4",
+    "41.9"
+  ],
+  "n_dimensions": 11
+}
