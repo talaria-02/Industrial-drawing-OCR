@@ -1,0 +1,30 @@
+Redraw every text/symbol inside this grid as if quickly hand-written in the field
+by a tired machinist marking up a shop-floor engineering drawing — messy, rushed,
+imperfect handwriting, NOT a clean font.
+
+Make it genuinely messy, not stylized:
+- Inconsistent letter size and slant within the same cell; baselines wander up/down.
+- Uneven, shaky stroke width — pen pressure varies, some strokes are thin/faint,
+  others thick/blotchy where the pen paused.
+- Imperfect closures on loops/circles (Ø, 0, digits) — slightly open or overlapping.
+- Slightly irregular spacing between characters, occasional touching/overlapping
+  strokes between adjacent characters (but still legible).
+- Add light physical noise: faint paper grain/texture, a little pencil smudging
+  or eraser ghosting nearby, mild ink bleed at stroke ends. Keep it subtle enough
+  that the text is still readable, not destroyed.
+- This should look like a real worn field annotation, not a "handwriting font" —
+  avoid uniform, evenly-spaced, calligraphic, or decorative styles.
+
+CRITICAL constraints (do not break these):
+- This image has a grid of 12 separate cells, each bordered by a black rectangle.
+  Preserve the exact grid layout, cell positions, and cell border lines. Do not
+  merge, resize, move, or reorder cells.
+- Inside each cell, preserve the EXACT characters, digits, and symbols shown —
+  do not add, remove, or change any character. Content must stay identical to
+  the input, cell by cell, even though the style is messy.
+- Use the SAME messy handwriting/pen across all cells (as if one rushed person
+  wrote the whole sheet), but each cell's own noise/wobble should differ slightly.
+- Background stays plain white/off-white outside the ink strokes. Single ink
+  color per cell (black, blue, or graphite gray), no color gradients unless
+  that's what light smudging naturally produces.
+- Do not let content from one cell bleed into a neighboring cell.

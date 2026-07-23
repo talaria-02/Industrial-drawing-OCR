@@ -1,0 +1,4 @@
+id,n_shapes,n_dimensions,noise,image,label,split
+0000,5,11,noisy,data\synth\images\drawing_0000.png,data\synth\labels\drawing_0000.json,train
+0002,4,13,slight,data\synth\images\drawing_0002.png,data\synth\labels\drawing_0002.json,train
+0001,4,0,noisy,data\synth\images\drawing_0001.png,data\synth\labels\drawing_0001.json,test

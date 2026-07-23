@@ -7,38 +7,6 @@
 
 ## 1. 프로젝트 목표
 
-**도면에 산재한 수치값(치수)을 빠짐없이 정확하게 인식하는 OCR 시스템.**
-
-멘토 핵심 조언:
-- 도면에서 가장 중요한 것은 **숫자(치수)**. 공장에서는 도면 그림과 숫자가 달라도
-  숫자를 기준으로 제품을 측정하고 일치율을 따진다.
-- 모델 선택보다 **전처리 설계**가 더 중요하다.
-- 치수 기준 ±5% 정상범위 판정이 최종 목표 (제품 실측값과의 대조 — 실측 데이터
-  확보 전이므로 판정기는 보류, 추출 정확도에 집중하기로 결정).
-
-## 2. 성과 요약
-
-### 합성 도면 벤치마크 (100장, 치수 1,426개, 동일 채점 기준)
-
-| 단계 | 구성 | recall | precision |
-|---|---|---|---|
-| Baseline | Tesseract (1패스, PSM 11) | 35.1% | 28.0% |
-| 엔진 교체 | PaddleOCR PP-OCRv5 mobile (1패스) | 52.8% | 44.4% |
-| **v2** | **+ 3패스 회전병합 + 영역분리** | **90.4%** | **71.0%** |
-
-노이즈 레벨별 recall (v2): clean 87.8 / slight 92.6 / noisy 90.9 / heavy 88.1%
-→ 최악 노이즈에서도 88% = 노이즈 강건성 확보.
-
-### 실제 도면 29장 영역 분리
-
-| 대상 | 결과 |
-|---|---|
-| 하단 타이틀블록 변형 (02~05, 08~20) | 전부 검출 |
-| **우측 기둥 타이틀블록 변형 (06~07)** | 최초 실패 → 우측형 규칙 추가로 해결 |
-| 테두리 없는 도면 (01, 1.1, 2.2) | 프레임 없음 판정 → 안전 폴백 (정답) |
-| eDOCr 논문 검증 도면 5장 | 전부 프레임+타이틀블록 검출 |
-
-**GPU 없는 노트북(CPU 추론)에서 학습 없이, 사전학습 모델 + 규칙 설계만으로 달성.**
 
 ## 3. 전체 진행 과정 (시간순)
 
@@ -167,6 +135,22 @@ F-K 검증 (오버레이 전수검사): 픽셀 오제거 없음 확인. 잔여 �
 이후 계획된 소비처: JSON의 drawing 텍스트 → 공차 파서(DOMAIN.md §10 사양)
 → {공칭, 상한, 하한} 구조화 → (실측값 입력 시) ±판정 → DB 적재.
 
+### 단계 7 — 엔지니어링 루프 종료 판단과 파인튜닝 준비 착수
+- **대안 재검토**: 사용자가 paddlepaddle CPU oneDNN 버그(`enable_mkldnn=False`
+  워크어라운드)의 해결 여부를 재확인 지시 → GitHub 이슈 #77340 실측: PyPI
+  정식 최신판(3.3.1)엔 여전히 미해결, 픽스는 미출시 개발 브랜치(3.4.x)에만
+  존재. paddleocr(API 껍데기, 3.7.0 최신)와 paddlepaddle(엔진, 버그 있는 곳)의
+  버전 체계가 다르다는 혼동 정리.
+- **한도 판단**: 규칙·설계 기반 개선(전처리·병합·다각도)의 수확체감을 인지,
+  "추가 모델 없이는 한도에 도달"이라는 자가 평가에 합의.
+- **파인튜닝 준비 착수**: PaddleOCR 공식 저장소의 TIA 증강 코드
+  (`augment.py`/`warp_mls.py`) 확보 및 스모크 테스트 완료 — 인식기(rec)
+  파인튜닝 시 사용할 왜곡·늘림·원근 증강 확보.
+- **저장소 리팩토링**: 실험 로그·중간 산출물 정리 후 `data/`(real·repr·synth)
+  `pipeline/`(핵심) `legacy/`(baseline) `finetune/`(파인튜닝 준비) `weights/`
+  `results/`(생성물)로 폴더 구조 확정. 이동에 따른 하드코딩 경로·크로스폴더
+  import 전량 수정 및 스모크 재검증.
+
 ## 4. 협업 기록 — 역할 분담
 
 이 프로젝트는 사람(이규석)이 방향·판단·검증 기준을 정하고, AI(Claude)가 구현·조사·
@@ -231,35 +215,77 @@ F-K 검증 (오버레이 전수검사): 픽셀 오제거 없음 확인. 잔여 �
     검증을 요구 → 회귀 0 · +7 확인 후 채택. 마지막 성능 레버를 직접 발굴.
 20. **도메인 지식 수집 방향 제시**: 파서 구현 전에 도면 표기법(끼워맞춤,
     기호 의미)부터 정리하자고 순서를 정함 → DOMAIN.md.
+21. **버그 상태 재검증 요구**: "이미 해결된 버그 아니야?"라며 기존 워크어라운드
+    (enable_mkldnn=False)의 필요성을 다시 확인시킴. 이어 "paddleocr 3.7.0 출시"
+    정보로 AI의 설명(paddleocr vs paddlepaddle 버전 혼동)을 교정하는 데 기여.
+22. **파인튜닝 준비 착수 결정**: 엔지니어링 루프 종료 판단 이후, 다음 단계로
+    사전학습 모델 자체의 파인튜닝을 목표로 설정 — TIA 증강 코드 확보를
+    스스로 진행(augment.py/warp_mls.py 도입, 테스트 스크립트 작성).
+23. **저장소 리팩토링 지시**: "파일 구조를 리팩토링하는 게 먼저"라고 우선순위를
+    정하고, 파인튜닝에 선행으로 필요한 코드·데이터부터 정리하도록 순서를 설계.
+    본인이 먼저 실험 로그·쓰레기 산출물을 정리(폴더 리네임 포함)한 뒤 AI에게
+    구조화를 넘김.
 
-## 5. 파일 구성
+## 5. 파일 구성 (2026-07-20 리팩토링)
 
-### 활성 코드
+폴더별로 역할을 분리. **모든 스크립트는 repo 루트에서 실행**하는 것을 기준으로
+상대경로가 잡혀 있음 (예: `python pipeline/paddle_rotate_merge.py data/real/`).
+
+```
+├── data/
+│   ├── real/    실제 도면 29장 (변형 묶음 01~20 + eDOCr 논문 5장 + 초기 4장)
+│   ├── repr/     대표성 검증용 11장 부분집합 (과적합 체크 — data/real의 서브셋)
+│   └── synth/    합성 도면 100장 + 라벨 (create_data_v5.py 산출물)
+├── pipeline/      실전 OCR 파이프라인 (핵심)
+├── legacy/        baseline·보류 코드 (ARCHIVE.md 참조 대상과 별개로, 현역이지만 비주력)
+├── finetune/      PaddleOCR 인식기 파인튜닝 준비 (증강 코드)
+├── weights/       사전학습/실험 가중치
+├── results/       파이프라인 실행 산출물 (재생성 가능, 매 실행시 갱신)
+└── *.md           문서 (루트 유지)
+```
+
+### pipeline/ — 실전 OCR 파이프라인
 | 파일 | 역할 |
 |---|---|
-| `create_data_v5.py` | 실제 도면 복잡도의 합성 도면 생성기 (라벨 포함) |
+| `create_data_v5.py` | 실제 도면 복잡도의 합성 도면 생성기 (라벨 포함) → `data/synth` |
 | `paddle_rotate_merge.py` | **핵심 OCR** — 다패스 회전병합. `--angles 45,-45`(대각) `--clean`/`--fk`(전처리) `--out` |
 | `remove_lines.py` | 점선 제거 전처리 (morph v2 / F-K 공선 체인 v4) |
 | `region_split.py` | 프레임/타이틀블록 검출, drawing/meta 분류 |
-| `eval_ocr.py` | 채점 공통 로직 + Tesseract baseline |
+| `eval_ocr.py` | 채점 공통 로직 + Tesseract baseline (legacy/ocr_real_drawing 사용) |
 | `eval_paddle.py` / `eval_paddle_v2.py` | 엔진/파이프라인 정량 평가 |
-| `test_paddle_real.py` | 1패스 시각화 (before/after 비교용) |
-| `preprocess.py` | 선/텍스트 레이어 분리 (향후 치수선 연결 기반) |
-| `ocr_real_drawing.py` | Tesseract 파이프라인 (baseline 재현 보존) |
-| `test_rtdetr_all.py` + `eng_dwg_v1.pt` | RT-DETR 검출 실험 (향후 후보) |
 
-### 데이터/결과
+### legacy/ — baseline·보류 코드
+| 파일 | 역할 |
+|---|---|
+| `ocr_real_drawing.py` | Tesseract 파이프라인 (baseline 재현 보존) |
+| `preprocess.py` | 선/텍스트 레이어 분리 (향후 치수선 연결 기반) |
+| `test_paddle_real.py` | 1패스 시각화 (before/after 비교용) |
+| `test_rtdetr_all.py` | RT-DETR 검출 실험 (`weights/eng_dwg_v1.pt` 사용, 향후 후보) |
+
+### finetune/ — PaddleOCR 인식기 파인튜닝 준비 (신규)
+PaddleOCR 공식 저장소의 TIA(Text Image Augmentation) 코드를 가져옴 — 실제
+PaddleOCR 인식기(rec) 학습에 쓰이는 증강 기법.
+| 파일 | 역할 |
+|---|---|
+| `augment.py` / `__init__.py` | `tia_distort`/`tia_stretch`/`tia_perspective` — 뒤틀림·늘림·원근 증강 |
+| `warp_mls.py` | Moving Least Squares 기반 워핑 엔진 (augment.py가 내부 사용) |
+| `test_augment.py` | 증강 3종 스모크 테스트 → `finetune/samples/`에 결과 저장 |
+
+### 기타
 | 경로 | 내용 |
 |---|---|
-| `real_images/` | 실제 도면 29장 (변형 묶음 01~20 + eDOCr 5장 + 초기 4장) |
-| `output_v5/` | 합성 도면 100장 + 라벨 |
-| `paddle_real_results/` | 1패스 결과 (개선 전 비교자료) |
-| `paddle_v2_results/` | 3패스 결과 (현행) |
-| `region_results/` | 영역 분리 시각화 (29장) |
-| `experiments/` | 점선 제거 실험 시리즈 (입력·버전별 결과·검증 오버레이) |
-| `paddle_eval.log` / `paddle_v2_eval.log` | 성능 수치 원본 로그 |
+| `weights/eng_dwg_v1.pt` | RT-DETR 사전학습 가중치 (66MB) |
+| `results/ocr/`, `results/region/` | 파이프라인 실행 산출물 (실행할 때마다 생성, 커밋 불필요) |
 | `mentoring_md` | 멘토링 회의록 |
 | `DOMAIN.md` | 도면 표기법 도메인 지식 (파서 사양 포함) |
+
+### 리팩토링 시 주의사항 (import/경로 함정 기록)
+- `pipeline/eval_ocr.py`는 `legacy/ocr_real_drawing.py`를 import — 다른 폴더라
+  `sys.path.insert(0, ...legacy)`로 명시적 연결. 폴더 재배치 시 깨지기 쉬운 지점.
+- `finetune/augment.py`·`__init__.py`는 같은 폴더의 `warp_mls.py`를 import —
+  호출 위치와 무관하게 찾도록 `sys.path.insert(0, Path(__file__).parent)` 처리.
+- `cv2.imread`는 한글 경로(예: `바탕 화면`)를 못 읽음 — 이미지 로드는 전부
+  `cv2.imdecode(np.fromfile(path, np.uint8), ...)` 패턴 사용 (Windows 프로젝트 공통 함정).
 
 ## 6. 설계 결정과 근거
 
@@ -276,7 +302,15 @@ F-K 검증 (오버레이 전수검사): 픽셀 오제거 없음 확인. 잔여 �
 ## 7. 남은 과제
 
 - [x] 병합 우선순위 실험 — 글자수 우선 규칙은 근거 부족으로 폐기·원복.
-      점수 기준 dedup 유지 (paddle_v2_results 기준선과 동일 동작)
+      점수 기준 dedup 유지 (기존 baseline과 동일 동작)
+- [x] 저장소 구조 리팩토링 (`data/`·`pipeline/`·`legacy/`·`finetune/`·
+      `weights/`·`results/`), 경로·import 전량 수정 및 스모크 검증
+- [ ] **PaddleOCR 인식기(rec) 파인튜닝** (다음 단계, 준비 중):
+      - [x] TIA 증강 코드 확보(`finetune/augment.py`) — distort/stretch/perspective
+      - [ ] `data/synth`(100장) 라벨을 crop 단위 학습셋으로 변환
+      - [ ] 증강 적용 → PaddleOCR rec 학습 데이터셋(txt 라벨 포맷) 생성
+      - [ ] Colab 등 무료 GPU에서 rec 파인튜닝 실행
+      - [ ] 파인튜닝 전/후 recall·precision 재측정 (기존 채점 스크립트 재사용)
 - [ ] 공차 파싱: `50±0,1` → {공칭, 상한, 하한} 구조화 (eDOCr 방식)
 - [ ] 끼워맞춤 오독 복원 (`20 f7`→`2017` 교정 규칙)
 - [ ] ±5% 판정기 (실측 데이터 확보 후)

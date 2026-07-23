@@ -1,0 +1,346 @@
+imgs/val_000000.png	√Ra1.6
+imgs/val_000001.png	▽
+imgs/val_000002.png	⊥ φ0.02 CA
+imgs/val_000003.png	⌭ ø0,1 B C
+imgs/val_000004.png	+0,1
+imgs/val_000005.png	81°
+imgs/val_000006.png	SCEAU
+imgs/val_000007.png	2-ø19
+imgs/val_000008.png	▽▽
+imgs/val_000009.png	3×73°
+imgs/val_000010.png	113 f7
+imgs/val_000011.png	Φ 44
+imgs/val_000012.png	A-A
+imgs/val_000013.png	0.118
+imgs/val_000014.png	φ70
+imgs/val_000015.png	4×ø8
+imgs/val_000016.png	PROCEDURES
+imgs/val_000017.png	□24
+imgs/val_000018.png	4-φ20
+imgs/val_000019.png	⊥ φ0.1 A
+imgs/val_000020.png	▽
+imgs/val_000021.png	R29
+imgs/val_000022.png	▽
+imgs/val_000023.png	77±0.05
+imgs/val_000024.png	R59
+imgs/val_000025.png	∥ ø1.2 A
+imgs/val_000026.png	8-Φ3
+imgs/val_000027.png	▽Ra1.6
+imgs/val_000028.png	▽▽▽
+imgs/val_000029.png	18 g6
+imgs/val_000030.png	⊥ 0.05 B
+imgs/val_000031.png	⊥ 1.2 ABC
+imgs/val_000032.png	8-ø24
+imgs/val_000033.png	▽▽▽
+imgs/val_000034.png	▽▽▽
+imgs/val_000035.png	∅167
+imgs/val_000036.png	R112
+imgs/val_000037.png	∥ 0.2 C
+imgs/val_000038.png	5-ø24
+imgs/val_000039.png	▽▽▽
+imgs/val_000040.png	A
+imgs/val_000041.png	FINISH
+imgs/val_000042.png	⏤ ø0,2 B C
+imgs/val_000043.png	⏥ 0.1 A
+imgs/val_000044.png	▽▽
+imgs/val_000045.png	∥ 0,1 C B
+imgs/val_000046.png	▽▽
+imgs/val_000047.png	∅ 68
+imgs/val_000048.png	44 f7
+imgs/val_000049.png	⏤ Φ0,2 BA
+imgs/val_000050.png	4-Φ4
+imgs/val_000051.png	R2
+imgs/val_000052.png	8×Φ9
+imgs/val_000053.png	20-09-2024
+imgs/val_000054.png	▽Ra12.5
+imgs/val_000055.png	⌭ 0.05 A B
+imgs/val_000056.png	∥ 0.05 A B C
+imgs/val_000057.png	5-Φ28
+imgs/val_000058.png	⏤ 1.02 A B C
+imgs/val_000059.png	75
+imgs/val_000060.png	7×Φ27
+imgs/val_000061.png	105±0.2
+imgs/val_000062.png	∥ Φ1.2 A B C
+imgs/val_000063.png	▽▽
+imgs/val_000064.png	⏥ 1.2 ABC
+imgs/val_000065.png	▽▽▽
+imgs/val_000066.png	94 k6
+imgs/val_000067.png	4-Φ27
+imgs/val_000068.png	⏤ 0.1 AC
+imgs/val_000069.png	▽▽▽
+imgs/val_000070.png	6×φ10
+imgs/val_000071.png	YDIM
+imgs/val_000072.png	3×169°
+imgs/val_000073.png	▽▽
+imgs/val_000074.png	5-ø30
+imgs/val_000075.png	TOL. GEOMETRIQUE (ENTRE SURF. MACHINÉES)
+imgs/val_000076.png	SCHEMA HYDRAULIQUE
+imgs/val_000077.png	NOTES GENÉRALES (SAUF SI SPÉCIFIÉ)
+imgs/val_000078.png	⏤ 0,05 CB
+imgs/val_000079.png	6×φ5
+imgs/val_000080.png	4-φ28
+imgs/val_000081.png	80
+imgs/val_000082.png	∥ φ1.2 B A
+imgs/val_000083.png	3×φ19
+imgs/val_000084.png	187 g6
+imgs/val_000085.png	63±0,1
+imgs/val_000086.png	∥ ø0,05 C
+imgs/val_000087.png	⊥ 1,02 C
+imgs/val_000088.png	+0.1
+imgs/val_000089.png	⏥ Φ0,05 B C
+imgs/val_000090.png	ø 113
+imgs/val_000091.png	▽▽
+imgs/val_000092.png	⌭ 0.1 AB
+imgs/val_000093.png	⌭ Φ0.2
+imgs/val_000094.png	136 k6
+imgs/val_000095.png	▽
+imgs/val_000096.png	2
+imgs/val_000097.png	⏤ 1,1 CB
+imgs/val_000098.png	30H9
+imgs/val_000099.png	Tel.:8192281476
+imgs/val_000100.png	8±0.1
+imgs/val_000101.png	▽
+imgs/val_000102.png	⊥ Φ0,05 A
+imgs/val_000103.png	R13
+imgs/val_000104.png	⌀65 H7
+imgs/val_000105.png	√ Ra 1.6
+imgs/val_000106.png	93±0.05
+imgs/val_000107.png	0
+imgs/val_000108.png	▽
+imgs/val_000109.png	⌭ 1,2 CA
+imgs/val_000110.png	199±0.2
+imgs/val_000111.png	R124
+imgs/val_000112.png	7-Φ13
+imgs/val_000113.png	□80
+imgs/val_000114.png	42±0,05
+imgs/val_000115.png	▽
+imgs/val_000116.png	▽
+imgs/val_000117.png	7-φ26
+imgs/val_000118.png	▽
+imgs/val_000119.png	81±0.2
+imgs/val_000120.png	▽
+imgs/val_000121.png	√ Ra 6.3
+imgs/val_000122.png	⊥ 0,1 ABC
+imgs/val_000123.png	1×6°
+imgs/val_000124.png	⏥ 1,02 AC
+imgs/val_000125.png	5
+imgs/val_000126.png	67°
+imgs/val_000127.png	⏤ ø0.02 ABC
+imgs/val_000128.png	▽Ra6.3
+imgs/val_000129.png	⌭ 0,02
+imgs/val_000130.png	CONTROLE QUAL.
+imgs/val_000131.png	4-φ13
+imgs/val_000132.png	⊥ φ0.1 A
+imgs/val_000133.png	5-Φ22
+imgs/val_000134.png	ø 98
+imgs/val_000135.png	⌭ 0,1 B C
+imgs/val_000136.png	⏥ Φ0,2
+imgs/val_000137.png	⏥ 0.02 A B C
+imgs/val_000138.png	⌭ 1,2
+imgs/val_000139.png	∥ 0.1 ABC
+imgs/val_000140.png	6-ø5
+imgs/val_000141.png	1 19/32
+imgs/val_000142.png	∥ 0.1 A
+imgs/val_000143.png	SHEET I OF I
+imgs/val_000144.png	A
+imgs/val_000145.png	Φ 69
+imgs/val_000146.png	⏤ 0.05 B
+imgs/val_000147.png	DESSUS
+imgs/val_000148.png	∥ 0,2
+imgs/val_000149.png	3×13°
+imgs/val_000150.png	∥ 0.05
+imgs/val_000151.png	⏥ 0.05 A B C
+imgs/val_000152.png	3×Φ6
+imgs/val_000153.png	√ Ra 3.2
+imgs/val_000154.png	2×169°
+imgs/val_000155.png	▽Ra25
+imgs/val_000156.png	▽▽
+imgs/val_000157.png	▽Ra1.6
+imgs/val_000158.png	□160
+imgs/val_000159.png	4-ø27
+imgs/val_000160.png	161±0,1
+imgs/val_000161.png	RUGOSITÉ SURF. MAX.
+imgs/val_000162.png	ø 51
+imgs/val_000163.png	SURFACES SOUDÉES
+imgs/val_000164.png	7×ø17
+imgs/val_000165.png	⌭ φ0.1 B
+imgs/val_000166.png	□140
+imgs/val_000167.png	⏥ Φ0.05
+imgs/val_000168.png	B.C.13.500
+imgs/val_000169.png	∥ 0.2 CB
+imgs/val_000170.png	▽
+imgs/val_000171.png	ø8.25
+imgs/val_000172.png	⏤ 0,2 A B C
+imgs/val_000173.png	⌭ 0,1
+imgs/val_000174.png	▽▽
+imgs/val_000175.png	142 H9
+imgs/val_000176.png	▽▽
+imgs/val_000177.png	41±0.05
+imgs/val_000178.png	▽Ra12.5
+imgs/val_000179.png	⊥ φ1,05
+imgs/val_000180.png	omnifab@omnifab.ca
+imgs/val_000181.png	3×ø12
+imgs/val_000182.png	2×Φ11
+imgs/val_000183.png	▽▽▽
+imgs/val_000184.png	▽▽
+imgs/val_000185.png	φ47/32↧ 1/32
+imgs/val_000186.png	⏥ 1.2 C B
+imgs/val_000187.png	∥ φ0,05 A
+imgs/val_000188.png	⌀ 100
+imgs/val_000189.png	∥ 0,1 C B
+imgs/val_000190.png	84°
+imgs/val_000191.png	▽▽
+imgs/val_000192.png	√Ra25
+imgs/val_000193.png	▽▽▽
+imgs/val_000194.png	▽
+imgs/val_000195.png	196±0,1
+imgs/val_000196.png	⏤ 0.05 ABC
+imgs/val_000197.png	mm
+imgs/val_000198.png	▽
+imgs/val_000199.png	▽▽▽
+imgs/val_000200.png	▽Ra1.6
+imgs/val_000201.png	+0,05
+imgs/val_000202.png	φ22
+imgs/val_000203.png	2-ø15
+imgs/val_000204.png	∥ ø1,1 C B
+imgs/val_000205.png	∥ ø1,1 A
+imgs/val_000206.png	6-Φ20
+imgs/val_000207.png	⏥ 0,05 A B C
+imgs/val_000208.png	⌭ 0,2 A
+imgs/val_000209.png	144±0,1
+imgs/val_000210.png	52°
+imgs/val_000211.png	5
+imgs/val_000212.png	⏥ 0,2 A B
+imgs/val_000213.png	⊥ 0,02 A
+imgs/val_000214.png	□97
+imgs/val_000215.png	⏤ 0,05 A
+imgs/val_000216.png	8×φ22
+imgs/val_000217.png	φ131 H7
+imgs/val_000218.png	3-φ11
+imgs/val_000219.png	⏤ 0.1 A
+imgs/val_000220.png	φ26/4↧ 43/32
+imgs/val_000221.png	11°
+imgs/val_000222.png	⏤ 0,02 AB
+imgs/val_000223.png	4×ø26
+imgs/val_000224.png	⌭ 0.05 B
+imgs/val_000225.png	3-φ30
+imgs/val_000226.png	⊥ 1.05 CA
+imgs/val_000227.png	⌭ φ0.1 C
+imgs/val_000228.png	□188
+imgs/val_000229.png	B
+imgs/val_000230.png	⏤ 0.02 B
+imgs/val_000231.png	7×ø18
+imgs/val_000232.png	⌭ ø1.2 A
+imgs/val_000233.png	⌭ ø0.2 C
+imgs/val_000234.png	C2
+imgs/val_000235.png	⏤ 1.02 C
+imgs/val_000236.png	⊥ 1,1 ABC
+imgs/val_000237.png	ø5.1181 G7
+imgs/val_000238.png	√ Ra 25
+imgs/val_000239.png	109°
+imgs/val_000240.png	R174
+imgs/val_000241.png	5-ø23
+imgs/val_000242.png	1×158°
+imgs/val_000243.png	⌭ Φ0.05
+imgs/val_000244.png	□195
+imgs/val_000245.png	⌀ 56
+imgs/val_000246.png	I/2 corte AB
+imgs/val_000247.png	□30
+imgs/val_000248.png	▽Ra12.5
+imgs/val_000249.png	4×φ24
+imgs/val_000250.png	34±0,1
+imgs/val_000251.png	∥ 0.05
+imgs/val_000252.png	∥ 0.1 ABC
+imgs/val_000253.png	X.XX=±0.1
+imgs/val_000254.png	7×Φ8
+imgs/val_000255.png	□12
+imgs/val_000256.png	⏥ 1,1 A
+imgs/val_000257.png	WFIGHT
+imgs/val_000258.png	8-ø9
+imgs/val_000259.png	√Ra6.3
+imgs/val_000260.png	R32
+imgs/val_000261.png	∥ ø0,02 A
+imgs/val_000262.png	□23
+imgs/val_000263.png	ø 55
+imgs/val_000264.png	⏥ 0.1 C
+imgs/val_000265.png	⌭ 0,05
+imgs/val_000266.png	⊥ Φ0.02
+imgs/val_000267.png	FIRST ANGLE PROJECTION
+imgs/val_000268.png	⌀55
+imgs/val_000269.png	5×φ15
+imgs/val_000270.png	⏥ 0.05 CA
+imgs/val_000271.png	126 h6
+imgs/val_000272.png	ø7
+imgs/val_000273.png	⌭ 0.1 AC
+imgs/val_000274.png	R41
+imgs/val_000275.png	φ112
+imgs/val_000276.png	▽
+imgs/val_000277.png	MATERIAU
+imgs/val_000278.png	√Ra25
+imgs/val_000279.png	∥ 0.1
+imgs/val_000280.png	61±0,1
+imgs/val_000281.png	⏤ 0.02
+imgs/val_000282.png	▽▽▽
+imgs/val_000283.png	121 k6
+imgs/val_000284.png	INSP.PAR
+imgs/val_000285.png	Φ 116
+imgs/val_000286.png	A-A
+imgs/val_000287.png	+0,15
+imgs/val_000288.png	+0.05
+imgs/val_000289.png	∥ 0,2 B
+imgs/val_000290.png	CE DESSINEST LA PROPFRETE DOMNEFAB. TOUT USAGE NON AUTORISE, LA REVELATION OE LINFORMATION TECHNGUE DEMONTREE ET LA REPRODUCTION TOTALE OU PARTELLE POUR UTHLISATION PAR UNE TIERCE PARTIE EST INTEROITE SAUF SOUS APPROBATION PREALABLE DOMNIFAB.
+imgs/val_000291.png	⊥ Φ0.1 B
+imgs/val_000292.png	φ 16
+imgs/val_000293.png	SOUDURES SELON
+imgs/val_000294.png	▽▽▽
+imgs/val_000295.png	⊥ 0,05 B
+imgs/val_000296.png	-0.2
+imgs/val_000297.png	1×163°
+imgs/val_000298.png	8/64↧ 54/16
+imgs/val_000299.png	(ow COUNAUENT) SUR UES
+imgs/val_000300.png	Part Number
+imgs/val_000301.png	√ Ra 3.2
+imgs/val_000302.png	▽▽▽
+imgs/val_000303.png	6×Φ16
+imgs/val_000304.png	▽
+imgs/val_000305.png	5/8
+imgs/val_000306.png	⊥ 0,1 B
+imgs/val_000307.png	∥ 0,2 A
+imgs/val_000308.png	□38
+imgs/val_000309.png	∥ 0,1 B A
+imgs/val_000310.png	√Ra1.6
+imgs/val_000311.png	8-ø13
+imgs/val_000312.png	30±0,1
+imgs/val_000313.png	R154
+imgs/val_000314.png	- SANITAIRE -
+imgs/val_000315.png	8
+imgs/val_000316.png	⌭ 0,05 A B
+imgs/val_000317.png	TOLÉRANCES DÉDIÉES
+imgs/val_000318.png	7-Φ11
+imgs/val_000319.png	⌭ 1.1 A B C
+imgs/val_000320.png	3×117°
+imgs/val_000321.png	√ Ra 0.8
+imgs/val_000322.png	R67
+imgs/val_000323.png	⊥ 0,1 A C
+imgs/val_000324.png	X.XX=±0.010
+imgs/val_000325.png	7-φ15
+imgs/val_000326.png	⌭ 1.02 A B C
+imgs/val_000327.png	R129
+imgs/val_000328.png	2-ø8
+imgs/val_000329.png	□75
+imgs/val_000330.png	ø27
+imgs/val_000331.png	Φ199
+imgs/val_000332.png	DO NOT SCALE DRAWING
+imgs/val_000333.png	▽▽
+imgs/val_000334.png	3×155°
+imgs/val_000335.png	⏤ ø0.05 C
+imgs/val_000336.png	√Ra3.2
+imgs/val_000337.png	⌭ φ0.1 ABC
+imgs/val_000338.png	√ Ra 1.6
+imgs/val_000339.png	2×74°
+imgs/val_000340.png	0.609
+imgs/val_000341.png	omnifab@omnifab.ca
+imgs/val_000342.png	(OU EOUNALENT) SUR LES
+imgs/val_000343.png	1×165°
+imgs/val_000344.png	▽▽
+imgs/val_000345.png	⊥ Φ0.2 B
