@@ -156,6 +156,7 @@ def build_review(img_path, progress=None):
     from line_detect import match_numbers as mn
     from line_detect import arrowhead_template as at
     from line_detect import targets as TG
+    from line_detect import arc_detect
 
     pipe, det_model, det_post, det_ops, rec_model, rec_post, rec_ops = _load_models(progress)
 
@@ -200,6 +201,25 @@ def build_review(img_path, progress=None):
     # 텍스트 영역 안에 완전히 들어간 선분은 글자 획이므로 제외
     _, text_bboxes = TG.build_targets_and_text_bboxes(ocr_json)
     lines = mn.filter_lines_in_text_regions(raw_lines, text_bboxes)
+
+    # ── 2-b) 원/호 추출 ───────────────────────────────────
+    # 반드시 텍스트 제외 뒤에 돌린다. 글자 О/0/6은 둥글어서 원 검출기가 곧잘
+    # 집어삼킨다(컨투어 원형도 방식에서 "КОНФИДЕНЦИАЛЬНО"의 О가 전부 잡혔다).
+    if progress:
+        progress("원/호 추출 중...")
+    gray_for_arc = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
+    lines, arcs, arc_stats = arc_detect.extract_arcs(lines, gray_for_arc)
+    for i, a in enumerate(arcs):
+        doc.data["arcs"].append({
+            "id": f'c{i + 1}',
+            "center": [round(float(a["cx"]), 2), round(float(a["cy"]), 2)],
+            "r": round(float(a["r"]), 2),
+            "start_deg": round(float(a["start"]), 2),
+            "span_deg": round(float(a["span"]), 2),
+            "closed": bool(a["span"] >= 300.0),
+            "source": "auto", "verified": False,
+        })
+
     for i, L in enumerate(lines):
         doc.data["lines"].append({
             "id": f'l{i + 1}', "p1": [float(L[0]), float(L[1])],

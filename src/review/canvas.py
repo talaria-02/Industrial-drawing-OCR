@@ -177,6 +177,24 @@ class Canvas(QWidget):
 
         linked = {lid for l in self.doc.data['links'] for lid in l['line_ids']}
 
+        # 원/호 — 선분보다 먼저 그려서 아래에 깔리게 한다(선분 선택 표시가 가려지지 않게).
+        # Qt의 drawArc는 1/16도 단위이고 3시 방향에서 '반시계'로 잰다. 우리 각도는
+        # 이미지 좌표계(y가 아래로) 기준이라 화면상 '시계' 방향이므로 부호를 뒤집는다.
+        if show.get('all_lines', True) or show.get('linked_lines', True):
+            for c in self.doc.data.get('arcs', []):
+                sel = (self.sel_kind == 'arc' and self.sel_id == c['id'])
+                p.setPen(QPen(QColor(255, 0, 255) if sel else QColor(0, 150, 80),
+                              3 if sel else 2))
+                cx, cy = c['center']
+                r = c['r']
+                tl = self.to_screen(cx - r, cy - r)
+                br = self.to_screen(cx + r, cy + r)
+                rect = QRectF(tl.x(), tl.y(), br.x() - tl.x(), br.y() - tl.y())
+                if c.get('closed'):
+                    p.drawEllipse(rect)
+                else:
+                    p.drawArc(rect, int(-c['start_deg'] * 16), int(-c['span_deg'] * 16))
+
         # 선분
         for l in self.doc.data['lines']:
             is_linked = l['id'] in linked

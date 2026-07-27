@@ -33,6 +33,10 @@ def empty_doc(image_name, image_size):
         "image_size": list(image_size),   # [width, height]
         "texts": [],
         "lines": [],
+        # 원/호는 선분과 별개로 보관한다. LSD는 곡선을 짧은 현 수십 개로 쪼개는데,
+        # 그걸 선분으로 두면 (a) 후보 풀이 노이즈로 뒤덮이고 (b) ø/R 치수가
+        # 가리킬 대상 자체가 없어진다(ø275는 원을 가리키지 현을 가리키지 않는다).
+        "arcs": [],
         "arrows": [],
         "links": [],
         # ⑦ 제품사진 비교용 예약 공간. 도면은 mm, 사진은 px이므로 환산(캘리브레이션)이
