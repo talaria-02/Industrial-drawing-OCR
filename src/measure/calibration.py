@@ -36,6 +36,9 @@ DEFAULT_DICT = cv2.aruco.DICT_4X4_50
 MIN_MARKER_PX = 120
 # 측정 지점이 마커 크기의 이 배수보다 멀면 호모그래피 외삽 오차가 커진다.
 MAX_DIST_IN_MARKERS = 3.0
+# 보정 결과에 담을 범위(마커 크기의 배수). 이보다 멀면 외삽 오차가 커서
+# 어차피 측정에 못 쓴다. 50mm 마커면 반경 500mm로, 웬만한 부품은 다 들어간다.
+EXTENT_IN_MARKERS = 10.0
 
 
 def make_detector(dict_id=DEFAULT_DICT):
@@ -131,23 +134,45 @@ def rectify(image, marker_mm, px_per_mm=8.0, dict_id=DEFAULT_DICT,
             "더 가까이 찍거나 큰 마커를 쓰세요 — 오차가 대략 1/마커크기^2로 커집니다.")
 
     m = marker_mm * px_per_mm
-    off = margin_mm * px_per_mm
-    dst = np.array([[off, off], [off + m, off], [off + m, off + m], [off, off + m]],
-                   dtype=np.float32)
+    dst = np.array([[0, 0], [m, 0], [m, m], [0, m]], dtype=np.float32)
     H = cv2.getPerspectiveTransform(src, dst)
-    size = (int(m + 2 * off), int(m + 2 * off))
-    rectified = cv2.warpPerspective(image, H, size, flags=cv2.INTER_CUBIC)
+
+    # 출력 크기는 '원본 사진 전체가 담기도록' 잡는다.
+    # 마커 주변 고정 여백(margin_mm)만 담으면 정작 측정할 부품이 잘려 나간다 —
+    # 합성 검증 이미지를 눈으로 보고서야 발견했다. 측정 자체는 좌표 변환으로
+    # 되므로 수치는 맞았지만, 사람이 결과를 보고 측정점을 찍을 수 없다.
+    h, w = gray.shape[:2]
+    corners = np.array([[0, 0], [w, 0], [w, h], [0, h]], np.float32).reshape(-1, 1, 2)
+    warped = cv2.perspectiveTransform(corners, H).reshape(-1, 2)
+    pad = margin_mm * px_per_mm
+    lo = np.minimum(warped.min(axis=0), 0) - pad
+    hi = np.maximum(warped.max(axis=0), [m, m]) + pad
+    # 기울여 찍으면 프레임의 먼 쪽 모서리가 아주 멀리 투영돼, 그대로 캔버스를
+    # 잡으면 대부분이 빈 여백인 거대한 이미지가 나온다(실측: 5609x5291px).
+    # 마커를 중심으로 현실적인 범위(마커 크기의 EXTENT_IN_MARKERS배)로 자른다 —
+    # 그보다 멀면 어차피 외삽 오차가 커서 측정에 쓸 수 없는 영역이다.
+    reach = EXTENT_IN_MARKERS * m
+    lo = np.maximum(lo, np.array([m / 2 - reach, m / 2 - reach]))
+    hi = np.minimum(hi, np.array([m / 2 + reach, m / 2 + reach]))
+    span = np.maximum(hi - lo, m)
+    T = np.array([[1, 0, -lo[0]], [0, 1, -lo[1]], [0, 0, 1]], np.float64)
+    H = T @ H
+    size = (int(np.clip(span[0], 64, 20000)), int(np.clip(span[1], 64, 20000)))
+    rectified = cv2.warpPerspective(image, H, size, flags=cv2.INTER_CUBIC,
+                                    borderValue=(255, 255, 255))
+    dst = cv2.perspectiveTransform(src.reshape(-1, 1, 2), H).reshape(-1, 2)
+    off_x, off_y = float(dst[0][0]), float(dst[0][1])
 
     # 되돌려 본 잔차 — 호모그래피가 제대로 섰는지 확인용(4점 피팅이라 0에 가깝지만,
     # 코너가 엉뚱하게 잡힌 경우를 잡아낸다)
-    back = cv2.perspectiveTransform(src.reshape(-1, 1, 2), H).reshape(-1, 2)
-    residual = float(np.sqrt(np.mean(np.sum((back - dst) ** 2, axis=1))))
+    ideal = dst[0] + np.array([[0, 0], [m, 0], [m, m], [0, m]], np.float64)
+    residual = float(np.sqrt(np.mean(np.sum((dst - ideal) ** 2, axis=1))))
 
     return {"rectified": rectified, "px_per_mm": float(px_per_mm), "homography": H,
             # ids 모양이 (N,1)인 버전과 (N,)인 버전이 둘 다 있어 ravel로 통일
             "marker_px": marker_px, "marker_id": int(np.ravel(ids)[k]),
             "residual_px": residual, "warnings": warnings,
-            "marker_origin_px": (float(off), float(off)), "marker_mm": float(marker_mm)}
+            "marker_origin_px": (off_x, off_y), "marker_mm": float(marker_mm)}
 
 
 def measurement_uncertainty(length_mm, dist_from_marker_mm, marker_mm,
