@@ -7,9 +7,6 @@
 
 ## 1. 프로젝트 목표
 
-
-## 3. 전체 진행 과정 (시간순)
-
 ### 단계 0 — 초기 탐색 (폐기된 방향)
 - Blender 3D 모델링, 도형 인식 모델 검토 → 멘토 가이드로 **"치수 숫자 중심"으로 방향 전환**.
 - 초기 합성 도면 v4 + Tesseract 파이프라인 제작. 회전/뒤집기 증강은 목적과 안 맞아 폐기.
@@ -226,66 +223,73 @@ F-K 검증 (오버레이 전수검사): 픽셀 오제거 없음 확인. 잔여 �
     본인이 먼저 실험 로그·쓰레기 산출물을 정리(폴더 리네임 포함)한 뒤 AI에게
     구조화를 넘김.
 
-## 5. 파일 구성 (2026-07-20 리팩토링)
+## 5. 파일 구성 (2026-07-23 리팩토링 — src/ 레이아웃)
 
-폴더별로 역할을 분리. **모든 스크립트는 repo 루트에서 실행**하는 것을 기준으로
-상대경로가 잡혀 있음 (예: `python pipeline/paddle_rotate_merge.py data/real/`).
+코드(`src/`)와 데이터/산출물(`data/`,`results/`)을 분리. **모든 스크립트는 repo
+루트에서 실행**하는 것을 기준으로 데이터 상대경로가 잡혀 있음
+(예: `python src/datagen/gen_det_overlay.py`). 모듈 import는 스크립트 폴더 기준이라
+상호 import하는 스크립트끼리는 같은 폴더에 묶여 있음.
 
 ```
 ├── data/
-│   ├── real/    실제 도면 29장 (변형 묶음 01~20 + eDOCr 논문 5장 + 초기 4장)
-│   ├── repr/     대표성 검증용 11장 부분집합 (과적합 체크 — data/real의 서브셋)
-│   └── synth/    합성 도면 100장 + 라벨 (create_data_v5.py 산출물)
-├── pipeline/      실전 OCR 파이프라인 (핵심)
-├── legacy/        baseline·보류 코드 (ARCHIVE.md 참조 대상과 별개로, 현역이지만 비주력)
-├── finetune/      PaddleOCR 인식기 파인튜닝 준비 (증강 코드)
-├── weights/       사전학습/실험 가중치
-├── results/       파이프라인 실행 산출물 (재생성 가능, 매 실행시 갱신)
-└── *.md           문서 (루트 유지)
+│   ├── real/       실 라벨 도면 (train/ — PPOCRLabel 형식, 소스 데이터·git 추적)
+│   ├── generated/  합성·증강·consolidated 산출물 전부 (gitignore, 재생성 가능)
+│   └── synth/      create_data_v5.py 산출물 (gitignore)
+├── src/
+│   ├── datagen/    합성·증강 데이터 생성기 (flat import 묶음)
+│   ├── pipeline/   추론 파이프라인
+│   ├── eval/       정량 평가·진단
+│   ├── labeling/   라벨링 도구
+│   └── train/      Colab 학습/테스트 노트북
+├── results/        추론·진단 출력 (gitignore, 매 실행 갱신)
+└── *.md            문서 (루트 유지)
 ```
 
-### pipeline/ — 실전 OCR 파이프라인
+### src/datagen/ — 데이터 생성·증강 (flat import 묶음)
 | 파일 | 역할 |
 |---|---|
-| `create_data_v5.py` | 실제 도면 복잡도의 합성 도면 생성기 (라벨 포함) → `data/synth` |
-| `paddle_rotate_merge.py` | **핵심 OCR** — 다패스 회전병합. `--angles 45,-45`(대각) `--clean`/`--fk`(전처리) `--out` |
-| `remove_lines.py` | 점선 제거 전처리 (morph v2 / F-K 공선 체인 v4) |
+| `gen_det_overlay.py` | **det 학습데이터 핵심** — 실도면 배경 위 40% 박스를 '글자별 왜곡+합성'으로 갈아끼움(페이드95%) → `data/generated/det_overlay_data` |
+| `create_data_v5.py` | 합성 도면 생성기(치수/기호/타이틀블록 + det bbox 라벨) → `data/synth` |
+| `build_train_data.py` | rec 학습셋 통합(합성+실크롭, dict OOV 필터) → `train_data_consolidated` |
+| `gen_*.py` | rec용 기호/공차/노이즈 조합 생성기들 (symbol/stacked/counterbore/line-noise/priority) |
+| `gen_real_augment_preview.py` | 실크롭 text-swap+회전+포토메트릭 증강 |
+| `split_stacked_crop.py` | 적층공차 통짜박스 → rec 전 열/행 분리 |
+| `build_handwriting_montage.py` | 실크롭 몽타주(이미지생성모델 스타일변형용) |
+| `augment.py`/`warp_mls.py`/`__init__.py` | TIA(distort/stretch/perspective) 증강 엔진 |
+| `zone_utils.py` | `###ZONE:DRAWING###` 태그 박스 분리 유틸(도면/메타 구분) |
+
+### src/pipeline/ — 추론 파이프라인
+| 파일 | 역할 |
+|---|---|
+| `infer_raw_pipeline.py` | **export 없이 raw checkpoint로 det→crop→rec** (회전은 rec 신뢰도로 판단) |
+| `paddle_rotate_merge.py` | 다패스 회전병합 OCR |
 | `region_split.py` | 프레임/타이틀블록 검출, drawing/meta 분류 |
-| `eval_ocr.py` | 채점 공통 로직 + Tesseract baseline (legacy/ocr_real_drawing 사용) |
-| `eval_paddle.py` / `eval_paddle_v2.py` | 엔진/파이프라인 정량 평가 |
 
-### legacy/ — baseline·보류 코드
+### src/eval/ — 평가·진단
 | 파일 | 역할 |
 |---|---|
-| `ocr_real_drawing.py` | Tesseract 파이프라인 (baseline 재현 보존) |
-| `preprocess.py` | 선/텍스트 레이어 분리 (향후 치수선 연결 기반) |
-| `test_paddle_real.py` | 1패스 시각화 (before/after 비교용) |
-| `test_rtdetr_all.py` | RT-DETR 검출 실험 (`weights/eng_dwg_v1.pt` 사용, 향후 후보) |
+| `eval_ocr.py` | 채점 공통 로직(recall/precision) |
+| `eval_paddle.py` / `eval_paddle_v2.py` | 엔진/파이프라인 정량 평가 (v2는 pipeline 상호import — sys.path shim) |
+| `test_det_only.py` | stock det이 특수기호를 얼마나 놓치는지 bbox만 시각화 → `results/det_only_check` |
 
-### finetune/ — PaddleOCR 인식기 파인튜닝 준비 (신규)
-PaddleOCR 공식 저장소의 TIA(Text Image Augmentation) 코드를 가져옴 — 실제
-PaddleOCR 인식기(rec) 학습에 쓰이는 증강 기법.
+### src/labeling/ · src/train/
 | 파일 | 역할 |
 |---|---|
-| `augment.py` / `__init__.py` | `tia_distort`/`tia_stretch`/`tia_perspective` — 뒤틀림·늘림·원근 증강 |
-| `warp_mls.py` | Moving Least Squares 기반 워핑 엔진 (augment.py가 내부 사용) |
-| `test_augment.py` | 증강 3종 스모크 테스트 → `finetune/samples/`에 결과 저장 |
-
-### 기타
-| 경로 | 내용 |
-|---|---|
-| `weights/eng_dwg_v1.pt` | RT-DETR 사전학습 가중치 (66MB) |
-| `results/ocr/`, `results/region/` | 파이프라인 실행 산출물 (실행할 때마다 생성, 커밋 불필요) |
-| `mentoring_md` | 멘토링 회의록 |
-| `DOMAIN.md` | 도면 표기법 도메인 지식 (파서 사양 포함) |
+| `labeling/run_ppocrlabel.py` | Windows PyQt5/torch DLL 충돌 회피 런처 |
+| `labeling/prepare_labeling.py` | 원본→train/test 분할(라벨링 준비) |
+| `labeling/labeling_prompt.md` | 외부 라벨링 가이드(bbox/정규화/기호 규칙) |
+| `train/colab_train.ipynb` | rec(PP-OCRv6_small) Colab 파인튜닝 |
+| `train/colab_train_det.ipynb` | det(PP-OCRv6_small) Colab 파인튜닝 |
+| `train/colab_test.ipynb` | raw checkpoint det+rec 파이프라인 테스트 |
 
 ### 리팩토링 시 주의사항 (import/경로 함정 기록)
-- `pipeline/eval_ocr.py`는 `legacy/ocr_real_drawing.py`를 import — 다른 폴더라
-  `sys.path.insert(0, ...legacy)`로 명시적 연결. 폴더 재배치 시 깨지기 쉬운 지점.
-- `finetune/augment.py`·`__init__.py`는 같은 폴더의 `warp_mls.py`를 import —
-  호출 위치와 무관하게 찾도록 `sys.path.insert(0, Path(__file__).parent)` 처리.
-- `cv2.imread`는 한글 경로(예: `바탕 화면`)를 못 읽음 — 이미지 로드는 전부
-  `cv2.imdecode(np.fromfile(path, np.uint8), ...)` 패턴 사용 (Windows 프로젝트 공통 함정).
+- **모든 데이터 경로는 repo 루트 기준 상대경로** 하드코딩 — 파일 이동 시 경로 문자열도 같이 수정.
+- `src/eval/eval_paddle_v2.py`는 `src/pipeline/`의 `paddle_rotate_merge`·`region_split`를
+  import — `sys.path.insert(0, ...pipeline)`로 명시 연결. 폴더 재배치 시 깨지기 쉬운 지점.
+- `src/datagen/`의 스크립트들은 같은 폴더 `zone_utils`/`warp_mls`/`gen_line_noise_rec`를
+  flat import — 그래서 datagen 묶음은 반드시 한 폴더에 유지.
+- `cv2.imread`는 한글 경로(예: `바탕 화면`)를 못 읽음 — 이미지 로드는
+  `cv2.imdecode(np.fromfile(path, np.uint8), ...)` 패턴 사용 (Windows 공통 함정).
 
 ## 6. 설계 결정과 근거
 
