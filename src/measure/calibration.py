@@ -175,6 +175,112 @@ def rectify(image, marker_mm, px_per_mm=8.0, dict_id=DEFAULT_DICT,
             "marker_origin_px": (off_x, off_y), "marker_mm": float(marker_mm)}
 
 
+def make_board(cols=2, rows=2, marker_mm=60.0, gap_mm=20.0, dict_id=DEFAULT_DICT):
+    """여러 마커가 '알려진 배치'로 인쇄된 보드.
+
+    [낱개 마커 여러 장을 흩어놓으면 왜 안 되는가]
+    서로의 상대 위치를 모르면 한 좌표계로 묶을 수 없다. 보드는 배치가 설계상
+    확정돼 있어서(getObjPoints가 mm 좌표를 준다) 검출된 모든 코너를 하나의
+    호모그래피에 함께 넣을 수 있다.
+
+    [왜 하나보다 나은가]
+    오차를 지배하는 건 마커 크기가 아니라 '기준점이 퍼진 폭'이다. 측정 지점이
+    기준점 바깥에 있으면 외삽이라 오차가 거리에 비례해 커지는데, 보드로 부품을
+    둘러싸면 내삽이 되어 오차가 급감한다. 덤으로 코너 수가 4개에서 4N개로 늘어
+    최소자승 평균화 효과와, 일부가 가려져도 동작하는 여유가 생긴다.
+    """
+    d = cv2.aruco.getPredefinedDictionary(dict_id)
+    return cv2.aruco.GridBoard((cols, rows), float(marker_mm), float(gap_mm), d)
+
+
+def board_image(board, px_per_mm=8.0, margin_mm=10.0):
+    """인쇄용 보드 이미지. 100% 배율로 인쇄한 뒤 반드시 자로 실측할 것."""
+    cols, rows = board.getGridSize()
+    ml, gap = board.getMarkerLength(), board.getMarkerSeparation()
+    w_mm = cols * ml + (cols - 1) * gap
+    h_mm = rows * ml + (rows - 1) * gap
+    img = board.generateImage((int(w_mm * px_per_mm), int(h_mm * px_per_mm)))
+    pad = int(margin_mm * px_per_mm)
+    return cv2.copyMakeBorder(img, pad, pad, pad, pad, cv2.BORDER_CONSTANT, value=255)
+
+
+def rectify_board(image, board, px_per_mm=8.0, camera_matrix=None, dist_coeffs=None,
+                  margin_mm=40.0, min_markers=2):
+    """보드 기반 보정. rectify()와 같은 dict를 돌려주되 정확도가 더 좋다.
+
+    검출된 마커가 min_markers 미만이면 실패시킨다 — 1개로 떨어지면 rectify()와
+    같아지는데, 사용자는 보드를 썼으니 더 정확할 거라고 믿게 되므로 조용히
+    수준을 낮추기보다 알려주는 편이 낫다.
+    """
+    gray = image if image.ndim == 2 else cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    if camera_matrix is not None and dist_coeffs is not None:
+        image = cv2.undistort(image, camera_matrix, dist_coeffs)
+        gray = cv2.undistort(gray, camera_matrix, dist_coeffs)
+
+    params = cv2.aruco.DetectorParameters()
+    params.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
+    detector = cv2.aruco.ArucoDetector(board.getDictionary(), params)
+    corners, ids, _ = detector.detectMarkers(gray)
+    if ids is None or len(ids) < min_markers:
+        n = 0 if ids is None else len(ids)
+        raise ValueError(f"보드 마커를 {n}개만 찾았습니다(최소 {min_markers}개). "
+                         "보드 전체가 프레임에 들어오고 초점이 맞았는지 확인하세요.")
+
+    obj_all, ids_all = board.getObjPoints(), np.ravel(board.getIds())
+    src_pts, dst_mm = [], []
+    for c, i in zip(corners, np.ravel(ids)):
+        w = np.where(ids_all == i)[0]
+        if len(w) == 0:
+            continue                      # 보드에 없는 마커(다른 물건)는 무시
+        src_pts.append(c.reshape(4, 2))
+        dst_mm.append(np.asarray(obj_all[w[0]], np.float64)[:, :2])
+    if len(src_pts) < min_markers:
+        raise ValueError(f"보드에 속한 마커가 {len(src_pts)}개뿐입니다.")
+
+    src = np.concatenate(src_pts).astype(np.float64)
+    dst0 = np.concatenate(dst_mm) * px_per_mm
+    # 4점 초과라 최소자승이 걸린다. RANSAC은 쓰지 않는다 — 코너는 이미 검증된
+    # 대응이라 이상치가 없고, 표본이 적어 무작위 표집이 오히려 불안정하다.
+    H, _ = cv2.findHomography(src, dst0, method=0)
+    if H is None:
+        raise ValueError("호모그래피 계산에 실패했습니다.")
+
+    # 재투영 잔차 — 마커 1개일 때는 항상 0이라 무의미했지만, 여기서는 실제
+    # 품질 지표다(보드가 휘었거나 코너가 잘못 잡히면 값이 뛴다).
+    proj = cv2.perspectiveTransform(src.reshape(-1, 1, 2), H).reshape(-1, 2)
+    residual = float(np.sqrt(np.mean(np.sum((proj - dst0) ** 2, axis=1)))) / px_per_mm
+
+    h, w = gray.shape[:2]
+    fr = cv2.perspectiveTransform(
+        np.array([[0, 0], [w, 0], [w, h], [0, h]], np.float32).reshape(-1, 1, 2),
+        H).reshape(-1, 2)
+    pad = margin_mm * px_per_mm
+    span_mm = max(np.ptp(dst0[:, 0]), np.ptp(dst0[:, 1]))
+    reach = EXTENT_IN_MARKERS * max(span_mm, 1.0)
+    ctr = dst0.mean(axis=0)
+    lo = np.maximum(np.minimum(fr.min(axis=0), dst0.min(axis=0)) - pad, ctr - reach)
+    hi = np.minimum(np.maximum(fr.max(axis=0), dst0.max(axis=0)) + pad, ctr + reach)
+    T = np.array([[1, 0, -lo[0]], [0, 1, -lo[1]], [0, 0, 1]], np.float64)
+    H = T @ H
+    size = (int(np.clip(hi[0] - lo[0], 64, 20000)), int(np.clip(hi[1] - lo[1], 64, 20000)))
+    rectified = cv2.warpPerspective(image, H, size, flags=cv2.INTER_CUBIC,
+                                    borderValue=(255, 255, 255))
+
+    areas = [cv2.contourArea(c.reshape(4, 2).astype(np.float32)) for c in src_pts]
+    marker_px = float(np.sqrt(np.mean(areas)))
+    warnings = []
+    if marker_px < MIN_MARKER_PX:
+        warnings.append(f"마커가 평균 {marker_px:.0f}px 뿐입니다(권장 {MIN_MARKER_PX}px 이상).")
+    if residual > 0.5:
+        warnings.append(f"재투영 잔차 {residual:.2f}mm — 보드가 휘었거나 평면이 아닐 수 있습니다.")
+
+    return {"rectified": rectified, "px_per_mm": float(px_per_mm), "homography": H,
+            "marker_px": marker_px, "n_markers": len(src_pts),
+            "residual_mm": residual, "warnings": warnings,
+            "marker_origin_px": (float(-lo[0]), float(-lo[1])),
+            "marker_mm": float(board.getMarkerLength())}
+
+
 def measurement_uncertainty(length_mm, dist_from_marker_mm, marker_mm,
                             height_diff_mm=0.0, camera_dist_mm=400.0,
                             edge_px_err=1.5, px_per_mm=8.0):
