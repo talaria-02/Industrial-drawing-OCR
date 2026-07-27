@@ -174,6 +174,60 @@ def orthogonal_snap(lines, tol_deg=1.0):
     return lines, log
 
 
+def refine_pipeline_g0(raw_lines, gray, min_length_pre=8.0, min_length_post=15.0,
+                        angle_thresh_deg=1.5, endpoint_gap_px=15.0,
+                        frag_perp_px=1.0, snap_tol_deg=1.0,
+                        gap_range=None, contrast_thresh=None):
+    """엣지쌍 병합(G0)을 포함한 후처리. refine_pipeline의 후속 버전.
+
+    [기존 refine_pipeline과 무엇이 다른가]
+    기존은 merge_collinear(perp_thresh=3.0) 하나로 끝냈는데, 실측 선 굵기가
+    2.6px라 3.0 > 2.6 이 되어 '한 획의 양쪽 경계'가 공선조각으로 오인돼 우발적
+    으로 합쳐지고 있었다. 굵은 선(3px 초과)은 안 합쳐지므로 일관성이 없었다.
+
+    그래서 두 가지를 분리한다:
+      A. 조각 잇기   perp <= frag_perp_px(1.0)  — 굵기(2.6px)를 못 건너뛴다.
+                     같은 경계의 끊긴 조각만 잇는다.
+      B. 엣지쌍 병합 edge_pair.merge_edge_pairs — 잉크검사로 획쌍만 골라 병합.
+      C. 중심선끼리 다시 조각 잇기
+      D. 직교 스냅
+
+    A를 B보다 먼저 두는 이유: 한 획의 위 경계가 3조각, 아래가 1조각으로 검출
+    되면 B의 겹침 조건이 실패한다. 조각을 먼저 이어야 짝이 맞는다.
+    frag_perp_px가 굵기보다 작아야 A가 엣지쌍을 건드리지 않는다.
+    """
+    from . import edge_pair
+
+    lines = length_nms(raw_lines, min_length_pre)
+    n_after_pre_filter = len(lines)
+
+    # A. 같은 경계의 조각만 잇기 (굵기를 건너뛰지 않는 좁은 허용치)
+    lines = merge_collinear(lines, angle_thresh_deg, frag_perp_px, endpoint_gap_px)
+    n_after_defrag = len(lines)
+
+    # B. 엣지쌍 -> 중심선
+    lines, pair_meta = edge_pair.merge_edge_pairs(
+        lines, gray, angle_thresh_deg=angle_thresh_deg,
+        gap_range=gap_range, contrast_thresh=contrast_thresh)
+    n_after_pairs = len(lines)
+
+    # C. 중심선끼리 조각 잇기
+    lines = merge_collinear(lines, angle_thresh_deg, frag_perp_px, endpoint_gap_px)
+    lines = length_nms(lines, min_length_post)
+    lines, snap_log = orthogonal_snap(lines, snap_tol_deg)
+
+    stats = {
+        "n_raw": int(len(raw_lines)),
+        "n_after_pre_filter": int(n_after_pre_filter),
+        "n_after_defrag": int(n_after_defrag),
+        "n_after_pairs": int(n_after_pairs),
+        "n_final": int(len(lines)),
+        "n_snapped": len(snap_log),
+        **{f"pair_{k}": v for k, v in pair_meta["stats"].items()},
+    }
+    return lines, stats
+
+
 def refine_pipeline(raw_lines, min_length_pre=8.0, min_length_post=15.0,
                      angle_thresh_deg=1.5, perp_thresh_px=3.0, endpoint_gap_px=15.0,
                      snap_tol_deg=1.0):
