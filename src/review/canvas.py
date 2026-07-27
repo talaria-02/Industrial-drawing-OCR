@@ -181,6 +181,8 @@ class Canvas(QWidget):
         show = self.visibility()
 
         linked = {lid for l in self.doc.data['links'] for lid in l['line_ids']}
+        linked_arcs = {cid for l in self.doc.data['links']
+                       for cid in l.get('arc_ids', [])}
 
         # 원/호 — 선분보다 먼저 그려서 아래에 깔리게 한다(선분 선택 표시가 가려지지 않게).
         # Qt의 drawArc는 1/16도 단위이고 3시 방향에서 '반시계'로 잰다. 우리 각도는
@@ -188,8 +190,13 @@ class Canvas(QWidget):
         if show.get('arcs', True):
             for c in self.doc.data.get('arcs', []):
                 sel = (self.sel_kind == 'arc' and self.sel_id == c['id'])
-                p.setPen(QPen(QColor(255, 0, 255) if sel else QColor(0, 150, 80),
-                              3 if sel else 2))
+                if sel:
+                    acol, awd = QColor(255, 0, 255), 3
+                elif c['id'] in linked_arcs:
+                    acol, awd = QColor(30, 90, 220), 3      # 선분과 같은 '연결됨' 색
+                else:
+                    acol, awd = QColor(0, 150, 80), 2
+                p.setPen(QPen(acol, awd))
                 cx, cy = c['center']
                 r = c['r']
                 tl = self.to_screen(cx - r, cy - r)
@@ -252,12 +259,28 @@ class Canvas(QWidget):
             hot = (tid == self.pending_text_id) or \
                   (self.sel_kind == 'text' and self.sel_id == tid)
             tc = self.to_screen(*self.doc.text_center(t))
+            # 선분은 중점으로, 원은 '텍스트에서 가장 가까운 둘레 위 점'으로 잇는다.
+            # 원 중심으로 이으면 큰 원에서 연결선이 도면을 가로질러 버린다.
+            targets = []
             for lid in link['line_ids']:
                 l = self.doc.find('lines', lid)
-                if l is None:
+                if l is not None:
+                    targets.append(((l['p1'][0] + l['p2'][0]) / 2,
+                                    (l['p1'][1] + l['p2'][1]) / 2))
+            tcx, tcy = self.doc.text_center(t)
+            for cid in link.get('arc_ids', []):
+                c = self.doc.find('arcs', cid)
+                if c is None:
                     continue
-                mid = self.to_screen((l['p1'][0] + l['p2'][0]) / 2,
-                                      (l['p1'][1] + l['p2'][1]) / 2)
+                cx, cy = c['center']
+                d = np.hypot(tcx - cx, tcy - cy)
+                if d < 1e-6:
+                    targets.append((cx + c['r'], cy))
+                else:
+                    targets.append((cx + (tcx - cx) / d * c['r'],
+                                    cy + (tcy - cy) / d * c['r']))
+            for tgt in targets:
+                mid = self.to_screen(*tgt)
                 col = QColor(255, 60, 0) if hot else QColor(90, 40, 220)
                 wdt = 4 if hot else 2
                 # 흰색 밑선을 먼저 깔면 검은 도면선 위에서도 연결선이 뚜렷하게 보인다
@@ -552,13 +575,21 @@ class Canvas(QWidget):
                 self.selectionChanged.emit()
                 self.statusMessage.emit('연결할 선을 클릭하세요 (여러 개 가능, Enter로 종료)')
             return
-        lid = self.hit_line(ix, iy)
-        if lid:
-            self.doc.toggle_link_line(self.pending_text_id, lid)
+        # 원을 선분보다 먼저 본다. ø/R 치수는 원을 가리키는데, 지름 치수선이
+        # 원을 가로질러 그려져 있으면 선분이 먼저 잡혀서 원을 못 고른다.
+        cid = self.hit_arc(ix, iy)
+        lid = None if cid else self.hit_line(ix, iy)
+        if cid or lid:
+            if cid:
+                self.doc.toggle_link_arc(self.pending_text_id, cid)
+            else:
+                self.doc.toggle_link_line(self.pending_text_id, lid)
             self.docChanged.emit()
             link = self.doc.get_link(self.pending_text_id)
-            n = len(link['line_ids']) if link else 0
-            self.statusMessage.emit(f'선 {n}개 연결됨 — 더 클릭하거나 Enter로 종료')
+            nl = len(link['line_ids']) if link else 0
+            nc = len(link.get('arc_ids', [])) if link else 0
+            self.statusMessage.emit(
+                f'선 {nl}개 · 원 {nc}개 연결됨 — 더 클릭하거나 Enter로 종료')
         else:
             # 빈 곳 클릭 = 다른 숫자 선택으로 전환
             tid = self.hit_text(ix, iy)

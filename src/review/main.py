@@ -65,7 +65,7 @@ MODE_HELP = {
     C.MODE_LINE: '끝점드래그=수정 · 빈곳 2클릭=새 선 · 클릭=선택 · Del=삭제',
     C.MODE_ARC: '빈곳 2클릭(중심→둘레)=새 원 · 파란점=중심이동 · 둘레드래그=반지름 · 초록/주황점=각도 · C=원↔호 전환 · Del=삭제',
     C.MODE_ARROW: '끝점(또는 선 몸통) 클릭마다 순환: 회색(미검사) → 초록(있음) → 빨강(없음) → 회색',
-    C.MODE_MATCH: '숫자 클릭 → 선 클릭(여러 개 가능) → Enter 확정 · 연결된 선 재클릭=그 선만 해제 · Del=전체 해제 · 우클릭=취소',
+    C.MODE_MATCH: '숫자 클릭 → 선/원 클릭(여러 개 가능) → Enter 확정 · 연결된 선 재클릭=그 선만 해제 · Del=전체 해제 · 우클릭=취소',
     C.MODE_CATEGORY: '숫자 클릭 후 오른쪽 패널에서 카테고리 변경',
     C.MODE_MEASURE: '제품사진 비교 기능은 향후 추가 예정 (자리만 예약)',
 }
@@ -329,10 +329,14 @@ class MainWindow(QMainWindow):
         if self.doc is not None:
             for t in self.doc.data['texts']:
                 link = self.doc.get_link(t['id'])
-                n = len(link['line_ids']) if link else 0
+                nl = len(link['line_ids']) if link else 0
+                nc = len(link.get('arc_ids', [])) if link else 0
+                n = nl + nc
                 mark = '✓' if (link and link.get('verified')) else ('·' if n else '✗')
+                # ø/R 치수는 원에 붙으므로 선/원을 나눠 보여줘야 검수자가 판단할 수 있다
+                cnt = f'선{nl}' + (f' 원{nc}' if nc else '')
                 item = QListWidgetItem(
-                    f'{mark} {t.get("text","")[:14]:<14} [{t.get("category","")}] 선{n}')
+                    f'{mark} {t.get("text","")[:14]:<14} [{t.get("category","")}] {cnt}')
                 item.setData(Qt.UserRole, ('text', t['id']))
                 self.list_widget.addItem(item)
         self.list_widget.blockSignals(False)
@@ -349,10 +353,11 @@ class MainWindow(QMainWindow):
         target = None
         if c.sel_kind == 'text' and c.sel_id:
             target = ('text', c.sel_id)
-        elif c.sel_kind == 'line' and c.sel_id:
-            # 선분을 골랐으면, 그 선과 연결된 숫자를 목록에서 짚어준다
+        elif c.sel_kind in ('line', 'arc') and c.sel_id:
+            # 선분/원을 골랐으면, 그것과 연결된 숫자를 목록에서 짚어준다
+            key = 'line_ids' if c.sel_kind == 'line' else 'arc_ids'
             for link in (self.doc.data['links'] if self.doc else []):
-                if c.sel_id in link['line_ids']:
+                if c.sel_id in link.get(key, []):
                     target = ('text', link['text_id'])
                     break
         self.list_widget.blockSignals(True)
@@ -388,7 +393,8 @@ class MainWindow(QMainWindow):
                 self.combo_cat.setCurrentIndex(
                     CATEGORIES.index(cat) if cat in CATEGORIES else len(CATEGORIES) - 1)
                 link = self.doc.get_link(oid)
-                lids = ', '.join(link['line_ids']) if link else '없음'
+                ids = (link['line_ids'] + link.get('arc_ids', [])) if link else []
+                lids = ', '.join(ids) if ids else '없음'
                 self.lbl_info.setText(
                     f'id={oid} · score={t.get("score")} · {"검수됨" if t.get("verified") else "자동"}\n'
                     f'연결: {lids}')

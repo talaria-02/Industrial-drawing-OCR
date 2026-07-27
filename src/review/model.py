@@ -246,7 +246,14 @@ class ReviewDoc:
     def delete_arc(self, cid):
         self.push_undo()
         self.data["arcs"] = [c for c in self.data["arcs"] if c["id"] != cid]
+        for link in self.data["links"]:
+            if cid in link.get("arc_ids", []):
+                link["arc_ids"] = [x for x in link["arc_ids"] if x != cid]
+                link["source"] = "human"
         self._log("arc_delete", arc_id=cid)
+
+    def linked_arc_ids(self):
+        return {cid for l in self.data["links"] for cid in l.get("arc_ids", [])}
 
     # ── 화살촉 ─────────────────────────────────────────────
     def get_arrow(self, lid, end):
@@ -295,24 +302,35 @@ class ReviewDoc:
     def toggle_link_line(self, tid, lid):
         """이미 연결된 선이면 해제, 아니면 추가.
         line_ids가 배열인 이유: 하나의 치수가 여러 선분을 가리키는 경우가 실제로 있다."""
+        return self._toggle_link(tid, "line_ids", lid)
+
+    def toggle_link_arc(self, tid, cid):
+        """치수 <-> 원/호 연결. ø와 R 치수가 가리키는 대상은 선분이 아니라 원이다.
+
+        선분과 별도 배열(arc_ids)로 두는 이유: id 공간이 다르고(l1 / c1), 하나의
+        치수가 원과 선분을 동시에 가리키는 경우도 있다(예: 지름 치수선이 원을
+        가로지르며 그려진 경우)."""
+        return self._toggle_link(tid, "arc_ids", cid)
+
+    def _toggle_link(self, tid, key, oid):
         self.push_undo()
         link = self.get_link(tid)
         if link is None:
             self.data["links"].append({
-                "text_id": tid, "line_ids": [lid],
+                "text_id": tid, "line_ids": [], "arc_ids": [],
                 "source": "human", "confidence": None, "verified": True,
             })
+            link = self.data["links"][-1]
+        ids = link.setdefault(key, [])
+        before = list(ids)
+        if oid in ids:
+            link[key] = [x for x in ids if x != oid]
         else:
-            before = list(link["line_ids"])
-            if lid in link["line_ids"]:
-                link["line_ids"] = [x for x in link["line_ids"] if x != lid]
-            else:
-                link["line_ids"].append(lid)
-            link["source"] = "human"
-            link["verified"] = True
-            self._log("link_edit", text_id=tid, before=before, after=list(link["line_ids"]))
-            return
-        self._log("link_add", text_id=tid, line_id=lid)
+            ids.append(oid)
+        link["source"] = "human"
+        link["verified"] = True
+        self._log("link_edit", text_id=tid, key=key, before=before,
+                  after=list(link[key]))
 
     def clear_link(self, tid):
         self.push_undo()
@@ -378,8 +396,14 @@ class ReviewDoc:
                 l = self.find("lines", lid)
                 if l is not None:
                     segs.append({"id": lid, "p1": l["p1"], "p2": l["p2"]})
+            circles = []
+            for cid in link.get("arc_ids", []):
+                c = self.find("arcs", cid)
+                if c is not None:
+                    circles.append({"id": cid, "center": c["center"], "r": c["r"],
+                                    "start_deg": c["start_deg"], "span_deg": c["span_deg"]})
             gt.append({
-                "text_id": link["text_id"], "text": t["text"],
+                "text_id": link["text_id"], "text": t["text"], "circles": circles,
                 "category": t.get("category"), "bbox": self.text_bbox(t),
                 "lines": segs,
             })
