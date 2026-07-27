@@ -5,6 +5,53 @@
 
 ---
 
+## 0. 실행 준비 (저장소를 새로 받은 경우)
+
+**이 저장소에는 코드와 문서만 있습니다.** 데이터와 모델 가중치는 용량·공개
+문제로 추적하지 않으므로(`.gitignore`), 실행하려면 아래 두 가지를 직접 채워야
+합니다.
+
+### (1) 모델 가중치 → `src/parameter/`
+
+| 파일 | 크기 | 내용 |
+|---|---|---|
+| `det_model2.pdparams` | 11MB | 텍스트 검출 (PP-OCRv6_small_det 파인튜닝) |
+| `rec_model.pdparams` | 120MB | 문자 인식 (PP-OCRv6_small_rec 파인튜닝) |
+
+`rec_model.pdparams`가 GitHub 100MB 제한을 넘어 저장소에 올릴 수 없습니다.
+Drive 등으로 따로 받아서 `src/parameter/`에 넣으면 됩니다.
+
+### (2) 데이터 → `data/`
+
+```
+data/
+├── real/train/   실 도면 + Label.txt (PPOCRLabel 형식)
+├── real/test/    평가용 도면
+└── crop_image/   기호 crop (기호 인식 실험용)
+```
+
+`generated/`, `synth/`는 생성기를 돌리면 다시 만들어집니다.
+
+### (3) PaddleOCR 레포
+
+`src/parameter`의 config가 PaddleOCR 레포를 참조합니다. 기본 경로는
+프로젝트와 형제 위치의 `ppocr/PaddleOCR`이며, 다르면 `src/review/bootstrap.py`의
+`PPOCR_REPO` 상수를 고치면 됩니다.
+
+### 실행
+
+```bash
+# 검수 UI (자동 처리 + 사람 검수)
+python src/review/main.py
+
+# 배치 추론
+python src/pipeline/run_infer_local.py
+```
+
+스크립트는 **repo 루트에서 실행**하는 것을 기준으로 데이터 상대경로가 잡혀 있습니다.
+
+---
+
 ## 1. 프로젝트 목표
 
 ### 단계 0 — 초기 탐색 (폐기된 방향)
@@ -231,17 +278,21 @@ F-K 검증 (오버레이 전수검사): 픽셀 오제거 없음 확인. 잔여 �
 상호 import하는 스크립트끼리는 같은 폴더에 묶여 있음.
 
 ```
-├── data/
-│   ├── real/       실 라벨 도면 (train/ — PPOCRLabel 형식, 소스 데이터·git 추적)
-│   ├── generated/  합성·증강·consolidated 산출물 전부 (gitignore, 재생성 가능)
-│   └── synth/      create_data_v5.py 산출물 (gitignore)
+├── data/           (전체 gitignore — 0장 참고)
+│   ├── real/       실 라벨 도면 (train/ — PPOCRLabel 형식)
+│   ├── crop_image/ 기호 crop
+│   ├── generated/  합성·증강·consolidated 산출물 (재생성 가능)
+│   └── synth/      create_data_v5.py 산출물
 ├── src/
 │   ├── datagen/    합성·증강 데이터 생성기 (flat import 묶음)
 │   ├── pipeline/   추론 파이프라인
+│   │   └── line_detect/  선분 검출·정제·매칭·화살촉 검출
+│   ├── review/     검수 UI (PyQt5) — 자동 결과를 사람이 확인/수정
+│   ├── parameter/  모델 가중치 (gitignore — 직접 채워야 함)
 │   ├── eval/       정량 평가·진단
 │   ├── labeling/   라벨링 도구
 │   └── train/      Colab 학습/테스트 노트북
-├── results/        추론·진단 출력 (gitignore, 매 실행 갱신)
+├── results/        추론·진단·검수 출력 (gitignore, 매 실행 갱신)
 └── *.md            문서 (루트 유지)
 ```
 
