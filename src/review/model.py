@@ -192,6 +192,62 @@ class ReviewDoc:
                 link["source"] = "human"
         self._log("line_delete", line_id=lid)
 
+    # ── 원/호 ──────────────────────────────────────────────
+    # 선분과 별개로 다루는 이유는 empty_doc 주석 참고. 편집 조작도 다르다 —
+    # 선분은 끝점 두 개지만 원은 중심/반지름/각도구간 세 가지를 따로 만진다.
+    def add_arc(self, center, r, start_deg=0.0, span_deg=360.0, source="human"):
+        self.push_undo()
+        cid = self._next_id("arcs", "c")
+        self.data["arcs"].append({
+            "id": cid,
+            "center": [float(center[0]), float(center[1])],
+            "r": float(r),
+            "start_deg": float(start_deg) % 360.0,
+            "span_deg": float(max(1.0, min(360.0, span_deg))),
+            "closed": bool(span_deg >= 300.0),
+            "source": source, "verified": source == "human",
+        })
+        self._log("arc_add", arc_id=cid)
+        return cid
+
+    def update_arc(self, cid, center=None, r=None, start_deg=None, span_deg=None):
+        self.push_undo()
+        c = self.find("arcs", cid)
+        if c is None:
+            return
+        if center is not None:
+            c["center"] = [float(center[0]), float(center[1])]
+        if r is not None:
+            c["r"] = float(max(1.0, r))
+        if start_deg is not None:
+            c["start_deg"] = float(start_deg) % 360.0
+        if span_deg is not None:
+            c["span_deg"] = float(max(1.0, min(360.0, span_deg)))
+            c["closed"] = c["span_deg"] >= 300.0
+        c["source"] = "human"
+        c["verified"] = True
+        self._log("arc_edit", arc_id=cid)
+
+    def toggle_arc_closed(self, cid):
+        """부분 호 <-> 완전 원 전환. 원이 치수선에 끊겨 부분 호로만 잡히는
+        경우가 흔해서, 사람이 한 번에 원으로 되돌릴 수 있어야 한다."""
+        self.push_undo()
+        c = self.find("arcs", cid)
+        if c is None:
+            return None
+        if c.get("closed") or c["span_deg"] >= 300.0:
+            c["closed"], c["span_deg"] = False, 180.0
+        else:
+            c["closed"], c["span_deg"], c["start_deg"] = True, 360.0, 0.0
+        c["source"], c["verified"] = "human", True
+        self._log("arc_toggle_closed", arc_id=cid)
+        return c["closed"]
+
+    def delete_arc(self, cid):
+        self.push_undo()
+        self.data["arcs"] = [c for c in self.data["arcs"] if c["id"] != cid]
+        self._log("arc_delete", arc_id=cid)
+
     # ── 화살촉 ─────────────────────────────────────────────
     def get_arrow(self, lid, end):
         for a in self.data["arrows"]:

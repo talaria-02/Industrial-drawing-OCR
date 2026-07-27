@@ -53,6 +53,7 @@ else:
 MODES = [
     ('텍스트', C.MODE_TEXT),
     ('선분', C.MODE_LINE),
+    ('원/호', C.MODE_ARC),
     ('화살촉', C.MODE_ARROW),
     ('매칭', C.MODE_MATCH),
     ('카테고리', C.MODE_CATEGORY),
@@ -62,6 +63,7 @@ MODES = [
 MODE_HELP = {
     C.MODE_TEXT: '빈곳 2클릭=새 박스 → F2로 인식 · 클릭=선택 · 모서리드래그=크기 · 안쪽드래그=이동 · Del=삭제',
     C.MODE_LINE: '끝점드래그=수정 · 빈곳 2클릭=새 선 · 클릭=선택 · Del=삭제',
+    C.MODE_ARC: '빈곳 2클릭(중심→둘레)=새 원 · 파란점=중심이동 · 둘레드래그=반지름 · 초록/주황점=각도 · C=원↔호 전환 · Del=삭제',
     C.MODE_ARROW: '끝점(또는 선 몸통) 클릭마다 순환: 회색(미검사) → 초록(있음) → 빨강(없음) → 회색',
     C.MODE_MATCH: '숫자 클릭 → 선 클릭(여러 개 가능) → Enter 확정 · 연결된 선 재클릭=그 선만 해제 · Del=전체 해제 · 우클릭=취소',
     C.MODE_CATEGORY: '숫자 클릭 후 오른쪽 패널에서 카테고리 변경',

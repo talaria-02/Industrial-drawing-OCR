@@ -21,6 +21,7 @@ from PyQt5.QtWidgets import QWidget
 
 MODE_TEXT = 'text'
 MODE_LINE = 'line'
+MODE_ARC = 'arc'
 MODE_ARROW = 'arrow'
 MODE_MATCH = 'match'
 MODE_CATEGORY = 'category'
@@ -133,6 +134,10 @@ class Canvas(QWidget):
             # 선분 편집은 선분이 주인공. 텍스트는 위치 파악용으로만 옅게 필요
             MODE_LINE:     dict(texts=True, all_lines=True, linked_lines=True,
                                 links=False, arrows=False),
+            # 원/호 편집은 선분을 다 끈다. 원 둘레와 선분이 겹쳐 보이면 어느 쪽을
+            # 잡는 건지 알 수 없고, 히트테스트도 서로 먹는다.
+            MODE_ARC:      dict(texts=False, all_lines=False, linked_lines=False,
+                                links=False, arrows=False),
             # 화살촉 모드도 모든 선분을 보여야 한다. 연결된 선만 보이게 했더니
             # '연결 안 된 선에는 화살촉을 만들 수 없다'는 문제가 생겼다
             # (게다가 안 보이는 선은 클릭도 안 되니 화면이동으로 처리돼 버렸음).
@@ -180,7 +185,7 @@ class Canvas(QWidget):
         # 원/호 — 선분보다 먼저 그려서 아래에 깔리게 한다(선분 선택 표시가 가려지지 않게).
         # Qt의 drawArc는 1/16도 단위이고 3시 방향에서 '반시계'로 잰다. 우리 각도는
         # 이미지 좌표계(y가 아래로) 기준이라 화면상 '시계' 방향이므로 부호를 뒤집는다.
-        if show.get('all_lines', True) or show.get('linked_lines', True):
+        if show.get('arcs', True):
             for c in self.doc.data.get('arcs', []):
                 sel = (self.sel_kind == 'arc' and self.sel_id == c['id'])
                 p.setPen(QPen(QColor(255, 0, 255) if sel else QColor(0, 150, 80),
@@ -194,6 +199,14 @@ class Canvas(QWidget):
                     p.drawEllipse(rect)
                 else:
                     p.drawArc(rect, int(-c['start_deg'] * 16), int(-c['span_deg'] * 16))
+                # 원 모드이거나 선택 중일 때만 조작 핸들을 띄운다(평소엔 지저분해진다)
+                if self.mode == MODE_ARC or sel:
+                    for pt, col in self._arc_handles(c):
+                        s = self.to_screen(*pt)
+                        p.setBrush(QBrush(col))
+                        p.setPen(QPen(QColor(40, 40, 40), 1))
+                        p.drawEllipse(s, HANDLE_PX // 2, HANDLE_PX // 2)
+                    p.setBrush(Qt.NoBrush)
 
         # 선분
         for l in self.doc.data['lines']:
@@ -388,6 +401,71 @@ class Canvas(QWidget):
                     return l['id'], end
         return None, None
 
+    # ── 원/호 조작 ────────────────────────────────────────
+    # 핸들 세 종류: 중심(이동) / 시작각 / 끝각. 반지름은 원 둘레를 잡아끈다.
+    # 완전 원일 때는 각도 핸들이 의미가 없어 중심만 띄운다.
+    def _arc_handles(self, c):
+        cx, cy = c['center']
+        r = c['r']
+        out = [((cx, cy), QColor(60, 120, 255))]
+        if not c.get('closed'):
+            for ang, col in ((c['start_deg'], QColor(0, 200, 90)),
+                             (c['start_deg'] + c['span_deg'], QColor(255, 140, 0))):
+                t = np.radians(ang)
+                out.append(((cx + r * np.cos(t), cy + r * np.sin(t)), col))
+        return out
+
+    def hit_arc_handle(self, ix, iy):
+        """반환 ('center'|'start'|'end', arc_id) 또는 (None, None)."""
+        tol = self._tol(HANDLE_PX + 3)
+        names = ('center', 'start', 'end')
+        for c in self.doc.data.get('arcs', []):
+            for (pt, _), nm in zip(self._arc_handles(c), names):
+                if np.hypot(ix - pt[0], iy - pt[1]) <= tol:
+                    return nm, c['id']
+        return None, None
+
+    def hit_arc(self, ix, iy):
+        """원 둘레를 클릭했는지. 부분 호는 각도 구간 안일 때만 잡는다."""
+        tol = self._tol()
+        best, bd = None, tol
+        for c in self.doc.data.get('arcs', []):
+            cx, cy = c['center']
+            d = abs(np.hypot(ix - cx, iy - cy) - c['r'])
+            if d > bd:
+                continue
+            if not c.get('closed'):
+                a = (np.degrees(np.arctan2(iy - cy, ix - cx)) - c['start_deg']) % 360.0
+                if a > c['span_deg']:
+                    continue
+            best, bd = c['id'], d
+        return best
+
+    def _press_arc(self, ix, iy):
+        nm, cid = self.hit_arc_handle(ix, iy)
+        if nm is not None:
+            self._drag = ('arc_' + nm, cid, None)
+            self.sel_kind, self.sel_id = 'arc', cid
+            self.selectionChanged.emit()
+            return
+        cid = self.hit_arc(ix, iy)
+        if cid and self._draw_start is None:
+            # 둘레를 잡으면 반지름 조절
+            self._drag = ('arc_radius', cid, None)
+            self.sel_kind, self.sel_id = 'arc', cid
+            self.selectionChanged.emit()
+            return
+        if self._draw_start is None:
+            self._draw_start = (ix, iy)
+            self.statusMessage.emit('원의 둘레가 지날 점을 클릭하세요 (우클릭 취소)')
+        else:
+            r = float(np.hypot(ix - self._draw_start[0], iy - self._draw_start[1]))
+            cid = self.doc.add_arc(self._draw_start, max(2.0, r))
+            self._draw_start = None
+            self.sel_kind, self.sel_id = 'arc', cid
+            self.docChanged.emit()
+            self.selectionChanged.emit()
+
     def hit_text_corner(self, ix, iy):
         tol = self._tol(HANDLE_PX + 3)
         for t in self.doc.data['texts']:
@@ -430,8 +508,10 @@ class Canvas(QWidget):
         # 단, "빈 곳 클릭"이 새 객체 그리기 시작인 모드(텍스트/선분)와 이미 그리는
         # 중일 때는 제외해야 그리기 동작을 막지 않는다.
         if (e.button() == Qt.LeftButton and self._draw_start is None
-                and self.mode not in (MODE_TEXT, MODE_LINE, MODE_ARROW)
-                and self.hit_text(ix, iy) is None and self.hit_line(ix, iy) is None):
+                and self.mode not in (MODE_TEXT, MODE_LINE, MODE_ARC, MODE_ARROW)
+                and self.hit_text(ix, iy) is None and self.hit_line(ix, iy) is None
+                and self.hit_arc(ix, iy) is None
+                and self.hit_arc_handle(ix, iy)[0] is None):
             self._start_pan(e)
             return
 
@@ -451,6 +531,8 @@ class Canvas(QWidget):
             self._press_text(ix, iy)
         elif self.mode == MODE_LINE:
             self._press_line(ix, iy)
+        elif self.mode == MODE_ARC:
+            self._press_arc(ix, iy)
         elif self.mode == MODE_ARROW:
             self._press_arrow(ix, iy)
         elif self.mode == MODE_CATEGORY:
@@ -587,6 +669,26 @@ class Canvas(QWidget):
                 if l:
                     l[end] = [ix, iy]
                     l['source'] = 'human'
+            elif kind.startswith('arc_'):
+                _, cid, _ = self._drag
+                c = self.doc.find('arcs', cid)
+                if c:
+                    cx, cy = c['center']
+                    if kind == 'arc_center':
+                        c['center'] = [ix, iy]
+                    elif kind == 'arc_radius':
+                        c['r'] = max(1.0, float(np.hypot(ix - cx, iy - cy)))
+                    else:
+                        ang = float(np.degrees(np.arctan2(iy - cy, ix - cx))) % 360.0
+                        if kind == 'arc_start':
+                            # 끝각을 붙잡아둔 채 시작각만 옮긴다
+                            end = c['start_deg'] + c['span_deg']
+                            c['start_deg'] = ang
+                            c['span_deg'] = max(1.0, (end - ang) % 360.0)
+                        else:
+                            c['span_deg'] = max(1.0, (ang - c['start_deg']) % 360.0)
+                        c['closed'] = c['span_deg'] >= 300.0
+                    c['source'], c['verified'] = 'human', True
             self.update()
             return
         if self._draw_start is not None:
@@ -624,6 +726,11 @@ class Canvas(QWidget):
             self.pending_text_id = None
             self._draw_start = None
             self.update()
+        elif k == Qt.Key_C and self.sel_kind == 'arc' and self.sel_id:
+            closed = self.doc.toggle_arc_closed(self.sel_id)
+            self.docChanged.emit()
+            self.statusMessage.emit(
+                f"{self.sel_id} → {'완전 원' if closed else '부분 호(180도)'}")
         elif k == Qt.Key_Delete:
             # 매칭 모드에서는 '연결만' 지운다. 이 모드에서 Del로 숫자 자체가
             # 지워지면 사고에 가깝다(연결을 지우려던 것일 뿐인데 텍스트가 사라짐).
@@ -645,6 +752,11 @@ class Canvas(QWidget):
                 self.selectionChanged.emit()
             elif self.sel_kind == 'line' and self.sel_id:
                 self.doc.delete_line(self.sel_id)
+                self.sel_kind = self.sel_id = None
+                self.docChanged.emit()
+                self.selectionChanged.emit()
+            elif self.sel_kind == 'arc' and self.sel_id:
+                self.doc.delete_arc(self.sel_id)
                 self.sel_kind = self.sel_id = None
                 self.docChanged.emit()
                 self.selectionChanged.emit()
