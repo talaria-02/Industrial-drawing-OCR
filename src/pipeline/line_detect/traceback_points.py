@@ -62,61 +62,99 @@ def _unit(v):
     return v / n if n > 1e-9 else np.array([1.0, 0.0])
 
 
+def _seg_dist_to_ray(p1, p2, origin, direction, lateral_tol):
+    """반직선(origin, direction) 위에서 선분까지의 전진거리. 벗어나면 None.
+
+    LSD 선분은 서로 닿아 있지 않다. 끊긴 채로 같은 방향에 늘어서 있으므로,
+    '접촉'이 아니라 '진행 방향 위에 있는가'로 판단해야 한다.
+    """
+    n = np.array([-direction[1], direction[0]])
+    best = None
+    for q in (p1, p2, (p1 + p2) / 2):
+        d = q - origin
+        fwd = float(d @ direction)
+        lat = abs(float(d @ n))
+        if fwd < -lateral_tol or lat > lateral_tol:
+            continue
+        if best is None or fwd < best:
+            best = fwd
+    return best
+
+
 def trace_measure_points(dim_line, lines, params, exclude_idx=()):
     """치수선 하나에서 측정점 두 개를 역추적한다.
 
-    dim_line : [x1,y1,x2,y2]  매칭이 찾아준 치수선
-    lines    : (N,4) 선분 DB 전체
-    반환 dict 또는 None
-      points   : [(x,y), (x,y)]  외형선 위의 측정점
-      via      : 사용한 치수보조선 인덱스 (없으면 None)
-      span_px  : 두 점 사이 거리(도면 px)
-      quality  : 'traced'(양쪽 다 추적) | 'partial' | 'fallback'(치수선 끝점 그대로)
+    [닿아 있는지로 판정할 수 없다]
+    LSD가 뱉는 선분은 조각조각 끊겨 있어서, 치수선 끝점에 치수보조선이 딱
+    붙어 있는 경우가 오히려 드물다. 그래서 '끝점이 가까운가'가 아니라
+    '치수선에 수직인 방향으로 나아가면 그 위에 있는가'로 찾는다. 조금 짧고
+    떨어져 있어도 같은 진행선 위에 있으면 후보로 받는다.
 
-    양쪽 다 못 찾으면 치수선 끝점을 그대로 쓴다(fallback). 치수선 길이는 원래
-    측정 거리와 같으므로 값 자체는 맞고, 다만 '사진의 어디'인지가 부정확해진다.
+    [경로를 남긴다]
+    어느 선분을 밟고 갔는지 path에 기록한다. 자동 결과가 논리적으로 말이
+    되는지는 사람이 그 경로를 보고 판단해야 하고, 곧바로 이은 직선만 보여주면
+    검수가 불가능하다.
+
+    반환 dict:
+      points   : [(x,y), (x,y)]  외형선 위의 측정점
+      path     : [[line_idx...], [line_idx...]]  양쪽에서 밟은 선분들
+      span_px  : 두 점 사이 거리(치수선 축 방향)
+      quality  : 'traced' | 'partial' | 'fallback'
     """
     d = np.asarray(dim_line, float)
     a, b = d[:2], d[2:]
     axis = _unit(b - a)
+    perp = np.array([-axis[1], axis[0]])
     lines = np.asarray(lines, float)
     if len(lines) == 0:
-        return {"points": [tuple(a), tuple(b)], "via": [None, None],
+        return {"points": [tuple(a), tuple(b)], "via": [None, None], "path": [[], []],
                 "span_px": float(np.linalg.norm(b - a)), "quality": "fallback"}
 
-    ends = np.vstack([lines[:, :2], lines[:, 2:]])
-    tree = cKDTree(ends)
-    n = len(lines)
-    R = params["search_radius"]
+    h = params["text_h"]
+    lat_tol = max(2.5, h * 0.25)          # 진행선에서 벗어나도 되는 폭
+    reach = max(params["search_radius"], h * 4.0)   # 한 번에 내다볼 거리
+    max_steps = 4                          # 끊긴 조각을 몇 번까지 이어 갈지
 
-    out, via = [], []
+    out, via, paths = [], [], []
     for tip in (a, b):
+        # 치수선 바깥쪽(부품 쪽)으로 뻗는 두 방향을 모두 시도한다
         best = None
-        for k in tree.query_ball_point(tip, R):
-            li = k % n
-            if li in exclude_idx:
-                continue
-            p1, p2 = lines[li, :2], lines[li, 2:]
-            u = _unit(p2 - p1)
-            # 치수보조선은 치수선과 수직이다
-            cosang = abs(float(u @ axis))
-            if cosang > np.cos(np.radians(90 - PERP_TOL_DEG)):
-                continue
-            near, far = (p1, p2) if np.linalg.norm(p1 - tip) <= np.linalg.norm(p2 - tip) else (p2, p1)
-            dist = float(np.linalg.norm(near - tip))
-            if best is None or dist < best[0]:
-                best = (dist, far, li)
+        for sgn in (1.0, -1.0):
+            dirv = perp * sgn
+            cur, walked, total = tip.copy(), [], 0.0
+            for _ in range(max_steps):
+                cand = None
+                for li in range(len(lines)):
+                    if li in exclude_idx or li in walked:
+                        continue
+                    p1, p2 = lines[li, :2], lines[li, 2:]
+                    u = _unit(p2 - p1)
+                    if abs(float(u @ dirv)) < np.cos(np.radians(PERP_TOL_DEG)):
+                        continue          # 진행 방향과 나란하지 않으면 보조선이 아니다
+                    fwd = _seg_dist_to_ray(p1, p2, cur, dirv, lat_tol)
+                    if fwd is None or fwd > reach:
+                        continue
+                    if cand is None or fwd < cand[0]:
+                        cand = (fwd, li, p1, p2)
+                if cand is None:
+                    break
+                _, li, p1, p2 = cand
+                far = p2 if float((p2 - cur) @ dirv) > float((p1 - cur) @ dirv) else p1
+                total += float((far - cur) @ dirv)
+                cur = far
+                walked.append(li)
+            if walked and (best is None or total > best[0]):
+                best = (total, cur, walked)
         if best is None:
-            out.append(tuple(tip)); via.append(None)
+            out.append(tuple(tip)); via.append(None); paths.append([])
         else:
-            out.append(tuple(best[1])); via.append(int(best[2]))
+            out.append(tuple(best[1])); via.append(best[2][0]); paths.append(best[2])
 
-    got = sum(v is not None for v in via)
+    got = sum(1 for v in via if v is not None)
     quality = "traced" if got == 2 else ("partial" if got == 1 else "fallback")
-    # 측정 거리는 치수선 축 방향 성분으로 낸다. 치수보조선 길이가 서로 달라도
-    # (외형선이 계단이면 흔하다) 축 방향 거리는 원래 치수와 일치한다.
     span = abs(float((np.array(out[1]) - np.array(out[0])) @ axis))
-    return {"points": out, "via": via, "span_px": span, "quality": quality}
+    return {"points": out, "via": via, "path": paths,
+            "span_px": span, "quality": quality}
 
 
 def build_measure_points(doc_links, texts, lines, text_polys):

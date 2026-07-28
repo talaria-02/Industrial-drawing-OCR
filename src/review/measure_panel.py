@@ -527,7 +527,12 @@ class MeasurePanel(QWidget):
                 continue
             i = max(idxs, key=lambda k: _np.hypot(L[k, 2] - L[k, 0], L[k, 3] - L[k, 1]))
             r = tp.trace_measure_points(L[i], L, params, exclude_idx={i})
+            # 밟고 간 선분 id를 함께 남긴다 — 사람이 '이 경로가 말이 되나'를
+            # 봐야 하는데, 결과 두 점만 있으면 판단할 근거가 없다.
+            ids = [l['id'] for l in self.doc.data['lines']]
+            path_ids = [[ids[i] for i in side if i < len(ids)] for side in r.get('path', [[], []])]
             link['measure'] = {'points': [[float(a), float(b)] for a, b in r['points']],
+                               'path': path_ids,
                                'quality': r['quality'], 'source': 'auto'}
             n[r['quality']] += 1
         self._build_graph(params['text_h'])

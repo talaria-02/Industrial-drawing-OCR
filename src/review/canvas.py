@@ -261,6 +261,19 @@ class Canvas(QWidget):
         # 측정점 — 치수가 가리키는 실제 두 모서리. 측정 모드에서만 띄운다
         # (다른 모드에서는 화면만 어지럽힌다).
         if self.mode == MODE_MEASURE:
+            # 역추적이 밟고 간 선분을 굵게 덧그린다. 결과 두 점만 찍어두면
+            # 그 연결이 말이 되는지 사람이 검수할 방법이 없다.
+            for link in self.doc.data['links']:
+                m = link.get('measure') or {}
+                hot = (self.sel_kind == 'text' and self.sel_id == link['text_id'])
+                for side in m.get('path', []):
+                    for lid in side:
+                        l = self.doc.find('lines', lid)
+                        if l is None:
+                            continue
+                        p.setPen(QPen(QColor(255, 150, 0) if hot else QColor(255, 200, 130),
+                                      5 if hot else 3))
+                        p.drawLine(self.to_screen(*l['p1']), self.to_screen(*l['p2']))
             for tid, pts in self.doc.measure_points().items():
                 hot = (self.sel_kind == 'text' and self.sel_id == tid)
                 col = QColor(230, 0, 130) if hot else QColor(150, 90, 190)
@@ -288,7 +301,7 @@ class Canvas(QWidget):
             if sel:
                 col, wdt = QColor(255, 0, 255), 3
             elif is_linked:
-                col, wdt = QColor(30, 90, 220), 3
+                col, wdt = QColor(30, 90, 220), (4 if self.mode == MODE_MEASURE else 3)
             else:
                 col, wdt = QColor(190, 190, 190), 1
             p.setPen(QPen(col, wdt))
