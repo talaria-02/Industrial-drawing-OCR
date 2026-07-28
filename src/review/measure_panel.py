@@ -737,6 +737,28 @@ class MeasurePanel(QWidget):
             self.lbl_summary.setText('')
             return
         res = self.doc.data.get('measure', {}).get('results', [])
+
+        # 표를 그릴 때마다 '현재 텍스트'로 다시 판정한다.
+        #
+        # 등급을 측정 시점에 한 번만 계산해 저장했더니, 사용자가 공차를 고쳐도
+        # 표가 옛 등급을 그대로 보여줬다(공차를 +10으로 넓혀도 계속 불량).
+        # 측정값은 고정이고 판정은 텍스트에 딸린 것이므로, 판정은 저장값이
+        # 아니라 매번 다시 내는 것이 맞다.
+        for r in res:
+            t = self.doc.find('texts', r['text_id'])
+            if t is None:
+                continue
+            parsed = cp.parse_dimension(t.get('text', ''))
+            g = cp.grade(parsed, r['measured_mm'], r.get('uncertainty_mm', 0.0))
+            r['text'] = t.get('text', '')
+            r['nominal'] = parsed['nominal']
+            r['upper'], r['lower'] = parsed['upper'], parsed['lower']
+            r['verdict'] = g['grade']
+            r['tol'], r['basis'] = g.get('tol'), g.get('basis')
+            r['deviation_mm'] = (None if g['deviation'] is None
+                                 else round(g['deviation'], 3))
+            r['reason'] = g['reason']
+
         counts = {}
         for r in res:
             row = self.table.rowCount()
