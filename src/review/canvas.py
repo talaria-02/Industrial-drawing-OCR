@@ -24,7 +24,8 @@ MODE_LINE = 'line'
 MODE_ARC = 'arc'
 MODE_ARROW = 'arrow'
 MODE_MATCH = 'match'
-MODE_CATEGORY = 'category'
+MODE_CATEGORY = 'category'   # 미사용(호환용)
+MODE_NODE = 'node'
 MODE_MEASURE = 'measure'
 
 HIT_PX = 10          # 화면 기준 클릭 허용 오차
@@ -130,6 +131,10 @@ class Canvas(QWidget):
             MODE_TEXT:     dict(texts=True, all_lines=False, linked_lines=False,
                                 links=False, arrows=False),
             MODE_CATEGORY: dict(texts=True, all_lines=False, linked_lines=False,
+                                links=False, arrows=False),
+            # 노드 단계 — 분할 결과를 눈으로 확인하고 고치는 자리. 선분이 전부
+            # 보이고 클릭돼야 하며, 텍스트는 접점을 가리므로 끈다.
+            MODE_NODE:     dict(texts=False, all_lines=True, linked_lines=True,
                                 links=False, arrows=False),
             # 선분 편집은 선분이 주인공. 텍스트는 위치 파악용으로만 옅게 필요
             MODE_LINE:     dict(texts=True, all_lines=True, linked_lines=True,
@@ -259,6 +264,23 @@ class Canvas(QWidget):
                 txt = f"({d['value']:g})"
                 p.setPen(QPen(QColor(255, 255, 255), 4)); p.drawText(mid, txt)
                 p.setPen(QPen(QColor(200, 90, 0), 1)); p.drawText(mid, txt)
+
+        # 노드 단계: 끝점이 겹치는 접점을 찍는다. 분할·스냅이 실제로 이어졌는지
+        # 여기서 보인다(숫자는 그 점에서 만나는 선분 수).
+        if self.mode == MODE_NODE:
+            fnt = QFont()
+            fnt.setPointSize(8)
+            p.setFont(fnt)
+            for (jx, jy), cnt in self.doc.junctions():
+                sp = self.to_screen(jx, jy)
+                col = QColor(0, 150, 100) if cnt >= 3 else QColor(70, 120, 220)
+                p.setPen(QPen(QColor(255, 255, 255), 1.5))
+                p.setBrush(QBrush(col))
+                p.drawEllipse(sp, HANDLE_PX / 2 + 1, HANDLE_PX / 2 + 1)
+                if cnt >= 3:
+                    p.setPen(QPen(col.darker(150), 1))
+                    p.drawText(QPointF(sp.x() + 6, sp.y() - 4), str(cnt))
+            p.setBrush(Qt.NoBrush)
 
         # 사람이 지정한 체인 — 순서 번호를 선 위에 찍는다. 마지막 번호가 외곽선.
         if self.mode == MODE_MEASURE:
@@ -703,7 +725,8 @@ class Canvas(QWidget):
         # 단, "빈 곳 클릭"이 새 객체 그리기 시작인 모드(텍스트/선분)와 이미 그리는
         # 중일 때는 제외해야 그리기 동작을 막지 않는다.
         if (e.button() == Qt.LeftButton and self._draw_start is None
-                and self.mode not in (MODE_TEXT, MODE_LINE, MODE_ARC, MODE_ARROW)
+                and self.mode not in (MODE_TEXT, MODE_LINE, MODE_ARC, MODE_ARROW,
+                                      MODE_NODE)
                 and not (self.mode == MODE_MEASURE and self.hit_measure_point(ix, iy)[0])
                 and self.hit_text(ix, iy) is None and self.hit_line(ix, iy) is None
                 and self.hit_arc(ix, iy) is None
@@ -740,6 +763,8 @@ class Canvas(QWidget):
             self._press_line(ix, iy)
         elif self.mode == MODE_ARC:
             self._press_arc(ix, iy)
+        elif self.mode == MODE_NODE:
+            self._press_line(ix, iy)      # 선분 모드와 같은 편집을 허용한다
         elif self.mode == MODE_MEASURE:
             self._press_measure(ix, iy)
         elif self.mode == MODE_ARROW:

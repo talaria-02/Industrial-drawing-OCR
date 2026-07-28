@@ -352,6 +352,87 @@ class ReviewDoc:
             link.pop("measure", None)
         self._log("measure_chain_clear", text_id=tid)
 
+    # ── 선분 분할 (노드 단계) ──────────────────────────────
+    def apply_split(self, new_lines, origin):
+        """교차점 분할 결과를 문서에 반영한다.
+
+        분할을 자동 단계 안에 숨겨두면 사람이 결과를 보거나 고칠 수 없다.
+        그래서 별도 단계로 꺼내 문서 자체를 바꾼다.
+
+        링크는 '원래 선분에서 나온 조각 중 가장 긴 것'으로 옮긴다. 치수선이
+        쪼개졌을 때 짧은 토막에 링크가 붙으면 이후 역추적이 엉뚱한 곳에서
+        시작하기 때문이다.
+        """
+        import numpy as np
+        old_ids = [l["id"] for l in self.data["lines"]]
+        old_src = {l["id"]: l.get("source", "auto") for l in self.data["lines"]}
+        self.push_undo()
+
+        frag = {}
+        for k, o in enumerate(origin):
+            frag.setdefault(o, []).append(k)
+
+        L = np.asarray(new_lines, float)
+        self.data["lines"] = []
+        newid = {}
+        for k in range(len(L)):
+            o = origin[k]
+            oid = old_ids[o] if o < len(old_ids) else None
+            lid = f"l{k + 1}"
+            newid[k] = lid
+            self.data["lines"].append({
+                "id": lid,
+                "p1": [float(L[k, 0]), float(L[k, 1])],
+                "p2": [float(L[k, 2]), float(L[k, 3])],
+                "source": old_src.get(oid, "auto"),
+                "from": oid,
+            })
+
+        def longest(oid):
+            o = old_ids.index(oid) if oid in old_ids else None
+            if o is None:
+                return None
+            ks = frag.get(o, [])
+            if not ks:
+                return None
+            best = max(ks, key=lambda k: float(np.hypot(L[k, 2] - L[k, 0],
+                                                        L[k, 3] - L[k, 1])))
+            return newid[best]
+
+        for link in self.data["links"]:
+            link["line_ids"] = [x for x in (longest(i) for i in link.get("line_ids", []))
+                                if x]
+            if link.get("measure_chain"):
+                link["measure_chain"] = [x for x in (longest(i) for i in
+                                                     link["measure_chain"]) if x]
+        self.data["arrows"] = [a for a in self.data["arrows"]
+                               if longest(a.get("line_id")) is not None]
+        for a in self.data["arrows"]:
+            a["line_id"] = longest(a["line_id"])
+        self._log("lines_split", n_in=len(old_ids), n_out=len(self.data["lines"]))
+
+    def junctions(self, tol=3.0):
+        """끝점이 겹치는 곳 = 노드. 분할·스냅이 제대로 됐는지 보는 눈이다."""
+        import numpy as np
+        pts = []
+        for l in self.data["lines"]:
+            pts.append(l["p1"])
+            pts.append(l["p2"])
+        if not pts:
+            return []
+        P = np.asarray(pts, float)
+        used = np.zeros(len(P), bool)
+        out = []
+        for i in range(len(P)):
+            if used[i]:
+                continue
+            d = np.linalg.norm(P - P[i], axis=1) <= tol
+            idx = np.where(d & ~used)[0]
+            used[idx] = True
+            if len(idx) >= 2:
+                out.append((tuple(P[idx].mean(axis=0)), int(len(idx))))
+        return out
+
     # ── 화살촉 ─────────────────────────────────────────────
     def get_arrow(self, lid, end):
         for a in self.data["arrows"]:

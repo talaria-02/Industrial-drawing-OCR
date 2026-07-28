@@ -58,7 +58,7 @@ MODES = [
     ('원/호', C.MODE_ARC),
     ('화살촉', C.MODE_ARROW),
     ('매칭', C.MODE_MATCH),
-    ('카테고리', C.MODE_CATEGORY),
+    ('노드', C.MODE_NODE),
     ('측정', C.MODE_MEASURE),
 ]
 
@@ -68,7 +68,8 @@ MODE_HELP = {
     C.MODE_ARC: '빈곳 2클릭(중심→둘레)=새 원 · 파란점=중심이동 · 둘레드래그=반지름 · 초록/주황점=각도 · C=원↔호 전환 · Del=삭제',
     C.MODE_ARROW: '끝점(또는 선 몸통) 클릭마다 순환: 회색(미검사) → 초록(있음) → 빨강(없음) → 회색',
     C.MODE_MATCH: '숫자 클릭 → 선/원 클릭(여러 개 가능) → Enter 확정 · 연결된 선 재클릭=그 선만 해제 · Del=전체 해제 · 우클릭=취소',
-    C.MODE_CATEGORY: '숫자 클릭 후 오른쪽 패널에서 카테고리 변경',
+    C.MODE_NODE: '[선분 분할] 버튼으로 교차점에서 쪼갠다 · 초록점=3개 이상 만나는 접점 · '
+                 '끝점드래그=수정 · Del=삭제 (분할 뒤 측정 단계로)',
     C.MODE_MEASURE: '치수 클릭(또는 오른쪽 목록) → 사진에서 양끝 2클릭 · 오른쪽에서 제품사진 열기 → 도면에서 치수 클릭 → 사진에서 양끝 2클릭 (Shift드래그=이동, 휠=확대, 우클릭=취소)',
 }
 
@@ -132,6 +133,13 @@ class MainWindow(QMainWindow):
             self.mode_group.addButton(rb, i)
             top.addWidget(rb)
         self.mode_group.buttonClicked.connect(self.on_mode)
+        self.btn_split = QPushButton('선분 분할')
+        self.btn_split.setToolTip(
+            '교차점에서 선분을 쪼개고 끝점을 붙입니다.\n'
+            'LSD 선분은 서로 닿아 있지 않아 이 단계 없이는 위상이 이어지지 않습니다.')
+        self.btn_split.clicked.connect(self.do_split)
+        self.btn_split.setVisible(False)
+        top.addWidget(self.btn_split)
         self.chk_list = QCheckBox('목록 표시')
         self.chk_list.setChecked(True)
         self.chk_list.stateChanged.connect(
@@ -363,11 +371,34 @@ class MainWindow(QMainWindow):
         else:
             self.splitter.setSizes([int(w * 0.72), 0, int(w * 0.28)])
 
+    def do_split(self):
+        """교차점 분할을 문서에 반영한다. 자동 단계에 숨기지 않고 별도 버튼으로
+        꺼내둔 이유는, 결과를 사람이 보고 고칠 수 있어야 하기 때문이다."""
+        if self.doc is None or not self.doc.data['lines']:
+            return
+        import numpy as np
+        sys.path.insert(0, os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'pipeline'))
+        from line_detect import snap_split as ss, traceback_points as tp
+        L = np.array([[l['p1'][0], l['p1'][1], l['p2'][0], l['p2'][1]]
+                      for l in self.doc.data['lines']], float)
+        th = tp.text_scale([t['poly'] for t in self.doc.data['texts']])
+        out, origin, st = ss.snap_and_split(L, th)
+        self.doc.apply_split(out, origin)
+        self.canvas.update()
+        self.refresh_list()
+        self.statusBar().showMessage(
+            f"분할 {st['n_in']} -> {st['n_out']}선분 (쪼갬 {st['n_split']} · "
+            f"해칭보존 {st['n_skipped_dense']} · 스냅 {st['n_snapped_pts']}점 · "
+            f"접점 {len(self.doc.junctions())}개)", 8000)
+        self.update_undo_buttons()
+
     def on_mode(self, btn):
         # 측정 모드에서만 사진 패널을 띄운다. 평소엔 도면 캔버스가 넓어야 한다.
         prev = self.canvas.mode
         if prev:
             self._split_sizes[prev] = self.splitter.sizes()
+        self.btn_split.setVisible(btn.property('mode') == C.MODE_NODE)
         self.measure_panel.setVisible(btn.property('mode') == C.MODE_MEASURE)
         self.canvas.mode = btn.property('mode')
         self._apply_split(self.canvas.mode)
