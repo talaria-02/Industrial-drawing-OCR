@@ -167,6 +167,85 @@ def judge(parsed, measured_mm, uncertainty_mm=0.0):
     return res
 
 
+# ── 3단계 등급 (정상 / 주의 / 불량) ────────────────────────────────
+# judge()는 "카메라로는 판정할 수 없다"를 정직하게 내지만, 실제로 쓰다 보면
+# 공차 미기재나 불확실도 초과 때문에 거의 전부 판정불가로 떨어진다. 그러면
+# 화면만 보고는 어느 치수가 문제인지 알 수 없어 검수에 쓸모가 없다.
+#
+# 그래서 '항상 결론을 내는' 등급을 따로 둔다. 대신 무엇을 근거로 삼았는지
+# (basis) 반드시 함께 반환한다 — 도면에 적힌 공차로 판정한 것과, 없어서
+# 일반공차를 가정한 것은 신뢰도가 다르고 그 차이를 숨기면 안 된다.
+GRADE_OK, GRADE_WARN, GRADE_BAD = "ok", "warn", "bad"
+GRADE_TEXT = {GRADE_OK: "정상", GRADE_WARN: "주의", GRADE_BAD: "불량"}
+# 공차가 없을 때 마지막으로 쓰는 가정 — 공칭값의 이 비율.
+FALLBACK_TOL_RATIO = 0.01
+FALLBACK_TOL_MIN = 0.3
+
+
+def effective_tolerance(parsed, general_grade="m"):
+    """판정에 쓸 공차와 그 근거를 정한다. 반환 (tol, basis).
+
+    우선순위:
+      1) 도면에 적힌 공차          basis='stated'
+      2) 일반공차 등급(ISO 2768)   basis='general'
+      3) 공칭값 비율 가정          basis='assumed'
+    """
+    up, lo = parsed.get("upper"), parsed.get("lower")
+    if up is not None and lo is not None:
+        return max(abs(up), abs(lo)), "stated"
+    nom = parsed.get("nominal")
+    if nom is not None:
+        t = general_tolerance(nom, general_grade)
+        if t:
+            return float(t), "general"
+        return max(FALLBACK_TOL_MIN, abs(nom) * FALLBACK_TOL_RATIO), "assumed"
+    return FALLBACK_TOL_MIN, "assumed"
+
+
+def grade(parsed, measured_mm, uncertainty_mm=0.0, general_grade="m"):
+    """항상 정상/주의/불량 중 하나를 낸다.
+
+    주의(warn)가 하는 일이 두 가지다:
+      - 공차는 벗어났지만 조금인 경우 (재확인 대상)
+      - 공차 안이지만 측정 불확실도가 커서 단정할 수 없는 경우
+    둘 다 '사람이 캘리퍼로 다시 재야 하는 것'이라 같은 칸에 넣는다.
+    """
+    out = {"grade": GRADE_WARN, "deviation": None, "tol": None,
+           "basis": None, "reason": None}
+    nom = parsed.get("nominal")
+    if nom is None or measured_mm is None:
+        out["reason"] = "공칭값을 읽지 못했습니다"
+        return out
+
+    tol, basis = effective_tolerance(parsed, general_grade)
+    dev = float(measured_mm) - float(nom)
+    out.update({"deviation": dev, "tol": float(tol), "basis": basis})
+
+    a = abs(dev)
+    # 불확실도를 감안한 여유. 측정이 흔들리는 만큼은 '주의'로 흡수한다.
+    warn_edge = max(tol * 2.0, tol + float(uncertainty_mm))
+    if a <= tol:
+        out["grade"] = GRADE_OK
+        if uncertainty_mm > tol:
+            out["grade"] = GRADE_WARN
+            out["reason"] = (f"공차 내({a:.2f}<={tol:.2f})지만 측정 불확실도 "
+                             f"±{uncertainty_mm:.2f}가 공차보다 커서 단정 불가")
+    elif a <= warn_edge:
+        out["grade"] = GRADE_WARN
+        out["reason"] = f"공차 {tol:.2f} 초과({a:.2f}) — 경계, 재측정 권장"
+    else:
+        out["grade"] = GRADE_BAD
+        out["reason"] = f"공차 {tol:.2f}의 {a/max(tol,1e-9):.1f}배 이탈"
+
+    if basis == "general":
+        out["reason"] = ((out["reason"] + " · ") if out["reason"] else "") + \
+            f"공차 미기재 — ISO 2768-{general_grade} 일반공차 ±{tol:.2f} 적용"
+    elif basis == "assumed":
+        out["reason"] = ((out["reason"] + " · ") if out["reason"] else "") + \
+            f"공차 미기재 — 공칭의 {FALLBACK_TOL_RATIO*100:.0f}% 가정 ±{tol:.2f}"
+    return out
+
+
 def format_result(parsed, measured_mm, uncertainty_mm=0.0):
     """사람이 읽을 한 줄. 측정값은 반드시 불확실도와 함께 낸다."""
     j = judge(parsed, measured_mm, uncertainty_mm)

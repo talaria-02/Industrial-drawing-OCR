@@ -40,13 +40,14 @@ HIT_PX = 10
 HANDLE_PX = 6
 MAX_TOL_IMG_PX = 14.0
 
+# 등급 3단계. 예전에는 pass/fail/inconclusive를 썼는데, 공차 미기재와
+# 불확실도 초과 때문에 실제 도면에서는 거의 전부 판정불가로 떨어져 어느 치수가
+# 문제인지 화면에서 알 수 없었다. 항상 결론을 내되 근거(basis)를 툴팁에 남긴다.
 VERDICT_COLOR = {
-    "pass": QColor(215, 245, 215), "fail": QColor(255, 215, 215),
-    "borderline": QColor(255, 240, 200), "inconclusive": QColor(230, 230, 230),
-    "unknown": QColor(240, 240, 240),
+    "ok": QColor(212, 244, 214), "warn": QColor(255, 238, 190),
+    "bad": QColor(255, 210, 210),
 }
-VERDICT_TEXT = {"pass": "합격", "fail": "불합격", "borderline": "경계",
-                "inconclusive": "판정불가", "unknown": "판정불가"}
+VERDICT_TEXT = {"ok": "정상", "warn": "주의", "bad": "불량"}
 
 
 def bgr_to_pixmap(bgr):
@@ -692,7 +693,7 @@ class MeasurePanel(QWidget):
             / self.calib['px_per_mm']
         u = cal.measurement_uncertainty(mm, dist_mm, pitch,
                                         px_per_mm=self.calib['px_per_mm'])
-        j = cp.judge(parsed, mm, u['total'])
+        j = cp.grade(parsed, mm, u['total'])
 
         self.doc.push_undo()
         results = self.doc.data['measure'].setdefault('results', [])
@@ -704,7 +705,8 @@ class MeasurePanel(QWidget):
             'measured_mm': round(float(mm), 3),
             'uncertainty_mm': round(float(u['total']), 3),
             'deviation_mm': None if j['deviation'] is None else round(j['deviation'], 3),
-            'verdict': j['verdict'], 'reason': j['reason'],
+            'verdict': j['grade'], 'tol': j.get('tol'),
+            'basis': j.get('basis'), 'reason': j['reason'],
             'points': [[float(p1[0]), float(p1[1])], [float(p2[0]), float(p2[1])]],
             'source': 'human', 'verified': True,
         })
@@ -740,8 +742,14 @@ class MeasurePanel(QWidget):
         for r in res:
             row = self.table.rowCount()
             self.table.insertRow(row)
-            tol = ('-' if r['upper'] is None
-                   else f"+{r['upper']:g}/{r['lower']:g}")
+            # 적힌 공차가 없으면 실제로 적용한 공차를 괄호로 보여준다 —
+            # 무엇을 기준으로 판정했는지 숨기면 안 된다.
+            if r['upper'] is not None:
+                tol = f"+{r['upper']:g}/{r['lower']:g}"
+            elif r.get('tol') is not None:
+                tol = f"(±{r['tol']:g})"
+            else:
+                tol = '-'
             dev = '-' if r['deviation_mm'] is None else f"{r['deviation_mm']:+.2f}"
             cells = [r['text'], '-' if r['nominal'] is None else f"{r['nominal']:g}",
                      tol, f"{r['measured_mm']:.2f} ±{r['uncertainty_mm']:.2f}",
