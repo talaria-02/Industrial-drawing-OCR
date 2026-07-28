@@ -174,10 +174,11 @@ def orthogonal_snap(lines, tol_deg=1.0):
     return lines, log
 
 
-def refine_pipeline_g0(raw_lines, gray, min_length_pre=8.0, min_length_post=15.0,
+def refine_pipeline_g0(raw_lines, gray, min_length_pre=5.0, min_length_post=15.0,
                         angle_thresh_deg=1.5, endpoint_gap_px=15.0,
                         frag_perp_px=1.0, snap_tol_deg=1.0,
-                        gap_range=None, contrast_thresh=None):
+                        gap_range=None, contrast_thresh=None,
+                        min_length_short=5.0):
     """엣지쌍 병합(G0)을 포함한 후처리. refine_pipeline의 후속 버전.
 
     [기존 refine_pipeline과 무엇이 다른가]
@@ -211,9 +212,27 @@ def refine_pipeline_g0(raw_lines, gray, min_length_pre=8.0, min_length_post=15.0
         gap_range=gap_range, contrast_thresh=contrast_thresh)
     n_after_pairs = len(lines)
 
+    # B'. 짧은 선분을 길이만으로 자르지 않는다.
+    #
+    # 예전에는 마지막에 15px 미만을 통째로 버렸는데, 도면의 짧은 실선(모따기,
+    # tick, 짧은 치수선)이 같이 죽었다. 그렇다고 임계값만 낮추면 글자획이
+    # 쏟아진다(실측: 잉크 조건만 걸면 XYZ 도면이 986 -> 1896개로 두 배).
+    #
+    # 대신 '짝을 찾았는가'로 가른다. G0에서 짝지어진 선분은 두 경계 사이가
+    # 잉크임을 확인하고 출력검증까지 통과한 것이라, 6~15px 구간에서도 잉크
+    # 적중률이 도면 4장 모두 100%였다. 반대로 짝 없는 짧은 선분은 21~61%로
+    # 대부분 노이즈다. 그래서 짧아도 짝이 있으면 남기고, 짝이 없으면 기존
+    # 길이 기준으로 자른다.
+    paired = pair_meta["paired"]
+    if len(lines):
+        seg_len = np.hypot(lines[:, 2] - lines[:, 0], lines[:, 3] - lines[:, 1])
+        lines = lines[paired | (seg_len >= min_length_post)]
+    n_after_short = len(lines)
+
     # C. 중심선끼리 조각 잇기
     lines = merge_collinear(lines, angle_thresh_deg, frag_perp_px, endpoint_gap_px)
-    lines = length_nms(lines, min_length_post)
+    # 노이즈는 위에서 이미 걸렀으므로 여기서는 아주 짧은 잔재만 턴다
+    lines = length_nms(lines, min_length_short)
     lines, snap_log = orthogonal_snap(lines, snap_tol_deg)
 
     stats = {
@@ -221,6 +240,7 @@ def refine_pipeline_g0(raw_lines, gray, min_length_pre=8.0, min_length_post=15.0
         "n_after_pre_filter": int(n_after_pre_filter),
         "n_after_defrag": int(n_after_defrag),
         "n_after_pairs": int(n_after_pairs),
+        "n_after_short_filter": int(n_after_short),
         "n_final": int(len(lines)),
         "n_snapped": len(snap_log),
         **{f"pair_{k}": v for k, v in pair_meta["stats"].items()},

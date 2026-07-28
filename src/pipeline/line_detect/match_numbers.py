@@ -20,7 +20,10 @@ from scipy.spatial import cKDTree
 # 잠정 가중치 — 데이터 검증 전. 셋 다 동일가중으로 시작.
 WEIGHTS = {"dist": 1 / 3, "angle": 1 / 3, "centrality": 1 / 3}
 
-MIN_LINE_LENGTH = 15.0     # 이보다 짧으면 글자획 잔재로 보고 후보에서 제외
+# 후보 최소 길이. 15px는 너무 빡빡했다 — 모따기선이나 짧은 치수선이 후보에
+# 들지도 못했다. 선분 검출 단계(refine_pipeline_g0)가 짝지음 여부로 노이즈를
+# 이미 걸러주므로, 여기서는 낮게 잡아도 글자획이 밀려들지 않는다.
+MIN_LINE_LENGTH = 8.0
 CANDIDATE_RADIUS = 150.0   # 텍스트 중심에서 이 거리(px) 이내 선분만 후보로
 TEXT_BBOX_MARGIN = 2.0     # 텍스트 bbox 내부 판정 시 여유(px)
 
