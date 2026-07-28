@@ -67,7 +67,7 @@ MODE_HELP = {
     C.MODE_LINE: '끝점드래그=수정 · 빈곳 2클릭=새 선 · 클릭=선택 · Del=삭제',
     C.MODE_ARC: '빈곳 2클릭(중심→둘레)=새 원 · 파란점=중심이동 · 둘레드래그=반지름 · 초록/주황점=각도 · C=원↔호 전환 · Del=삭제',
     C.MODE_ARROW: '끝점(또는 선 몸통) 클릭마다 순환: 회색(미검사) → 초록(있음) → 빨강(없음) → 회색',
-    C.MODE_MATCH: '숫자 클릭 → 선/원 클릭(여러 개 가능) → Enter 확정 · 연결된 선 재클릭=그 선만 해제 · Del=전체 해제 · 우클릭=취소',
+    C.MODE_MATCH: '[자동 매칭] 버튼 또는 수동: 숫자 클릭 → 선/원 클릭(여러 개 가능) → Enter 확정 · 연결된 선 재클릭=그 선만 해제 · Del=전체 해제 · 우클릭=취소',
     C.MODE_NODE: '[선분 분할] 버튼으로 교차점에서 쪼갠다 · 초록점=3개 이상 만나는 접점 · '
                  '끝점드래그=수정 · Del=삭제 (분할 뒤 측정 단계로)',
     C.MODE_MEASURE: '치수 클릭(또는 오른쪽 목록) → 사진에서 양끝 2클릭 · 오른쪽에서 제품사진 열기 → 도면에서 치수 클릭 → 사진에서 양끝 2클릭 (Shift드래그=이동, 휠=확대, 우클릭=취소)',
@@ -133,6 +133,13 @@ class MainWindow(QMainWindow):
             self.mode_group.addButton(rb, i)
             top.addWidget(rb)
         self.mode_group.buttonClicked.connect(self.on_mode)
+        self.btn_match = QPushButton('자동 매칭')
+        self.btn_match.setToolTip(
+            '치수 텍스트마다 근처 선분을 점수로 골라 연결합니다.\n'
+            '사람이 손댄 연결은 건드리지 않습니다.')
+        self.btn_match.clicked.connect(self.do_match)
+        self.btn_match.setVisible(False)
+        top.addWidget(self.btn_match)
         self.btn_split = QPushButton('선분 분할')
         self.btn_split.setToolTip(
             '교차점에서 선분을 쪼개고 끝점을 붙입니다.\n'
@@ -371,6 +378,69 @@ class MainWindow(QMainWindow):
         else:
             self.splitter.setSizes([int(w * 0.72), 0, int(w * 0.28)])
 
+    def do_match(self):
+        """치수 <-> 선분 자동 매칭을 다시 돌린다.
+
+        자동 실행(build_review) 안에만 있으면, 노드 단계에서 선분을 쪼갠 뒤나
+        선분을 손으로 고친 뒤에 다시 매칭할 방법이 없다. 단계마다 사람이 개입한
+        결과 위에서 재실행할 수 있어야 한다.
+
+        사람이 만든/고친 연결은 보존한다 — 덮어쓰면 검수한 의미가 없다.
+        """
+        if self.doc is None or not self.doc.data['lines']:
+            return
+        import numpy as np
+        sys.path.insert(0, os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'pipeline'))
+        from line_detect import match_numbers as mn
+
+        lines = np.array([[l['p1'][0], l['p1'][1], l['p2'][0], l['p2'][1]]
+                          for l in self.doc.data['lines']], float)
+        line_ids = [l['id'] for l in self.doc.data['lines']]
+
+        # 사람이 손댄 치수는 후보에서 빼고, 그 선분도 이미 쓰인 것으로 둔다
+        human = {l['text_id'] for l in self.doc.data['links']
+                 if l.get('source') == 'human'}
+        targets, tids = [], []
+        for t in self.doc.data['texts']:
+            if t.get('category') not in MEASURABLE_CATEGORIES:
+                continue
+            if t['id'] in human:
+                continue
+            ang, uncertain, _ = mn.text_angle_from_poly(t['poly'])
+            cx, cy = self.doc.text_center(t)
+            targets.append({'cx': cx, 'cy': cy, 'angle_deg': ang,
+                            'angle_uncertain': uncertain})
+            tids.append(t['id'])
+        if not targets:
+            self.statusBar().showMessage(
+                '매칭할 치수가 없습니다 (사람이 연결한 것은 유지됩니다)', 6000)
+            return
+
+        by_target = {i: mn.score_candidates(t, lines) for i, t in enumerate(targets)}
+        assignment, conflicts = mn.assign_greedy(by_target)
+
+        self.doc.push_undo()
+        # 자동 연결만 걷어내고 다시 만든다
+        self.doc.data['links'] = [l for l in self.doc.data['links']
+                                  if l.get('source') == 'human']
+        for ti, cand in assignment.items():
+            tid = tids[ti]
+            lid = line_ids[cand['line_idx']]
+            self.doc.data['links'].append({
+                'text_id': tid, 'line_ids': [lid], 'arc_ids': [],
+                'source': 'auto', 'confidence': round(float(cand['combined']), 3),
+                'verified': False})
+        self.doc.data['history'].append(
+            {'action': 'auto_match', 'n': len(assignment)})
+        self.doc.dirty = True
+        self.canvas.update()
+        self.refresh_list()
+        self.update_undo_buttons()
+        self.statusBar().showMessage(
+            f'자동 매칭 {len(assignment)}/{len(targets)}건 · 충돌 {len(conflicts)}건 · '
+            f'사람 연결 {len(human)}건 유지', 8000)
+
     def do_split(self):
         """교차점 분할을 문서에 반영한다. 자동 단계에 숨기지 않고 별도 버튼으로
         꺼내둔 이유는, 결과를 사람이 보고 고칠 수 있어야 하기 때문이다."""
@@ -398,6 +468,7 @@ class MainWindow(QMainWindow):
         prev = self.canvas.mode
         if prev:
             self._split_sizes[prev] = self.splitter.sizes()
+        self.btn_match.setVisible(btn.property('mode') == C.MODE_MATCH)
         self.btn_split.setVisible(btn.property('mode') == C.MODE_NODE)
         self.measure_panel.setVisible(btn.property('mode') == C.MODE_MEASURE)
         self.canvas.mode = btn.property('mode')
