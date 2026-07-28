@@ -132,11 +132,17 @@ class MainWindow(QMainWindow):
             self.mode_group.addButton(rb, i)
             top.addWidget(rb)
         self.mode_group.buttonClicked.connect(self.on_mode)
+        self.chk_list = QCheckBox('목록 표시')
+        self.chk_list.setChecked(True)
+        self.chk_list.stateChanged.connect(
+            lambda: (self.splitter.widget(2).setVisible(self.chk_list.isChecked()),
+                     self._remember_split()))
         self.chk_unlinked = QCheckBox('미연결 선 표시')
         self.chk_unlinked.setChecked(True)
         self.chk_unlinked.stateChanged.connect(self.on_toggle_unlinked)
         top.addSpacing(20)
         top.addWidget(self.chk_unlinked)
+        top.addWidget(self.chk_list)
         top.addStretch(1)
 
         self.help_label = QLabel(MODE_HELP[C.MODE_MATCH])
@@ -189,12 +195,19 @@ class MainWindow(QMainWindow):
         splitter.addWidget(left)
         splitter.addWidget(self.measure_panel)
         splitter.addWidget(right)
-        splitter.setStretchFactor(0, 4)
-        splitter.setStretchFactor(1, 3)
-        splitter.setStretchFactor(2, 1)
+        # 스트레치 팩터를 세워두면 창 크기가 바뀔 때마다 그 비율로 되돌아가
+        # 사용자가 끌어놓은 배치를 덮는다. 배치는 _apply_split이 관리한다.
+        for i in range(3):
+            splitter.setStretchFactor(i, 1)
         # 손잡이를 눈에 띄게(기본 1~2px은 잡기 어렵다) + 접힘 방지
         splitter.setHandleWidth(6)
         splitter.setChildrenCollapsible(False)
+        self.splitter = splitter
+        # 모드마다 화면 배치를 따로 기억한다. 측정 모드는 사진이 커야 하고
+        # 매칭 모드는 도면이 커야 하는데, 하나로 공유하면 모드를 오갈 때마다
+        # 사용자가 다시 끌어야 한다. 한 번 맞춰두면 그 모드에서는 유지된다.
+        self._split_sizes = {}
+        splitter.splitterMoved.connect(self._remember_split)
         splitter.setStyleSheet("QSplitter::handle{background:#c8ccd4;}QSplitter::handle:hover{background:#7f95c4;}QSplitter::handle:horizontal{width:6px;margin:2px 0;}QSplitter::handle:vertical{height:6px;margin:0 2px;}")
 
         central = QWidget()
@@ -324,10 +337,40 @@ class MainWindow(QMainWindow):
             f'검수된 텍스트 {n_lbl}건 → Label.txt\n검수된 연결 {n_gt}건 → matching_gt.json\n\n{d}')
 
     # ── 모드/목록/속성 ────────────────────────────────────
+    def _remember_split(self, *_):
+        if self.canvas.mode:
+            self._split_sizes[self.canvas.mode] = self.splitter.sizes()
+
+    def _apply_split(self, mode):
+        """그 모드에서 쓰던 배치를 되살린다. 처음이면 기본 비율을 준다.
+
+        레이아웃이 끝난 뒤에 적용해야 한다. 숨어 있던 패널을 보이게 한 직후에
+        setSizes를 부르면 Qt가 아직 최소 크기만 배정한 상태라 무시되고, 패널이
+        최소폭(280px)에 붙박인 채로 남는다.
+        """
+        from PyQt5.QtCore import QTimer
+        QTimer.singleShot(0, lambda: self._apply_split_now(mode))
+
+    def _apply_split_now(self, mode):
+        saved = self._split_sizes.get(mode)
+        if saved and sum(saved) > 0:
+            self.splitter.setSizes(saved)
+            return
+        w = max(self.splitter.width(), 900)
+        if mode == C.MODE_MEASURE:
+            # 사진을 보며 재는 모드라 가운데가 넉넉해야 한다
+            self.splitter.setSizes([int(w * 0.34), int(w * 0.48), int(w * 0.18)])
+        else:
+            self.splitter.setSizes([int(w * 0.72), 0, int(w * 0.28)])
+
     def on_mode(self, btn):
         # 측정 모드에서만 사진 패널을 띄운다. 평소엔 도면 캔버스가 넓어야 한다.
+        prev = self.canvas.mode
+        if prev:
+            self._split_sizes[prev] = self.splitter.sizes()
         self.measure_panel.setVisible(btn.property('mode') == C.MODE_MEASURE)
         self.canvas.mode = btn.property('mode')
+        self._apply_split(self.canvas.mode)
         self.refresh_list()
         if btn.property('mode') == C.MODE_MEASURE:
             # set_document를 다시 부르면 안 된다 — 불러둔 사진과 보정 결과가 날아간다.

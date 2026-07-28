@@ -358,20 +358,26 @@ class MeasurePanel(QWidget):
         self.canvas.measureDeleted.connect(self._on_canvas_deleted)
 
         # ── 보드 설정 + 사진 열기 ──
+        # 툴바를 두 줄로 나눈다. 한 줄에 몰아넣으면 이 패널의 최소폭이
+        # 그만큼 커져서, 스플리터로 넓히려 해도 좁은 쪽에 붙박이게 된다.
         bar = QHBoxLayout()
-        self.btn_open = QPushButton('제품 사진 열기')
+        bar2 = QHBoxLayout()
+        self.btn_open = QPushButton('사진 열기')
         self.btn_open.clicked.connect(self.open_photo)
         bar.addWidget(self.btn_open)
-        bar.addWidget(QLabel('마커'))
+        bar2.addWidget(QLabel('마커'))
         self.sp_marker = QDoubleSpinBox(); self.sp_marker.setRange(5, 500)
+        self.sp_marker.setMaximumWidth(92)
         self.sp_marker.setValue(50.0); self.sp_marker.setSuffix(' mm')
         self.sp_marker.setToolTip('인쇄물을 자로 잰 값. 3% 틀리면 모든 측정이 3% 틀립니다')
-        bar.addWidget(self.sp_marker)
-        bar.addWidget(QLabel('중심간'))
+        bar2.addWidget(self.sp_marker)
+        bar2.addWidget(QLabel('중심간'))
         self.sp_pitch = QDoubleSpinBox(); self.sp_pitch.setRange(10, 1000)
+        self.sp_pitch.setMaximumWidth(92)
         self.sp_pitch.setValue(150.0); self.sp_pitch.setSuffix(' mm')
-        bar.addWidget(self.sp_pitch)
-        self.btn_trace = QPushButton('측정점 자동 추출')
+        bar2.addWidget(self.sp_pitch)
+        bar2.addStretch(1)
+        self.btn_trace = QPushButton('측정점 자동추출')
         self.btn_trace.setToolTip(
             '연결된 치수마다 치수보조선을 따라가 실제 외곽선 위의 두 점을 찾습니다.\n'
             '도면 캔버스에 보라 점선으로 표시되며 끌어서 고칠 수 있습니다.')
@@ -380,10 +386,12 @@ class MeasurePanel(QWidget):
         bar.addStretch(1)
         self.lbl_calib = QLabel('사진 없음')
         self.lbl_calib.setStyleSheet('color:#555;')
-        bar.addWidget(self.lbl_calib)
+        self.lbl_calib.setWordWrap(True)
+        bar2.addWidget(self.lbl_calib)
 
         # ── 지금 비교 중인 치수 ──
         self.lbl_target = QLabel('도면에서 치수를 클릭하세요')
+        self.lbl_target.setWordWrap(True)
         self.lbl_target.setStyleSheet(
             'background:#eef4ff; border:1px solid #aac; padding:6px; font-weight:bold;')
 
@@ -431,9 +439,10 @@ class MeasurePanel(QWidget):
         lay = QVBoxLayout(self)
         lay.setContentsMargins(4, 4, 4, 4)
         lay.addLayout(bar)
+        lay.addLayout(bar2)
         lay.addWidget(self.vsplit, 1)
         # 패널 자체도 바깥 스플리터로 자유롭게 줄였다 늘렸다 할 수 있어야 한다
-        self.setMinimumWidth(280)
+        self.setMinimumWidth(200)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
     # ── 문서 연동 ─────────────────────────────────────────
