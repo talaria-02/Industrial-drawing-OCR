@@ -57,8 +57,10 @@ MODES = [
     ('선분', C.MODE_LINE),
     ('원/호', C.MODE_ARC),
     ('화살촉', C.MODE_ARROW),
-    ('매칭', C.MODE_MATCH),
+    # 노드를 매칭보다 앞에 둔다 — 교차점에서 먼저 쪼개놓고 매칭해야 치수선이
+    # 온전한 조각으로 잡힌다. 순서가 곧 권장 작업 순서다.
     ('노드', C.MODE_NODE),
+    ('매칭', C.MODE_MATCH),
     ('측정', C.MODE_MEASURE),
 ]
 
