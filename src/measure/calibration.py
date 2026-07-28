@@ -270,6 +270,11 @@ def rectify_board(image, board, px_per_mm=8.0, camera_matrix=None, dist_coeffs=N
     size = (int(np.clip(hi[0] - lo[0], 64, 20000)), int(np.clip(hi[1] - lo[1], 64, 20000)))
     rectified = cv2.warpPerspective(image, H, size, flags=cv2.INTER_CUBIC,
                                     borderValue=(255, 255, 255))
+    # 사진 바깥은 흰색으로 채워지는데, 그 여백이 종이보다 밝아서 하류의 '배경지
+    # 찾기'가 종이와 여백을 한 덩어리로 삼켜버린다(실측: 종이 가장자리가 181mm
+    # 물체로 잡혔다). 어디까지가 실제 촬영 범위인지 마스크로 같이 넘긴다.
+    valid = cv2.warpPerspective(np.full(gray.shape, 255, np.uint8), H, size,
+                                flags=cv2.INTER_NEAREST, borderValue=0)
 
     areas = [cv2.contourArea(c.reshape(4, 2).astype(np.float32)) for c in src_pts]
     marker_px = float(np.sqrt(np.mean(areas)))
@@ -279,7 +284,8 @@ def rectify_board(image, board, px_per_mm=8.0, camera_matrix=None, dist_coeffs=N
     if residual > 0.5:
         warnings.append(f"재투영 잔차 {residual:.2f}mm — 보드가 휘었거나 평면이 아닐 수 있습니다.")
 
-    return {"rectified": rectified, "px_per_mm": float(px_per_mm), "homography": H,
+    return {"rectified": rectified, "valid_mask": valid,
+            "px_per_mm": float(px_per_mm), "homography": H,
             "marker_px": marker_px, "n_markers": len(src_pts),
             "residual_mm": residual, "warnings": warnings,
             "marker_origin_px": (float(-lo[0]), float(-lo[1])),

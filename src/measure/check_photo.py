@@ -19,7 +19,7 @@ import cv2
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from measure import calibration as cal  # noqa: E402
+from measure import calibration as cal, measure as ms  # noqa: E402
 
 
 def imread_unicode(path):
@@ -57,6 +57,10 @@ def main():
     ap.add_argument("--p1", type=str, default=None, help="측정점1 'x,y' (보정 이미지 px)")
     ap.add_argument("--p2", type=str, default=None)
     ap.add_argument("--out", type=str, default=None)
+    ap.add_argument("--objects", action="store_true",
+                    help="배경지 위 물체를 자동 검출해 각각의 길이/폭을 잰다")
+    ap.add_argument("--min-area", type=float, default=15.0, help="최소 면적 mm^2")
+    ap.add_argument("--no-snap", action="store_true", help="엣지 스냅 끄기")
     a = ap.parse_args()
 
     img = imread_unicode(a.photo)
@@ -97,10 +101,30 @@ def main():
     os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
     vis = draw_mm_grid(r["rectified"], r["px_per_mm"])
 
+    if a.objects:
+        objs, _ = ms.detect_objects(r["rectified"], r["px_per_mm"],
+                                    exclude_boxes=ms.marker_boxes(r["rectified"]),
+                                    min_area_mm2=a.min_area,
+                                    valid_mask=r.get("valid_mask"))
+        print(f"\n자동 검출 물체 {len(objs)}개")
+        print(f"  {'#':>2}{'길이mm':>10}{'폭mm':>9}{'면적mm2':>10}")
+        for i, o in enumerate(objs):
+            print(f"  {i+1:2d}{o['length_mm']:10.2f}{o['width_mm']:9.2f}{o['area_mm2']:10.1f}")
+        if not objs:
+            print("  배경과 대비되는 물체가 없습니다. 흰 물체는 임계값으로 못 가르므로 "
+                  "--p1/--p2 로 직접 재거나 대비되는 배경지를 쓰세요.")
+        vis = ms.draw_objects(vis, objs, r["px_per_mm"])
+
     if a.p1 and a.p2:
         p1 = np.array([float(v) for v in a.p1.split(",")])
         p2 = np.array([float(v) for v in a.p2.split(",")])
-        mm = float(np.hypot(*(p2 - p1))) / r["px_per_mm"]
+        res = ms.measure_two_points(r["rectified"], p1, p2, r["px_per_mm"],
+                                    snap=not a.no_snap)
+        mm = res["mm"]
+        if res.get("snapped"):
+            print(f"\n엣지 스냅: 시작 {res['shift1_px']:+.1f}px, "
+                  f"끝 {res['shift2_px']:+.1f}px")
+        p1, p2 = res["p1"], res["p2"]
         # 마커 중심에서 측정 중점까지의 거리로 외삽 오차를 추정
         ctr = np.array(r["marker_origin_px"]) + a.pitch_mm * r["px_per_mm"] / 2
         dist_mm = float(np.hypot(*((p1 + p2) / 2 - ctr))) / r["px_per_mm"]
