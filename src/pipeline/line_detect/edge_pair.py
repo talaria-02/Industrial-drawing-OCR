@@ -56,13 +56,32 @@ INSIDE_PCTL = 30
 
 
 def estimate_ink_paper(gray):
-    """Otsu로 그 도면의 잉크/종이 대표 밝기를 추정. 반환 (ink, paper)."""
+    """Otsu로 그 도면의 잉크/바탕 대표 밝기를 추정. 반환 (ink, paper).
+
+    [어두운 배경 도면 주의]
+    "잉크는 어둡다"고 못 박으면 안 된다. CAD를 다크 테마로 캡처한 도면은
+    검은 바탕에 흰 선이라 정반대다(실측: monami_clear는 91%가 밝기 32~64이고,
+    그 상태에서 짝지음률이 4%로 무너졌다 — 일반 도면은 44%).
+
+    그래서 밝기로 정하지 않고 '넓이'로 정한다. 도면은 어느 쪽이든 바탕이
+    압도적으로 넓으므로, 화소가 많은 쪽이 바탕이고 적은 쪽이 잉크다.
+    이렇게 하면 ink > paper 인 경우도 자연스럽게 나온다.
+    """
     thr, _ = cv2_threshold_otsu(gray)
     dark = gray[gray <= thr]
     light = gray[gray > thr]
-    ink = float(np.median(dark)) if dark.size else 0.0
-    paper = float(np.median(light)) if light.size else 255.0
-    return ink, paper
+    if dark.size == 0 or light.size == 0:
+        return 0.0, 255.0
+    d_med, l_med = float(np.median(dark)), float(np.median(light))
+    if dark.size >= light.size:
+        return l_med, d_med       # 어두운 쪽이 넓다 -> 그쪽이 바탕(흰 선 도면)
+    return d_med, l_med
+
+
+def ink_polarity(gray):
+    """잉크가 바탕보다 어두우면 +1, 밝으면 -1. 대비 부호를 맞추는 데 쓴다."""
+    ink, paper = estimate_ink_paper(gray)
+    return 1.0 if ink <= paper else -1.0
 
 
 def cv2_threshold_otsu(gray):
@@ -153,6 +172,20 @@ def _sample_contrast(gray, cand, mid, dirs, normals, gap, overlap_len, overlap_c
         return gray[ys, xs]
 
     out_off = np.abs(gap) / 2 + outside_margin
+    # 흰 선 도면에서는 '사이가 밝고 바깥이 어둡다'. 극성을 곱해 부호를 통일하면
+    # 아래 판정식(대비 > 임계)을 두 경우 모두에 그대로 쓸 수 있다.
+    pol = ink_polarity(gray)
+    if pol < 0:
+        g2 = 255 - gray.astype(np.int16)
+        gray = np.clip(g2, 0, 255).astype(np.uint8)
+        H, W = gray.shape
+
+        def grab(offset_px):
+            pts = center_pts + normals[i][:, None, :] * offset_px[:, None, None]
+            xs = np.clip(np.rint(pts[:, :, 0]).astype(np.int32), 0, W - 1)
+            ys = np.clip(np.rint(pts[:, :, 1]).astype(np.int32), 0, H - 1)
+            return gray[ys, xs]
+
     inside = np.percentile(grab(np.zeros(len(cand))), inside_pctl, axis=1)
     out_a = np.median(grab(out_off), axis=1)
     out_b = np.median(grab(-out_off), axis=1)
@@ -201,7 +234,11 @@ def _on_ink(lines, gray, pctl=INSIDE_PCTL, n_samples=13):
     pts = p1[:, None, :] + (p2 - p1)[:, None, :] * ts
     xs = np.clip(np.rint(pts[:, :, 0]).astype(np.int32), 0, W - 1)
     ys = np.clip(np.rint(pts[:, :, 1]).astype(np.int32), 0, H - 1)
-    return np.percentile(gray[ys, xs], pctl, axis=1) < cut
+    v = gray[ys, xs]
+    # 흰 선 도면이면 '잉크에 가깝다'가 밝은 쪽이다
+    if ink <= paper:
+        return np.percentile(v, pctl, axis=1) < cut
+    return np.percentile(v, 100 - pctl, axis=1) > cut
 
 
 def merge_edge_pairs(lines, gray, angle_thresh_deg=ANGLE_THRESH_DEG,
@@ -357,5 +394,9 @@ def centerline_ink_rate(lines, gray, n_samples=11, pctl=50):
     pts = p1[:, None, :] + (p2 - p1)[:, None, :] * ts
     xs = np.clip(np.rint(pts[:, :, 0]).astype(np.int32), 0, W - 1)
     ys = np.clip(np.rint(pts[:, :, 1]).astype(np.int32), 0, H - 1)
-    vals = np.percentile(gray[ys, xs], pctl, axis=1)
-    return float(np.mean(vals < cut)), vals
+    # 흰 선 도면이면 '잉크 위'가 밝은 쪽이다(estimate_ink_paper가 극성을 알려준다)
+    if ink <= paper:
+        vals = np.percentile(gray[ys, xs], pctl, axis=1)
+        return float(np.mean(vals < cut)), vals
+    vals = np.percentile(gray[ys, xs], 100 - pctl, axis=1)
+    return float(np.mean(vals > cut)), vals
