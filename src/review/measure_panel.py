@@ -344,6 +344,10 @@ class MeasurePanel(QWidget):
     """사진 불러오기 + 보정 + 치수별 비교 결과 표."""
     docChanged = pyqtSignal()
     statusMessage = pyqtSignal(str)
+    # 결과 표에서 행을 고르면 그 치수를 도면에서도 고르게 한다. 표에서 행을
+    # 눌러도 선택이 안 바뀌면, 공차 입력칸은 계속 '아까 도면에서 누른 치수'를
+    # 가리키고 있어서 눈에 보이는 행과 실제로 수정되는 치수가 어긋난다.
+    textSelected = pyqtSignal(str)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -403,13 +407,22 @@ class MeasurePanel(QWidget):
             '이 치수의 공차를 직접 지정합니다. 0(자동)이면 도면에 적힌 공차,\n'
             '없으면 ISO 2768 일반공차를 씁니다. 선을 다시 그어도 유지됩니다.')
         self.sp_tol.valueChanged.connect(self._on_tol_changed)
-        bar2.addWidget(QLabel('공차'))
-        bar2.addWidget(self.sp_tol)
+        self.sp_tol.setEnabled(False)
 
         self.lbl_target = QLabel('도면에서 치수를 클릭하세요')
         self.lbl_target.setWordWrap(True)
         self.lbl_target.setStyleSheet(
             'background:#eef4ff; border:1px solid #aac; padding:6px; font-weight:bold;')
+
+        # 공차 입력칸은 '지금 고른 치수' 표시줄에 붙인다. 툴바 끝에 두면
+        # 패널이 좁을 때 오른쪽으로 밀려 화면에서 사라진다 — 실제로 그래서
+        # 사용자가 입력칸을 찾지 못했다.
+        self.lbl_tol = QLabel('공차')
+        row_t = QHBoxLayout()
+        row_t.setContentsMargins(0, 0, 0, 0)
+        row_t.addWidget(self.lbl_target, 1)
+        row_t.addWidget(self.lbl_tol)
+        row_t.addWidget(self.sp_tol)
 
         # ── 결과 표 ──
         self.table = QTableWidget(0, 6)
@@ -419,6 +432,7 @@ class MeasurePanel(QWidget):
         self.table.verticalHeader().setVisible(False)
         self.table.setSelectionBehavior(QTableWidget.SelectRows)
         self.table.setMinimumHeight(80)
+        self.table.itemSelectionChanged.connect(self._on_row_selected)
 
         btns = QHBoxLayout()
         self.btn_del = QPushButton('선택 행 삭제')
@@ -440,7 +454,7 @@ class MeasurePanel(QWidget):
         tl = QVBoxLayout(top_w)
         tl.setContentsMargins(0, 0, 0, 0)
         tl.addWidget(self.canvas, 1)
-        tl.addWidget(self.lbl_target)
+        tl.addLayout(row_t)
 
         self.vsplit = QSplitter(Qt.Vertical)
         self.vsplit.addWidget(top_w)
@@ -493,6 +507,21 @@ class MeasurePanel(QWidget):
         self.refresh_table()
         self.docChanged.emit()
 
+    def _on_row_selected(self):
+        """표에서 행을 고르면 그 치수를 '지금 비교 중'으로 바꾼다."""
+        if self.doc is None:
+            return
+        rows = {i.row() for i in self.table.selectedIndexes()}
+        if len(rows) != 1:
+            return
+        res = self.doc.data.get('measure', {}).get('results', [])
+        row = rows.pop()
+        if not (0 <= row < len(res)):
+            return
+        tid = res[row]['text_id']
+        if tid != self.active_text:
+            self.textSelected.emit(tid)
+
     def _on_tol_changed(self, v):
         if self.doc is None or not self.active_text or self._tol_guard:
             return
@@ -512,6 +541,7 @@ class MeasurePanel(QWidget):
             self.sp_tol.setValue(float(ov) if ov else 0.0)
         finally:
             self._tol_guard = False
+        self.sp_tol.setEnabled(self.doc is not None and tid is not None)
         if self.doc is None or tid is None:
             self.lbl_target.setText('도면에서 치수를 클릭하세요')
             return

@@ -201,6 +201,7 @@ class MainWindow(QMainWindow):
         self.measure_panel.docChanged.connect(self.on_doc_changed)
         self.measure_panel.statusMessage.connect(
             lambda t: self.statusBar().showMessage(t, 5000))
+        self.measure_panel.textSelected.connect(self.select_text_on_canvas)
         self.measure_panel.setVisible(False)
 
         splitter = QSplitter(Qt.Horizontal)
@@ -606,6 +607,19 @@ class MainWindow(QMainWindow):
             if tid:
                 c.seed_measure_chain(tid)
             self.measure_panel.set_active_text(tid)
+    def select_text_on_canvas(self, tid):
+        """측정 패널(결과 표)에서 고른 치수를 도면 캔버스에서도 고른 상태로 만든다.
+
+        선택 상태를 캔버스가 들고 있으므로 여기서 바꿔주고 selectionChanged를
+        직접 쏜다. 그러면 on_selection이 평소 경로대로 돌아 측정 패널까지
+        갱신되므로, 도면을 클릭한 것과 표를 클릭한 것이 같은 결과가 된다.
+        """
+        if self.doc is None or self.doc.find('texts', tid) is None:
+            return
+        self.canvas.sel_kind, self.canvas.sel_id = 'text', tid
+        self.canvas.update()
+        self.canvas.selectionChanged.emit()
+
     def apply_text_edit(self):
         if self.doc and self.canvas.sel_kind == 'text' and self.canvas.sel_id:
             t = self.doc.find('texts', self.canvas.sel_id)
