@@ -45,9 +45,11 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QFileDialog, QL
 if __package__ in (None, ''):   # 파일 직접 실행 지원
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     from src.review import bootstrap, canvas as C
+    from src.review import measure_panel as MP
     from src.review.model import ReviewDoc, CATEGORIES
 else:
     from . import bootstrap, canvas as C
+    from . import measure_panel as MP
     from .model import ReviewDoc, CATEGORIES
 
 MODES = [
@@ -172,7 +174,6 @@ class MainWindow(QMainWindow):
         rl.addWidget(self.list_widget, 1)
         rl.addWidget(prop)
 
-        from . import measure_panel as MP
         self.measure_panel = MP.MeasurePanel()
         self.measure_panel.docChanged.connect(self.on_doc_changed)
         self.measure_panel.statusMessage.connect(
