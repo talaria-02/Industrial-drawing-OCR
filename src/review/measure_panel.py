@@ -511,7 +511,25 @@ class MeasurePanel(QWidget):
             return
         polys = [t['poly'] for t in self.doc.data['texts']]
         params = tp.scaled_params(tp.text_scale(polys))
+
+        # 교차점 분할 + 끝점 스냅을 '역추적 직전에만' 적용한다.
+        #
+        # 매칭 단계에 넣지 않는 이유: 선분이 1.3배로 늘어 후보 풀도 그만큼
+        # 커진다. 매칭은 이미 그 문제로 31%에 머물러 있어 더 악화될 위험이 크다.
+        # 반면 역추적은 '끊긴 보조선을 타고 외형선까지 가는' 일이라 위상이
+        # 이어져 있는 것이 결정적으로 유리하다.
+        #
+        # doc['lines']는 건드리지 않는다. 분할 결과는 이 함수 안에서만 쓰고,
+        # 밟은 경로는 origin으로 원래 id로 되돌려 저장한다 — 그래야 화면에서
+        # 기존 선분을 덧그려 검수할 수 있다.
+        from line_detect import snap_split as ss
+        L0 = L
+        L, origin, sstat = ss.snap_and_split(L0, params['text_h'])
+        doc_ids = [l['id'] for l in self.doc.data['lines']]
         id2i = {l['id']: i for i, l in enumerate(self.doc.data['lines'])}
+        frag_of = {}
+        for k, o in enumerate(origin):
+            frag_of.setdefault(o, []).append(k)
         cat = {t['id']: t.get('category') for t in self.doc.data['texts']}
         self.doc.push_undo()
         n = {'traced': 0, 'partial': 0, 'fallback': 0, 'skip': 0}
@@ -525,16 +543,35 @@ class MeasurePanel(QWidget):
             idxs = [id2i[x] for x in link.get('line_ids', []) if x in id2i]
             if not idxs:
                 continue
-            i = max(idxs, key=lambda k: _np.hypot(L[k, 2] - L[k, 0], L[k, 3] - L[k, 1]))
-            r = tp.trace_measure_points(L[i], L, params, exclude_idx={i})
-            # 밟고 간 선분 id를 함께 남긴다 — 사람이 '이 경로가 말이 되나'를
-            # 봐야 하는데, 결과 두 점만 있으면 판단할 근거가 없다.
-            ids = [l['id'] for l in self.doc.data['lines']]
-            path_ids = [[ids[i] for i in side if i < len(ids)] for side in r.get('path', [[], []])]
+            # 원래 치수선이 여러 조각으로 쪼개졌을 수 있다 — 가장 긴 조각을 본체로,
+            # 같은 원본에서 나온 조각은 전부 제외해야 자기 자신을 보조선으로
+            # 오인하지 않는다.
+            frags = [k for o in idxs for k in frag_of.get(o, [])]
+            if not frags:
+                continue
+            i = max(frags, key=lambda k: _np.hypot(L[k, 2] - L[k, 0], L[k, 3] - L[k, 1]))
+            r = tp.trace_measure_points(L[i], L, params, exclude_idx=set(frags))
+            # 밟고 간 선분을 원래 id로 되돌려 남긴다 — 사람이 '이 경로가 말이
+            # 되나'를 봐야 하는데, 결과 두 점만 있으면 판단할 근거가 없다.
+            path_ids = []
+            for side in r.get('path', [[], []]):
+                seen, got = set(), []
+                for k in side:
+                    o = origin[k] if k < len(origin) else None
+                    if o is None or o >= len(doc_ids) or o in seen:
+                        continue
+                    seen.add(o)
+                    got.append(doc_ids[o])
+                path_ids.append(got)
             link['measure'] = {'points': [[float(a), float(b)] for a, b in r['points']],
                                'path': path_ids,
                                'quality': r['quality'], 'source': 'auto'}
             n[r['quality']] += 1
+        self.statusMessage.emit(
+            f"분할 {sstat['n_in']}->{sstat['n_out']}선분 "
+            f"(쪼갬 {sstat['n_split']} · 해칭보존 {sstat['n_skipped_dense']} · "
+            f"스냅 {sstat['n_snapped_pts']}점)  |  "
+            f"추적 {n['traced']} · 부분 {n['partial']} · 대체 {n['fallback']}")
         self._build_graph(params['text_h'])
         self.doc.dirty = True
         if sum(n.values()) == 0:
