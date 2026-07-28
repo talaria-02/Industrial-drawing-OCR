@@ -530,6 +530,7 @@ class MeasurePanel(QWidget):
             link['measure'] = {'points': [[float(a), float(b)] for a, b in r['points']],
                                'quality': r['quality'], 'source': 'auto'}
             n[r['quality']] += 1
+        self._build_graph(params['text_h'])
         self.doc.dirty = True
         if sum(n.values()) == 0:
             n_link = sum(1 for l in self.doc.data['links'] if l.get('line_ids'))
@@ -546,6 +547,41 @@ class MeasurePanel(QWidget):
             f"치수선대체 {n['fallback']} · 사람수정 유지 {n['skip']}  "
             f"(글자높이 {params['text_h']:.0f}px 기준)")
         self.docChanged.emit()
+
+    def _build_graph(self, text_h):
+        """측정점을 노드로 승격시켜 외곽선 그래프를 만들고 빠진 치수를 채운다.
+
+        역추적이 찍은 두 점이 곧 외곽선을 잘라야 할 자리다. 따로 노드를 찾지
+        않고 그대로 승격시키면, 같은 외곽선에 걸린 치수들이 직렬 체인이 된다.
+        """
+        from line_detect import geometry_graph as gg
+        mp, vals = {}, {}
+        for link in self.doc.data['links']:
+            m = link.get('measure')
+            if not (m and m.get('points')):
+                continue
+            tid = link['text_id']
+            t = self.doc.find('texts', tid)
+            if t is None or t.get('category') not in MEASURABLE_CATEGORIES:
+                continue
+            mp[tid] = [tuple(p) for p in m['points']]
+            v = cp.parse_dimension(t.get('text', '')).get('nominal')
+            if v is not None:
+                vals[tid] = v
+        if not mp:
+            return
+        G = gg.build_graph(mp, vals, text_h)
+        self.doc.data['graph'] = {
+            'nodes': [[round(x, 2), round(y, 2)] for x, y in G['nodes']],
+            'edges': G['edges'],
+            'dimensions': G['dimensions'],
+            'conflicts': G['conflicts'],
+        }
+        der = sum(1 for d in G['dimensions'] if not d['is_explicit'])
+        if der or G['conflicts']:
+            self.statusMessage.emit(
+                f"그래프: 노드 {len(G['nodes'])} · 구간 {len(G['edges'])} · "
+                f"추론치수 {der} · 모순 {len(G['conflicts'])}건")
 
     # ── 사진 ──────────────────────────────────────────────
     def open_photo(self):

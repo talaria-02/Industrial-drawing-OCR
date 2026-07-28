@@ -59,7 +59,7 @@ MODES = [
     ('화살촉', C.MODE_ARROW),
     ('매칭', C.MODE_MATCH),
     ('카테고리', C.MODE_CATEGORY),
-    ('측정(⑦)', C.MODE_MEASURE),
+    ('측정', C.MODE_MEASURE),
 ]
 
 MODE_HELP = {

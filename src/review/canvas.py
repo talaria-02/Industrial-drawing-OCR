@@ -228,6 +228,36 @@ class Canvas(QWidget):
                 p.setBrush(Qt.NoBrush)
                 p.drawPolygon(poly)
 
+        # 외곽선 그래프 — 노드(칼자국)와 추론된 치수. 측정 모드에서만.
+        if self.mode == MODE_MEASURE:
+            G = self.doc.data.get('graph', {})
+            for e in G.get('edges', []):
+                nd = G['nodes']
+                if e['start'] < len(nd) and e['end'] < len(nd):
+                    p.setPen(QPen(QColor(0, 170, 120), 2))
+                    p.drawLine(self.to_screen(*nd[e['start']]),
+                               self.to_screen(*nd[e['end']]))
+            for k, (nx, ny) in enumerate(G.get('nodes', [])):
+                sp = self.to_screen(nx, ny)
+                p.setPen(QPen(QColor(255, 255, 255), 1.5))
+                p.setBrush(QBrush(QColor(0, 150, 100)))
+                p.drawEllipse(sp, HANDLE_PX / 2 + 1, HANDLE_PX / 2 + 1)
+            p.setBrush(Qt.NoBrush)
+            # 도면에 안 적힌 값은 다른 색으로 — OCR로 읽은 것과 섞이면 안 된다
+            f = QFont(); f.setPointSize(9); f.setBold(True); p.setFont(f)
+            for d in G.get('dimensions', []):
+                if d.get('is_explicit') or d.get('value') is None:
+                    continue
+                a, b = d['ref_nodes']
+                nd = G['nodes']
+                if a >= len(nd) or b >= len(nd):
+                    continue
+                sa, sb = self.to_screen(*nd[a]), self.to_screen(*nd[b])
+                mid = QPointF((sa.x() + sb.x()) / 2, (sa.y() + sb.y()) / 2 - 8)
+                txt = f"({d['value']:g})"
+                p.setPen(QPen(QColor(255, 255, 255), 4)); p.drawText(mid, txt)
+                p.setPen(QPen(QColor(200, 90, 0), 1)); p.drawText(mid, txt)
+
         # 측정점 — 치수가 가리키는 실제 두 모서리. 측정 모드에서만 띄운다
         # (다른 모드에서는 화면만 어지럽힌다).
         if self.mode == MODE_MEASURE:

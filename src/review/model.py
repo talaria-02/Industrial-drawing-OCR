@@ -43,6 +43,10 @@ def empty_doc(image_name, image_size):
         "arcs": [],
         "arrows": [],
         "links": [],
+        # 외곽선을 점/구간으로 쪼갠 그래프. 한 외곽선에 치수가 여러 개 걸릴 때
+        # '선분에 치수를 붙이는' 방식으로는 표현이 안 되고, 도면에 안 적힌
+        # 치수(10-3=7)도 여기서 방정식으로 나온다. geometry_graph가 채운다.
+        "graph": {"nodes": [], "edges": [], "dimensions": [], "conflicts": []},
         # ⑦ 제품사진 비교용 예약 공간. 도면은 mm, 사진은 px이므로 환산(캘리브레이션)이
         # 반드시 필요해서 자리를 미리 잡아둔다. 지금은 UI에서 비활성.
         "measure": {"photo_path": None, "calibration": None, "results": []},
