@@ -16,7 +16,13 @@ ArUco 호모그래피는 '평면의 원근'만 되돌린다. 렌즈 왜곡은 �
 맞고 멀어질수록 틀리는 오차가 남는다.
 
 실행:
+    # 체커보드로 (정확도 우선)
     python src/measure/calibrate_camera.py data/calib/내폰 --square-mm 25
+
+    # 측정용 ArUco 보드로 (인쇄물 하나로 끝내기 — 장수를 더 찍어야 함)
+    python src/measure/calibrate_camera.py data/calib/내폰 --aruco \
+        --marker-mm 50 --pitch-mm 150
+
     -> results/camera_calib/내폰.json  저장
 
 촬영 요령:
@@ -93,6 +99,47 @@ def make_checkerboard(cols=9, rows=6, square_mm=25.0, dpi=300, margin_mm=10.0):
     return cv2.copyMakeBorder(img, pad, pad, pad, pad, cv2.BORDER_CONSTANT, value=255)
 
 
+def intrinsics_from_aruco(images, marker_mm=50.0, pitch_mm=150.0):
+    """ArUco 보드 사진들로 렌즈 왜곡을 구한다. 체커보드를 따로 인쇄하지 않는 길.
+
+    [체커보드와 무엇이 다른가]
+    9x6 체커보드는 한 장에서 코너 54점을 준다. 2x2 ArUco 보드는 16점뿐이다.
+    점이 적으면 왜곡계수(특히 k2, k3) 추정이 흔들리므로, 장수로 메워야 한다 —
+    체커보드 15~20장 자리에 25~30장을 권한다.
+
+    [그래도 이 길을 두는 이유]
+    측정에 쓸 보드는 이미 인쇄돼 있다. 종이를 하나 더 만들고 그 칸을 다시
+    재는 일이 늘면 실제로는 캘리브레이션을 건너뛰게 된다. 정확도가 조금
+    낮아도 실행되는 절차가 낫다.
+
+    marker_mm / pitch_mm 은 인쇄물을 자로 잰 값을 넣어야 한다 — 이 값이 틀리면
+    초점거리가 그만큼 통째로 틀어진다.
+    """
+    board = cal.make_board(2, 2, marker_mm=marker_mm, gap_mm=pitch_mm - marker_mm)
+    det = cal.make_detector()
+    obj_pts, img_pts, size = [], [], None
+    for im in images:
+        gray = im if im.ndim == 2 else cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+        size = gray.shape[::-1]
+        corners, ids, _ = det.detectMarkers(gray)
+        if ids is None or len(ids) < 3:
+            continue          # 3개 미만이면 그 컷은 자세를 못 믿는다
+        o, i = board.matchImagePoints(corners, ids)
+        if o is None or len(o) < 8:
+            continue
+        obj_pts.append(o.astype(np.float32))
+        img_pts.append(i.astype(np.float32))
+    if len(obj_pts) < 8:
+        raise ValueError(
+            f"보드가 잡힌 사진이 {len(obj_pts)}장뿐입니다. "
+            "ArUco 보드로 왜곡을 구하려면 최소 8장(권장 25~30장) 필요합니다 — "
+            "코너 수가 체커보드의 1/3이라 장수로 메워야 합니다.")
+    rms, K, dist, _, _ = cv2.calibrateCamera(obj_pts, img_pts, size, None, None)
+    return {"camera_matrix": K, "dist_coeffs": dist, "rms": float(rms),
+            "n_used": len(obj_pts), "image_size": size,
+            "pattern": "aruco2x2", "square_mm": marker_mm}
+
+
 def imread_unicode(path):
     return cv2.imdecode(np.fromfile(path, np.uint8), cv2.IMREAD_COLOR)
 
@@ -106,6 +153,10 @@ def main():
     ap.add_argument("--square-mm", type=float, default=25.0)
     ap.add_argument("--make-board", action="store_true",
                     help="인쇄용 체커보드만 만들고 끝낸다")
+    ap.add_argument("--aruco", action="store_true",
+                    help="체커보드 대신 측정용 ArUco 보드 사진으로 구한다")
+    ap.add_argument("--marker-mm", type=float, default=50.0)
+    ap.add_argument("--pitch-mm", type=float, default=150.0)
     a = ap.parse_args()
 
     if a.make_board:
@@ -135,16 +186,19 @@ def main():
         size = (im.shape[1], im.shape[0])
 
     try:
-        r = cal.estimate_intrinsics(imgs, pattern=pat, square_mm=a.square_mm)
+        if a.aruco:
+            print(f"ArUco 보드 모드 (마커 {a.marker_mm}mm, 중심간 {a.pitch_mm}mm)")
+            r = intrinsics_from_aruco(imgs, a.marker_mm, a.pitch_mm)
+        else:
+            r = cal.estimate_intrinsics(imgs, pattern=pat, square_mm=a.square_mm)
+            r["image_size"] = size
+            r["pattern"] = list(pat)
+            r["square_mm"] = a.square_mm
     except ValueError as e:
         print(f"\n[실패] {e}")
-        print("  체커보드가 잘려 있거나 흐리면 코너 검출이 안 됩니다. "
+        print("  보드가 잘려 있거나 흐리면 코너 검출이 안 됩니다. "
               "보드 전체가 프레임에 들어오게 다시 찍으세요.")
         return 1
-
-    r["image_size"] = size
-    r["pattern"] = list(pat)
-    r["square_mm"] = a.square_mm
     K, D = r["camera_matrix"], np.asarray(r["dist_coeffs"]).ravel()
     print(f"\n사용된 사진 {r['n_used']}/{len(imgs)}장,  재투영 RMS {r['rms']:.3f}px "
           + ("(양호)" if r["rms"] < 1.0 else "(높음 — 보드가 휘었거나 흐린 컷이 섞였을 수 있음)"))
