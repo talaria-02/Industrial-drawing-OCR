@@ -39,6 +39,8 @@ MAX_DIST_IN_MARKERS = 3.0
 # 보정 결과에 담을 범위(마커 크기의 배수). 이보다 멀면 외삽 오차가 커서
 # 어차피 측정에 못 쓴다. 50mm 마커면 반경 500mm로, 웬만한 부품은 다 들어간다.
 EXTENT_IN_MARKERS = 10.0
+# 보드 기준 확장 배수. 보드 폭 자체가 이미 크므로 훨씬 작게 잡는다.
+EXTENT_IN_BOARDS = 0.75
 
 
 def make_detector(dict_id=DEFAULT_DICT):
@@ -256,7 +258,10 @@ def rectify_board(image, board, px_per_mm=8.0, camera_matrix=None, dist_coeffs=N
         H).reshape(-1, 2)
     pad = margin_mm * px_per_mm
     span_mm = max(np.ptp(dst0[:, 0]), np.ptp(dst0[:, 1]))
-    reach = EXTENT_IN_MARKERS * max(span_mm, 1.0)
+    # 보드는 이미 넓게 퍼져 있으므로 마커 하나 기준 배수(EXTENT_IN_MARKERS)를
+    # 그대로 쓰면 캔버스가 폭주한다(실측: 200mm 보드에서 20000x20000px).
+    # 보드 폭의 EXTENT_IN_BOARDS배까지만 담는다.
+    reach = EXTENT_IN_BOARDS * max(span_mm, 1.0)
     ctr = dst0.mean(axis=0)
     lo = np.maximum(np.minimum(fr.min(axis=0), dst0.min(axis=0)) - pad, ctr - reach)
     hi = np.minimum(np.maximum(fr.max(axis=0), dst0.max(axis=0)) + pad, ctr + reach)
