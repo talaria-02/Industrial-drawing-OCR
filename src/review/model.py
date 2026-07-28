@@ -433,6 +433,28 @@ class ReviewDoc:
                 out.append((tuple(P[idx].mean(axis=0)), int(len(idx))))
         return out
 
+    # ── 공차 직접 지정 ─────────────────────────────────────
+    # OCR이 공차를 못 읽는 일이 흔하고, 텍스트를 고쳐 우회하려 해도 표기법이
+    # 조금 달라지면 다시 파싱에 실패해 일반공차로 되돌아간다. 사람이 넣은
+    # 숫자는 파싱 경로를 타지 않고 그대로 쓴다.
+    def set_tolerance(self, tid, tol):
+        self.push_undo()
+        link = self.get_link(tid)
+        if link is None:
+            self.data["links"].append({
+                "text_id": tid, "line_ids": [], "arc_ids": [],
+                "source": "human", "confidence": None, "verified": True})
+            link = self.data["links"][-1]
+        if tol is None or float(tol) <= 0:
+            link.pop("tol_override", None)
+        else:
+            link["tol_override"] = float(tol)
+        self._log("tolerance_set", text_id=tid, tol=tol)
+
+    def tolerance_override(self, tid):
+        link = self.get_link(tid)
+        return (link or {}).get("tol_override")
+
     # ── 화살촉 ─────────────────────────────────────────────
     def get_arrow(self, lid, end):
         for a in self.data["arrows"]:

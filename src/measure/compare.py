@@ -182,14 +182,27 @@ FALLBACK_TOL_RATIO = 0.01
 FALLBACK_TOL_MIN = 0.3
 
 
-def effective_tolerance(parsed, general_grade="m"):
+def effective_tolerance(parsed, general_grade="m", override=None):
     """판정에 쓸 공차와 그 근거를 정한다. 반환 (tol, basis).
 
     우선순위:
+      0) 사용자가 직접 지정한 값    basis='manual'   <- 무엇보다 우선
       1) 도면에 적힌 공차          basis='stated'
       2) 일반공차 등급(ISO 2768)   basis='general'
       3) 공칭값 비율 가정          basis='assumed'
+
+    override를 0순위로 둔 이유: OCR이 공차를 못 읽거나 잘못 읽는 일이 흔한데,
+    그때 사용자가 텍스트를 고쳐 우회하려 해도 표기법이 조금 다르면 다시 파싱에
+    실패해 일반공차로 되돌아간다. 사람이 넣은 숫자는 파싱을 거치지 않고 그대로
+    쓰는 길이 있어야 한다.
     """
+    if override is not None:
+        try:
+            v = abs(float(override))
+            if v > 0:
+                return v, "manual"
+        except (TypeError, ValueError):
+            pass
     up, lo = parsed.get("upper"), parsed.get("lower")
     if up is not None and lo is not None:
         return max(abs(up), abs(lo)), "stated"
@@ -202,7 +215,8 @@ def effective_tolerance(parsed, general_grade="m"):
     return FALLBACK_TOL_MIN, "assumed"
 
 
-def grade(parsed, measured_mm, uncertainty_mm=0.0, general_grade="m"):
+def grade(parsed, measured_mm, uncertainty_mm=0.0, general_grade="m",
+          override=None):
     """항상 정상/주의/불량 중 하나를 낸다.
 
     주의(warn)가 하는 일이 두 가지다:
@@ -217,7 +231,7 @@ def grade(parsed, measured_mm, uncertainty_mm=0.0, general_grade="m"):
         out["reason"] = "공칭값을 읽지 못했습니다"
         return out
 
-    tol, basis = effective_tolerance(parsed, general_grade)
+    tol, basis = effective_tolerance(parsed, general_grade, override)
     dev = float(measured_mm) - float(nom)
     out.update({"deviation": dev, "tol": float(tol), "basis": basis})
 
@@ -237,7 +251,10 @@ def grade(parsed, measured_mm, uncertainty_mm=0.0, general_grade="m"):
         out["grade"] = GRADE_BAD
         out["reason"] = f"공차 {tol:.2f}의 {a/max(tol,1e-9):.1f}배 이탈"
 
-    if basis == "general":
+    if basis == "manual":
+        out["reason"] = ((out["reason"] + " · ") if out["reason"] else "") + \
+            f"사용자 지정 공차 ±{tol:g}"
+    elif basis == "general":
         out["reason"] = ((out["reason"] + " · ") if out["reason"] else "") + \
             f"공차 미기재 — ISO 2768-{general_grade} 일반공차 ±{tol:.2f} 적용"
     elif basis == "assumed":

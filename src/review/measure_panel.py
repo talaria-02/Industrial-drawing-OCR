@@ -350,6 +350,7 @@ class MeasurePanel(QWidget):
         self.doc = None
         self.calib = None          # rectify_board 결과
         self.active_text = None    # 지금 비교 중인 도면 치수 id
+        self._tol_guard = False    # 공차 입력칸 되먹임 방지
 
         self.canvas = PhotoCanvas()
         self.canvas.measured.connect(self.on_measured)
@@ -390,6 +391,21 @@ class MeasurePanel(QWidget):
         bar2.addWidget(self.lbl_calib)
 
         # ── 지금 비교 중인 치수 ──
+        self.sp_tol = QDoubleSpinBox()
+        self.sp_tol.setRange(0.0, 999.0)
+        self.sp_tol.setDecimals(3)
+        self.sp_tol.setSingleStep(0.1)
+        self.sp_tol.setPrefix('± ')
+        self.sp_tol.setSuffix(' mm')
+        self.sp_tol.setSpecialValueText('자동')   # 0 = 도면/일반공차에 맡김
+        self.sp_tol.setMaximumWidth(120)
+        self.sp_tol.setToolTip(
+            '이 치수의 공차를 직접 지정합니다. 0(자동)이면 도면에 적힌 공차,\n'
+            '없으면 ISO 2768 일반공차를 씁니다. 선을 다시 그어도 유지됩니다.')
+        self.sp_tol.valueChanged.connect(self._on_tol_changed)
+        bar2.addWidget(QLabel('공차'))
+        bar2.addWidget(self.sp_tol)
+
         self.lbl_target = QLabel('도면에서 치수를 클릭하세요')
         self.lbl_target.setWordWrap(True)
         self.lbl_target.setStyleSheet(
@@ -477,10 +493,25 @@ class MeasurePanel(QWidget):
         self.refresh_table()
         self.docChanged.emit()
 
+    def _on_tol_changed(self, v):
+        if self.doc is None or not self.active_text or self._tol_guard:
+            return
+        self.doc.set_tolerance(self.active_text, None if v <= 0 else v)
+        self.refresh_table()
+        self.docChanged.emit()
+
     def set_active_text(self, tid):
         """도면 캔버스에서 치수를 고르면 호출된다."""
         self.active_text = tid
         self.canvas.set_active(tid)
+        # 입력칸을 그 치수의 저장값으로 맞춘다. 이때 valueChanged가 다시 저장을
+        # 부르지 않도록 잠근다(선택만 했는데 값이 덮이면 안 된다).
+        self._tol_guard = True
+        try:
+            ov = self.doc.tolerance_override(tid) if (self.doc and tid) else None
+            self.sp_tol.setValue(float(ov) if ov else 0.0)
+        finally:
+            self._tol_guard = False
         if self.doc is None or tid is None:
             self.lbl_target.setText('도면에서 치수를 클릭하세요')
             return
@@ -692,7 +723,8 @@ class MeasurePanel(QWidget):
             / self.calib['px_per_mm']
         u = cal.measurement_uncertainty(mm, dist_mm, pitch,
                                         px_per_mm=self.calib['px_per_mm'])
-        j = cp.grade(parsed, mm, u['total'])
+        j = cp.grade(parsed, mm, u['total'],
+                     override=self.doc.tolerance_override(self.active_text))
 
         self.doc.push_undo()
         results = self.doc.data['measure'].setdefault('results', [])
@@ -749,7 +781,8 @@ class MeasurePanel(QWidget):
             if t is None:
                 continue
             parsed = cp.parse_dimension(t.get('text', ''))
-            g = cp.grade(parsed, r['measured_mm'], r.get('uncertainty_mm', 0.0))
+            g = cp.grade(parsed, r['measured_mm'], r.get('uncertainty_mm', 0.0),
+                         override=self.doc.tolerance_override(r['text_id']))
             r['text'] = t.get('text', '')
             r['nominal'] = parsed['nominal']
             r['upper'], r['lower'] = parsed['upper'], parsed['lower']
