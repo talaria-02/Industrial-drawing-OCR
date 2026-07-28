@@ -255,6 +255,40 @@ class ReviewDoc:
     def linked_arc_ids(self):
         return {cid for l in self.data["links"] for cid in l.get("arc_ids", [])}
 
+    # ── 측정점 ─────────────────────────────────────────────
+    # 치수가 '실제로 가리키는 두 모서리'. 치수선은 주석이라 제품에 없으므로,
+    # 사진에서 재려면 이 두 점이 있어야 한다(traceback_points가 자동 추출).
+    def set_measure_points(self, tid, points, quality="human", source="human"):
+        self.push_undo()
+        link = self.get_link(tid)
+        if link is None:
+            self.data["links"].append({
+                "text_id": tid, "line_ids": [], "arc_ids": [],
+                "source": "human", "confidence": None, "verified": True,
+            })
+            link = self.data["links"][-1]
+        link["measure"] = {
+            "points": [[float(p[0]), float(p[1])] for p in points],
+            "quality": quality, "source": source,
+        }
+        self._log("measure_points", text_id=tid, source=source)
+
+    def clear_measure_points(self, tid):
+        self.push_undo()
+        link = self.get_link(tid)
+        if link is not None:
+            link.pop("measure", None)
+        self._log("measure_points_clear", text_id=tid)
+
+    def measure_points(self):
+        """{text_id: [(x,y),(x,y)]} — 캔버스 렌더/히트테스트용."""
+        out = {}
+        for l in self.data["links"]:
+            m = l.get("measure")
+            if m and m.get("points"):
+                out[l["text_id"]] = [tuple(p) for p in m["points"]]
+        return out
+
     # ── 화살촉 ─────────────────────────────────────────────
     def get_arrow(self, lid, end):
         for a in self.data["arrows"]:

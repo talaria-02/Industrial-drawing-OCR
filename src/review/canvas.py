@@ -215,6 +215,25 @@ class Canvas(QWidget):
                         p.drawEllipse(s, HANDLE_PX // 2, HANDLE_PX // 2)
                     p.setBrush(Qt.NoBrush)
 
+        # 측정점 — 치수가 가리키는 실제 두 모서리. 측정 모드에서만 띄운다
+        # (다른 모드에서는 화면만 어지럽힌다).
+        if self.mode == MODE_MEASURE:
+            for tid, pts in self.doc.measure_points().items():
+                hot = (self.sel_kind == 'text' and self.sel_id == tid)
+                col = QColor(230, 0, 130) if hot else QColor(150, 90, 190)
+                a, b = self.to_screen(*pts[0]), self.to_screen(*pts[1])
+                p.setPen(QPen(QColor(255, 255, 255, 200), 5 if hot else 3))
+                p.drawLine(a, b)
+                p.setPen(QPen(col, 2.5 if hot else 1.5, Qt.DashLine))
+                p.drawLine(a, b)
+                for k, s_ in enumerate((a, b)):
+                    act = self._drag and self._drag[0] == 'mpoint'                         and self._drag[1] == tid and self._drag[2] == k
+                    p.setPen(QPen(QColor(255, 255, 255), 1.5))
+                    p.setBrush(QBrush(QColor(255, 0, 255) if act else col))
+                    r = HANDLE_PX / 2 + (1 if hot else 0)
+                    p.drawEllipse(s_, r, r)
+                p.setBrush(Qt.NoBrush)
+
         # 선분
         for l in self.doc.data['lines']:
             is_linked = l['id'] in linked
@@ -464,6 +483,27 @@ class Canvas(QWidget):
             best, bd = c['id'], d
         return best
 
+    def hit_measure_point(self, ix, iy):
+        """반환 (text_id, 0|1) 또는 (None, None)."""
+        tol = self._tol(HANDLE_PX + 3)
+        for tid, pts in self.doc.measure_points().items():
+            for k, q in enumerate(pts):
+                if np.hypot(ix - q[0], iy - q[1]) <= tol:
+                    return tid, k
+        return None, None
+
+    def _press_measure(self, ix, iy):
+        tid, k = self.hit_measure_point(ix, iy)
+        if tid is not None:
+            self._drag = ('mpoint', tid, k)
+            self.sel_kind, self.sel_id = 'text', tid
+            self.selectionChanged.emit()
+            return
+        t = self.hit_text(ix, iy)
+        if t:
+            self.sel_kind, self.sel_id = 'text', t
+            self.selectionChanged.emit()
+
     def _press_arc(self, ix, iy):
         nm, cid = self.hit_arc_handle(ix, iy)
         if nm is not None:
@@ -532,6 +572,7 @@ class Canvas(QWidget):
         # 중일 때는 제외해야 그리기 동작을 막지 않는다.
         if (e.button() == Qt.LeftButton and self._draw_start is None
                 and self.mode not in (MODE_TEXT, MODE_LINE, MODE_ARC, MODE_ARROW)
+                and not (self.mode == MODE_MEASURE and self.hit_measure_point(ix, iy)[0])
                 and self.hit_text(ix, iy) is None and self.hit_line(ix, iy) is None
                 and self.hit_arc(ix, iy) is None
                 and self.hit_arc_handle(ix, iy)[0] is None):
@@ -556,6 +597,8 @@ class Canvas(QWidget):
             self._press_line(ix, iy)
         elif self.mode == MODE_ARC:
             self._press_arc(ix, iy)
+        elif self.mode == MODE_MEASURE:
+            self._press_measure(ix, iy)
         elif self.mode == MODE_ARROW:
             self._press_arrow(ix, iy)
         elif self.mode == MODE_CATEGORY:
@@ -700,6 +743,13 @@ class Canvas(QWidget):
                 if l:
                     l[end] = [ix, iy]
                     l['source'] = 'human'
+            elif kind == 'mpoint':
+                _, tid, k = self._drag
+                link = self.doc.get_link(tid)
+                if link and link.get('measure'):
+                    link['measure']['points'][k] = [ix, iy]
+                    link['measure']['source'] = 'human'
+                    link['measure']['quality'] = 'human'
             elif kind.startswith('arc_'):
                 _, cid, _ = self._drag
                 c = self.doc.find('arcs', cid)

@@ -324,6 +324,12 @@ class MeasurePanel(QWidget):
         self.sp_pitch = QDoubleSpinBox(); self.sp_pitch.setRange(10, 1000)
         self.sp_pitch.setValue(150.0); self.sp_pitch.setSuffix(' mm')
         bar.addWidget(self.sp_pitch)
+        self.btn_trace = QPushButton('측정점 자동 추출')
+        self.btn_trace.setToolTip(
+            '연결된 치수마다 치수보조선을 따라가 실제 외곽선 위의 두 점을 찾습니다.\n'
+            '도면 캔버스에 보라 점선으로 표시되며 끌어서 고칠 수 있습니다.')
+        self.btn_trace.clicked.connect(self.auto_trace)
+        bar.addWidget(self.btn_trace)
         bar.addStretch(1)
         self.lbl_calib = QLabel('사진 없음')
         self.lbl_calib.setStyleSheet('color:#555;')
@@ -387,6 +393,43 @@ class MeasurePanel(QWidget):
         self.lbl_target.setText(
             f"측정 대상: {t.get('text','')}  ·  공칭 {parsed['nominal']}  ·  {tol}"
             f"  ·  연결 {n}개{warn}")
+
+    def auto_trace(self):
+        """연결된 치수마다 측정점을 역추적한다. 사람이 고친 것은 건드리지 않는다."""
+        if self.doc is None:
+            return
+        import numpy as _np
+        sys.path.insert(0, os.path.join(PROJECT_ROOT, 'src', 'pipeline'))
+        from line_detect import traceback_points as tp
+        L = _np.array([[l['p1'][0], l['p1'][1], l['p2'][0], l['p2'][1]]
+                       for l in self.doc.data['lines']], float)
+        if len(L) == 0:
+            self.statusMessage.emit('선분이 없습니다')
+            return
+        polys = [t['poly'] for t in self.doc.data['texts']]
+        params = tp.scaled_params(tp.text_scale(polys))
+        id2i = {l['id']: i for i, l in enumerate(self.doc.data['lines'])}
+        self.doc.push_undo()
+        n = {'traced': 0, 'partial': 0, 'fallback': 0, 'skip': 0}
+        for link in self.doc.data['links']:
+            m = link.get('measure')
+            if m and m.get('source') == 'human':
+                n['skip'] += 1          # 사람이 고친 것은 덮지 않는다
+                continue
+            idxs = [id2i[x] for x in link.get('line_ids', []) if x in id2i]
+            if not idxs:
+                continue
+            i = max(idxs, key=lambda k: _np.hypot(L[k, 2] - L[k, 0], L[k, 3] - L[k, 1]))
+            r = tp.trace_measure_points(L[i], L, params, exclude_idx={i})
+            link['measure'] = {'points': [[float(a), float(b)] for a, b in r['points']],
+                               'quality': r['quality'], 'source': 'auto'}
+            n[r['quality']] += 1
+        self.doc.dirty = True
+        self.statusMessage.emit(
+            f"측정점 추출: 추적 {n['traced']} · 부분 {n['partial']} · "
+            f"치수선대체 {n['fallback']} · 사람수정 유지 {n['skip']}  "
+            f"(글자높이 {params['text_h']:.0f}px 기준)")
+        self.docChanged.emit()
 
     # ── 사진 ──────────────────────────────────────────────
     def open_photo(self):
