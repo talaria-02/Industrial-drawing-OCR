@@ -26,7 +26,8 @@ from PyQt5.QtGui import (QPainter, QPen, QBrush, QColor, QPixmap, QImage,
                           QFont)
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
                               QLabel, QDoubleSpinBox, QTableWidget, QTableWidgetItem,
-                              QFileDialog, QMessageBox, QHeaderView, QGroupBox)
+                              QFileDialog, QMessageBox, QHeaderView, QGroupBox,
+                              QSplitter, QSizePolicy)
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if os.path.join(PROJECT_ROOT, "src") not in sys.path:
@@ -77,7 +78,7 @@ class PhotoCanvas(QWidget):
         super().__init__(parent)
         self.setMouseTracking(True)
         self.setFocusPolicy(Qt.StrongFocus)
-        self.setMinimumHeight(260)
+        self.setMinimumHeight(120)
         self.pixmap = None
         self.rect_img = None       # 보정된 BGR (엣지 스냅용 원본 화소)
         self.px_per_mm = 8.0
@@ -347,6 +348,7 @@ class MeasurePanel(QWidget):
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table.verticalHeader().setVisible(False)
         self.table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.table.setMinimumHeight(80)
 
         btns = QHBoxLayout()
         self.btn_del = QPushButton('선택 행 삭제')
@@ -356,16 +358,35 @@ class MeasurePanel(QWidget):
         self.lbl_summary = QLabel('')
         btns.addWidget(self.lbl_summary)
 
+        # 사진과 결과표의 비율을 사용자가 정하게 한다. 고정 비율로 두면 도면마다
+        # (치수 3개짜리 vs 40개짜리) 어느 한쪽이 늘 답답하다.
+        g = QGroupBox('비교 결과')
+        gl = QVBoxLayout(g)
+        gl.setContentsMargins(4, 4, 4, 4)
+        gl.addWidget(self.table, 1)
+        gl.addLayout(btns)
+
+        top_w = QWidget()
+        tl = QVBoxLayout(top_w)
+        tl.setContentsMargins(0, 0, 0, 0)
+        tl.addWidget(self.canvas, 1)
+        tl.addWidget(self.lbl_target)
+
+        self.vsplit = QSplitter(Qt.Vertical)
+        self.vsplit.addWidget(top_w)
+        self.vsplit.addWidget(g)
+        self.vsplit.setStretchFactor(0, 3)
+        self.vsplit.setStretchFactor(1, 2)
+        self.vsplit.setChildrenCollapsible(False)
+        self.vsplit.setHandleWidth(6)
+
         lay = QVBoxLayout(self)
         lay.setContentsMargins(4, 4, 4, 4)
         lay.addLayout(bar)
-        lay.addWidget(self.canvas, 3)
-        lay.addWidget(self.lbl_target)
-        g = QGroupBox('비교 결과')
-        gl = QVBoxLayout(g)
-        gl.addWidget(self.table, 1)
-        gl.addLayout(btns)
-        lay.addWidget(g, 2)
+        lay.addWidget(self.vsplit, 1)
+        # 패널 자체도 바깥 스플리터로 자유롭게 줄였다 늘렸다 할 수 있어야 한다
+        self.setMinimumWidth(280)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
     # ── 문서 연동 ─────────────────────────────────────────
     def set_document(self, doc):

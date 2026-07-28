@@ -192,6 +192,9 @@ class MainWindow(QMainWindow):
         splitter.setStretchFactor(0, 4)
         splitter.setStretchFactor(1, 3)
         splitter.setStretchFactor(2, 1)
+        # 손잡이를 눈에 띄게(기본 1~2px은 잡기 어렵다) + 접힘 방지
+        splitter.setHandleWidth(6)
+        splitter.setChildrenCollapsible(False)
 
         central = QWidget()
         cl = QVBoxLayout(central)
