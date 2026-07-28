@@ -149,7 +149,9 @@ class Canvas(QWidget):
             # 검증 단계에서는 텍스트 박스를 끈다. 이 모드에서 볼 것은 '측정점이
             # 외곽선 위에 제대로 놓였는가'인데, 글자 박스가 깔리면 그게 가려진다.
             # 치수 선택은 오른쪽 목록에서 한다.
-            MODE_MEASURE:  dict(texts=False, all_lines=False, linked_lines=True,
+            # 사람이 체인을 짚어야 하므로 모든 선분이 보이고 클릭돼야 한다.
+            # 텍스트 박스만 끈다(측정점을 가리므로).
+            MODE_MEASURE:  dict(texts=False, all_lines=True, linked_lines=True,
                                 links=False, arrows=False),
         }.get(m, dict(texts=True, all_lines=True, linked_lines=True,
                       links=True, arrows=True))
@@ -257,6 +259,34 @@ class Canvas(QWidget):
                 txt = f"({d['value']:g})"
                 p.setPen(QPen(QColor(255, 255, 255), 4)); p.drawText(mid, txt)
                 p.setPen(QPen(QColor(200, 90, 0), 1)); p.drawText(mid, txt)
+
+        # 사람이 지정한 체인 — 순서 번호를 선 위에 찍는다. 마지막 번호가 외곽선.
+        if self.mode == MODE_MEASURE:
+            fnt = QFont()
+            fnt.setPointSize(10)
+            fnt.setBold(True)
+            p.setFont(fnt)
+            for tid, chain in self.doc.measure_chains().items():
+                hot = (self.sel_kind == 'text' and self.sel_id == tid)
+                for k, lid in enumerate(chain):
+                    l = self.doc.find('lines', lid)
+                    if l is None:
+                        continue
+                    last = (k == len(chain) - 1)
+                    if hot:
+                        col = QColor(0, 160, 90) if last else QColor(255, 140, 0)
+                    else:
+                        col = QColor(150, 200, 170) if last else QColor(255, 205, 150)
+                    wdt = 6 if (hot and last) else (4 if hot else 3)
+                    p.setPen(QPen(col, wdt))
+                    a, b = self.to_screen(*l['p1']), self.to_screen(*l['p2'])
+                    p.drawLine(a, b)
+                    mid = QPointF((a.x() + b.x()) / 2, (a.y() + b.y()) / 2 - 5)
+                    txt = str(k + 1) + ('(외곽)' if last and hot else '')
+                    p.setPen(QPen(QColor(255, 255, 255), 4))
+                    p.drawText(mid, txt)
+                    p.setPen(QPen(col.darker(140), 1))
+                    p.drawText(mid, txt)
 
         # 측정점 — 치수가 가리키는 실제 두 모서리. 측정 모드에서만 띄운다
         # (다른 모드에서는 화면만 어지럽힌다).
@@ -562,6 +592,27 @@ class Canvas(QWidget):
         if t:
             self.sel_kind, self.sel_id = 'text', t
             self.selectionChanged.emit()
+            self.statusMessage.emit(
+                '치수선 -> 치수보조선 -> ... -> 외곽선 순으로 클릭 '
+                '(마지막이 외곽선 · 우클릭=마지막 취소 · Del=전체 취소)')
+            return
+        # 선분 클릭 = 체인에 추가. 자동 역추적이 자주 실패하므로 사람이 직접
+        # 경로를 짚는다. 순서가 곧 의미이고, 마지막이 외곽선이다.
+        if self.sel_kind != 'text' or not self.sel_id:
+            return
+        lid = self.hit_line(ix, iy)
+        if lid is None:
+            return
+        link = self.doc.get_link(self.sel_id)
+        chain = list((link or {}).get('measure_chain') or [])
+        if lid in chain:
+            chain.remove(lid)          # 같은 선 재클릭 = 취소
+        else:
+            chain.append(lid)
+        pts = self.doc.set_measure_chain(self.sel_id, chain)
+        self.docChanged.emit()
+        self.statusMessage.emit(
+            f'{len(chain)}개 지정' + (' -> 측정점 확정' if pts else ' (2개 이상 필요)'))
 
     def _press_arc(self, ix, iy):
         nm, cid = self.hit_arc_handle(ix, iy)
@@ -638,6 +689,17 @@ class Canvas(QWidget):
             self._start_pan(e)
             return
 
+        if e.button() == Qt.RightButton and self.mode == MODE_MEASURE \
+                and self.sel_kind == 'text' and self.sel_id:
+            link = self.doc.get_link(self.sel_id)
+            chain = list((link or {}).get('measure_chain') or [])
+            if chain:
+                chain.pop()
+                self.doc.set_measure_chain(self.sel_id, chain)
+                self.docChanged.emit()
+                self.statusMessage.emit('마지막 취소 — %d개 남음' % len(chain))
+                self.update()
+                return
         if e.button() == Qt.RightButton:
             # 우클릭: 선 그리기 취소 / 매칭 대기 해제
             self._draw_start = None
@@ -885,6 +947,10 @@ class Canvas(QWidget):
                     self.statusMessage.emit('연결을 모두 해제했습니다 (Ctrl+Z로 복구 가능)')
                 else:
                     self.statusMessage.emit('먼저 숫자를 클릭하세요')
+            elif self.mode == MODE_MEASURE and self.sel_kind == 'text' and self.sel_id:
+                self.doc.clear_measure_chain(self.sel_id)
+                self.docChanged.emit()
+                self.statusMessage.emit('측정 체인 전체 취소')
             elif self.sel_kind == 'text' and self.sel_id:
                 self.doc.delete_text(self.sel_id)
                 self.sel_kind = self.sel_id = None

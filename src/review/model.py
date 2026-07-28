@@ -297,6 +297,61 @@ class ReviewDoc:
                 out[l["text_id"]] = [tuple(p) for p in m["points"]]
         return out
 
+    # ── 측정 체인 (사람이 순서대로 지정) ───────────────────
+    # 자동 역추적의 성공률이 도면당 3/29~18/39에 머물러, 사람이 직접 경로를
+    # 짚는 길을 둔다. 치수선(1) -> 치수보조선(2) -> ... -> 외곽선(N) 순으로
+    # 클릭하면 "가장 큰 번호가 실제 외곽선"이라는 규칙으로 확정된다.
+    #
+    # 측정점은 따로 찍지 않는다. 치수선 양 끝을 마지막 선분(외곽선)에 수직
+    # 투영하면 그 두 점이 곧 사진에서 잴 자리다 — 치수선과 외곽선은 나란하고
+    # 치수보조선이 그 사이를 수직으로 잇는 구조라, 투영 거리가 원래 치수와 같다.
+    def set_measure_chain(self, tid, line_ids):
+        self.push_undo()
+        link = self.get_link(tid)
+        if link is None:
+            self.data["links"].append({
+                "text_id": tid, "line_ids": [], "arc_ids": [],
+                "source": "human", "confidence": None, "verified": True})
+            link = self.data["links"][-1]
+        link["measure_chain"] = list(line_ids)
+        pts = self.points_from_chain(line_ids)
+        if pts is not None:
+            link["measure"] = {"points": [[float(a), float(b)] for a, b in pts],
+                               "path": [list(line_ids[1:-1]), []],
+                               "quality": "human", "source": "human"}
+        self._log("measure_chain", text_id=tid, chain=list(line_ids))
+        return pts
+
+    def points_from_chain(self, line_ids):
+        """체인의 첫 선분(치수선) 끝점을 마지막 선분(외곽선)에 수직 투영."""
+        if len(line_ids) < 2:
+            return None
+        first = self.find("lines", line_ids[0])
+        last = self.find("lines", line_ids[-1])
+        if first is None or last is None:
+            return None
+        import numpy as np
+        a, b = np.array(first["p1"], float), np.array(first["p2"], float)
+        c, d = np.array(last["p1"], float), np.array(last["p2"], float)
+        u = d - c
+        n = float(np.linalg.norm(u))
+        if n < 1e-9:
+            return None
+        u = u / n
+        return [tuple(c + u * float((a - c) @ u)), tuple(c + u * float((b - c) @ u))]
+
+    def measure_chains(self):
+        return {l["text_id"]: l["measure_chain"]
+                for l in self.data["links"] if l.get("measure_chain")}
+
+    def clear_measure_chain(self, tid):
+        self.push_undo()
+        link = self.get_link(tid)
+        if link is not None:
+            link.pop("measure_chain", None)
+            link.pop("measure", None)
+        self._log("measure_chain_clear", text_id=tid)
+
     # ── 화살촉 ─────────────────────────────────────────────
     def get_arrow(self, lid, end):
         for a in self.data["arrows"]:
