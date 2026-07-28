@@ -67,7 +67,7 @@ MODE_HELP = {
     C.MODE_ARROW: '끝점(또는 선 몸통) 클릭마다 순환: 회색(미검사) → 초록(있음) → 빨강(없음) → 회색',
     C.MODE_MATCH: '숫자 클릭 → 선/원 클릭(여러 개 가능) → Enter 확정 · 연결된 선 재클릭=그 선만 해제 · Del=전체 해제 · 우클릭=취소',
     C.MODE_CATEGORY: '숫자 클릭 후 오른쪽 패널에서 카테고리 변경',
-    C.MODE_MEASURE: '제품사진 비교 기능은 향후 추가 예정 (자리만 예약)',
+    C.MODE_MEASURE: '오른쪽에서 제품사진 열기 → 도면에서 치수 클릭 → 사진에서 양끝 2클릭 (Shift드래그=이동, 휠=확대, 우클릭=취소)',
 }
 
 
@@ -125,8 +125,6 @@ class MainWindow(QMainWindow):
         for i, (label, mode) in enumerate(MODES):
             rb = QRadioButton(label)
             rb.setProperty('mode', mode)
-            if mode == C.MODE_MEASURE:
-                rb.setEnabled(False)          # ⑦ 자리만 예약
             if mode == C.MODE_MATCH:
                 rb.setChecked(True)
             self.mode_group.addButton(rb, i)
@@ -174,6 +172,13 @@ class MainWindow(QMainWindow):
         rl.addWidget(self.list_widget, 1)
         rl.addWidget(prop)
 
+        from . import measure_panel as MP
+        self.measure_panel = MP.MeasurePanel()
+        self.measure_panel.docChanged.connect(self.on_doc_changed)
+        self.measure_panel.statusMessage.connect(
+            lambda t: self.statusBar().showMessage(t, 5000))
+        self.measure_panel.setVisible(False)
+
         splitter = QSplitter(Qt.Horizontal)
         left = QWidget()
         ll = QVBoxLayout(left)
@@ -181,9 +186,11 @@ class MainWindow(QMainWindow):
         ll.addWidget(self.canvas, 1)
         ll.addWidget(self.help_label)
         splitter.addWidget(left)
+        splitter.addWidget(self.measure_panel)
         splitter.addWidget(right)
         splitter.setStretchFactor(0, 4)
-        splitter.setStretchFactor(1, 1)
+        splitter.setStretchFactor(1, 3)
+        splitter.setStretchFactor(2, 1)
 
         central = QWidget()
         cl = QVBoxLayout(central)
@@ -286,6 +293,7 @@ class MainWindow(QMainWindow):
     def _show_doc(self):
         self.bgr = cv2.imdecode(np.fromfile(self.img_path, np.uint8), cv2.IMREAD_COLOR)
         self.canvas.set_document(self.doc, self.bgr)
+        self.measure_panel.set_document(self.doc)
         self.doc._undo.clear(); self.doc._redo.clear()   # 새 문서는 이력 초기화
         self.update_undo_buttons()
         self.refresh_list()
@@ -312,6 +320,13 @@ class MainWindow(QMainWindow):
 
     # ── 모드/목록/속성 ────────────────────────────────────
     def on_mode(self, btn):
+        # 측정 모드에서만 사진 패널을 띄운다. 평소엔 도면 캔버스가 넓어야 한다.
+        self.measure_panel.setVisible(btn.property('mode') == C.MODE_MEASURE)
+        if btn.property('mode') == C.MODE_MEASURE:
+            self.measure_panel.set_document(self.doc)
+            c = self.canvas
+            self.measure_panel.set_active_text(
+                c.sel_id if c.sel_kind == 'text' else None)
         m = btn.property('mode')
         self.canvas.mode = m
         self.canvas.pending_text_id = None
@@ -423,7 +438,11 @@ class MainWindow(QMainWindow):
             self.lbl_info.setText('-')
         self.edit_text.blockSignals(False)
         self.combo_cat.blockSignals(False)
-
+        # 측정 모드가 켜져 있으면 '지금 비교할 치수'를 패널에 알린다
+        if self.canvas.mode == C.MODE_MEASURE:
+            c = self.canvas
+            self.measure_panel.set_active_text(
+                c.sel_id if c.sel_kind == 'text' else None)
     def apply_text_edit(self):
         if self.doc and self.canvas.sel_kind == 'text' and self.canvas.sel_id:
             t = self.doc.find('texts', self.canvas.sel_id)
