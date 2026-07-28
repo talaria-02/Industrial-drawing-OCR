@@ -572,10 +572,34 @@ class Canvas(QWidget):
             best, bd = c['id'], d
         return best
 
+    def seed_measure_chain(self, tid):
+        """매칭에서 이미 연결된 선분을 체인 1번으로 채워둔다.
+
+        치수선은 매칭 단계에서 이미 확정돼 있다. 측정 단계에서 그것부터 다시
+        클릭하게 하면 같은 일을 두 번 시키는 셈이고, 사용자는 '연결한 선이
+        체인에 안 들어간다'고 느낀다. 비어 있을 때만 채우고, 사람이 손댄
+        체인은 건드리지 않는다.
+        """
+        link = self.doc.get_link(tid)
+        if link is None or link.get('measure_chain'):
+            return
+        seed = [x for x in link.get('line_ids', []) if self.doc.find('lines', x)]
+        if not seed:
+            self.statusMessage.emit(
+                '이 치수는 매칭된 선분이 없습니다 — 치수선부터 순서대로 클릭하세요')
+            return
+        self.doc.set_measure_chain(tid, seed)
+        self.docChanged.emit()
+        self.statusMessage.emit(
+            f'매칭된 치수선 {len(seed)}개를 1번으로 넣었습니다 — '
+            '이어서 치수보조선, 마지막에 외곽선을 클릭하세요')
+
     def hit_measure_point(self, ix, iy):
-        """반환 (text_id, 0|1) 또는 (None, None)."""
+        """반환 (text_id, 0|1) 또는 (None, None). 선택된 치수의 것만 잡는다."""
         tol = self._tol(HANDLE_PX + 3)
         for tid, pts in self.doc.measure_points().items():
+            if tid != self.sel_id:
+                continue
             for k, q in enumerate(pts):
                 if np.hypot(ix - q[0], iy - q[1]) <= tol:
                     return tid, k
@@ -592,9 +616,7 @@ class Canvas(QWidget):
         if t:
             self.sel_kind, self.sel_id = 'text', t
             self.selectionChanged.emit()
-            self.statusMessage.emit(
-                '치수선 -> 치수보조선 -> ... -> 외곽선 순으로 클릭 '
-                '(마지막이 외곽선 · 우클릭=마지막 취소 · Del=전체 취소)')
+            self.seed_measure_chain(t)
             return
         # 선분 클릭 = 체인에 추가. 자동 역추적이 자주 실패하므로 사람이 직접
         # 경로를 짚는다. 순서가 곧 의미이고, 마지막이 외곽선이다.

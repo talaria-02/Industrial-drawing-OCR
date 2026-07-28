@@ -498,8 +498,10 @@ class MainWindow(QMainWindow):
         # 측정 모드가 켜져 있으면 '지금 비교할 치수'를 패널에 알린다
         if self.canvas.mode == C.MODE_MEASURE:
             c = self.canvas
-            self.measure_panel.set_active_text(
-                c.sel_id if c.sel_kind == 'text' else None)
+            tid = c.sel_id if c.sel_kind == 'text' else None
+            if tid:
+                c.seed_measure_chain(tid)
+            self.measure_panel.set_active_text(tid)
     def apply_text_edit(self):
         if self.doc and self.canvas.sel_kind == 'text' and self.canvas.sel_id:
             t = self.doc.find('texts', self.canvas.sel_id)
