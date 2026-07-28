@@ -23,3 +23,4 @@ def detect(gray):
     if lines is None:
         return np.empty((0, 4), dtype=np.float64)
     return lines.reshape(-1, 4).astype(np.float64)
+
