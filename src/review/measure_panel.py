@@ -500,9 +500,13 @@ class MeasurePanel(QWidget):
         polys = [t['poly'] for t in self.doc.data['texts']]
         params = tp.scaled_params(tp.text_scale(polys))
         id2i = {l['id']: i for i, l in enumerate(self.doc.data['lines'])}
+        from review.model import MEASURABLE_CATEGORIES
+        cat = {t['id']: t.get('category') for t in self.doc.data['texts']}
         self.doc.push_undo()
         n = {'traced': 0, 'partial': 0, 'fallback': 0, 'skip': 0}
         for link in self.doc.data['links']:
+            if cat.get(link['text_id']) not in MEASURABLE_CATEGORIES:
+                continue          # 메타데이터·거칠기는 잴 대상이 아니다
             m = link.get('measure')
             if m and m.get('source') == 'human':
                 n['skip'] += 1          # 사람이 고친 것은 덮지 않는다

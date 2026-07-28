@@ -146,8 +146,11 @@ class Canvas(QWidget):
             # 매칭은 숫자·선분·연결선이 다 필요
             MODE_MATCH:    dict(texts=True, all_lines=True, linked_lines=True,
                                 links=True, arrows=True),
-            MODE_MEASURE:  dict(texts=True, all_lines=False, linked_lines=True,
-                                links=True, arrows=False),
+            # 검증 단계에서는 텍스트 박스를 끈다. 이 모드에서 볼 것은 '측정점이
+            # 외곽선 위에 제대로 놓였는가'인데, 글자 박스가 깔리면 그게 가려진다.
+            # 치수 선택은 오른쪽 목록에서 한다.
+            MODE_MEASURE:  dict(texts=False, all_lines=False, linked_lines=True,
+                                links=False, arrows=False),
         }.get(m, dict(texts=True, all_lines=True, linked_lines=True,
                       links=True, arrows=True))
         # 사용자가 체크박스로 미연결 선을 끈 경우는 그 뜻을 우선한다

@@ -46,11 +46,11 @@ if __package__ in (None, ''):   # 파일 직접 실행 지원
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     from src.review import bootstrap, canvas as C
     from src.review import measure_panel as MP
-    from src.review.model import ReviewDoc, CATEGORIES
+    from src.review.model import ReviewDoc, CATEGORIES, MEASURABLE_CATEGORIES
 else:
     from . import bootstrap, canvas as C
     from . import measure_panel as MP
-    from .model import ReviewDoc, CATEGORIES
+    from .model import ReviewDoc, CATEGORIES, MEASURABLE_CATEGORIES
 
 MODES = [
     ('텍스트', C.MODE_TEXT),
@@ -326,6 +326,8 @@ class MainWindow(QMainWindow):
     def on_mode(self, btn):
         # 측정 모드에서만 사진 패널을 띄운다. 평소엔 도면 캔버스가 넓어야 한다.
         self.measure_panel.setVisible(btn.property('mode') == C.MODE_MEASURE)
+        self.canvas.mode = btn.property('mode')
+        self.refresh_list()
         if btn.property('mode') == C.MODE_MEASURE:
             self.measure_panel.set_document(self.doc)
             c = self.canvas
@@ -346,7 +348,11 @@ class MainWindow(QMainWindow):
         self.list_widget.blockSignals(True)
         self.list_widget.clear()
         if self.doc is not None:
+            measure_only = (self.canvas.mode == C.MODE_MEASURE)
             for t in self.doc.data['texts']:
+                # 검증 단계에서는 잴 수 있는 것만 남긴다
+                if measure_only and t.get('category') not in MEASURABLE_CATEGORIES:
+                    continue
                 link = self.doc.get_link(t['id'])
                 nl = len(link['line_ids']) if link else 0
                 nc = len(link.get('arc_ids', [])) if link else 0
