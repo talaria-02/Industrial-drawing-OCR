@@ -69,7 +69,7 @@ MODE_HELP = {
     C.MODE_ARROW: '끝점(또는 선 몸통) 클릭마다 순환: 회색(미검사) → 초록(있음) → 빨강(없음) → 회색',
     C.MODE_MATCH: '숫자 클릭 → 선/원 클릭(여러 개 가능) → Enter 확정 · 연결된 선 재클릭=그 선만 해제 · Del=전체 해제 · 우클릭=취소',
     C.MODE_CATEGORY: '숫자 클릭 후 오른쪽 패널에서 카테고리 변경',
-    C.MODE_MEASURE: '오른쪽에서 제품사진 열기 → 도면에서 치수 클릭 → 사진에서 양끝 2클릭 (Shift드래그=이동, 휠=확대, 우클릭=취소)',
+    C.MODE_MEASURE: '치수 클릭(또는 오른쪽 목록) → 사진에서 양끝 2클릭 · 오른쪽에서 제품사진 열기 → 도면에서 치수 클릭 → 사진에서 양끝 2클릭 (Shift드래그=이동, 휠=확대, 우클릭=취소)',
 }
 
 
@@ -195,6 +195,7 @@ class MainWindow(QMainWindow):
         # 손잡이를 눈에 띄게(기본 1~2px은 잡기 어렵다) + 접힘 방지
         splitter.setHandleWidth(6)
         splitter.setChildrenCollapsible(False)
+        splitter.setStyleSheet("QSplitter::handle{background:#c8ccd4;}QSplitter::handle:hover{background:#7f95c4;}QSplitter::handle:horizontal{width:6px;margin:2px 0;}QSplitter::handle:vertical{height:6px;margin:0 2px;}")
 
         central = QWidget()
         cl = QVBoxLayout(central)
@@ -329,7 +330,10 @@ class MainWindow(QMainWindow):
         self.canvas.mode = btn.property('mode')
         self.refresh_list()
         if btn.property('mode') == C.MODE_MEASURE:
-            self.measure_panel.set_document(self.doc)
+            # set_document를 다시 부르면 안 된다 — 불러둔 사진과 보정 결과가 날아간다.
+            # 문서는 도면을 열 때 이미 물려 있다.
+            if self.measure_panel.doc is not self.doc:
+                self.measure_panel.set_document(self.doc)
             c = self.canvas
             self.measure_panel.set_active_text(
                 c.sel_id if c.sel_kind == 'text' else None)

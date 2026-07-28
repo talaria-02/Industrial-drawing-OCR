@@ -218,6 +218,16 @@ class Canvas(QWidget):
                         p.drawEllipse(s, HANDLE_PX // 2, HANDLE_PX // 2)
                     p.setBrush(Qt.NoBrush)
 
+        # 측정 모드에서는 '지금 고른 치수'만 옅은 테두리로 표시한다. 전부 그리면
+        # 측정점이 가려지고, 아무것도 안 그리면 무엇을 재는 중인지 알 수 없다.
+        if self.mode == MODE_MEASURE and self.sel_kind == 'text' and self.sel_id:
+            t = self.doc.find('texts', self.sel_id)
+            if t:
+                poly = QPolygonF([self.to_screen(x, y) for x, y in t['poly']])
+                p.setPen(QPen(QColor(230, 0, 130), 2, Qt.DashLine))
+                p.setBrush(Qt.NoBrush)
+                p.drawPolygon(poly)
+
         # 측정점 — 치수가 가리키는 실제 두 모서리. 측정 모드에서만 띄운다
         # (다른 모드에서는 화면만 어지럽힌다).
         if self.mode == MODE_MEASURE:
@@ -395,7 +405,10 @@ class Canvas(QWidget):
         return min(base_px / self.scale, MAX_TOL_IMG_PX)
 
     def hit_text(self, ix, iy):
-        if not self.visibility()['texts']:
+        # 측정 모드는 예외 — 글자 박스를 그리지 않지만 클릭으로는 고를 수 있어야 한다.
+        # 박스를 다 그리면 정작 확인해야 할 측정점이 가려지는데, 클릭까지 막으면
+        # 도면에서 치수를 고를 방법이 사라진다(오른쪽 목록만 남아 불편했다).
+        if not self.visibility()['texts'] and self.mode != MODE_MEASURE:
             return None          # 화면에 안 보이는 건 클릭으로도 잡히지 않게
         # 박스 안을 찍었으면 그게 우선(겹쳐 있으면 더 작은 박스를 고른다 —
         # 큰 박스에 갇혀서 안쪽 작은 박스를 못 고르는 일을 막으려는 것)

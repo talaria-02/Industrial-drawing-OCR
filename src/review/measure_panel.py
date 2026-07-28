@@ -33,6 +33,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(_
 if os.path.join(PROJECT_ROOT, "src") not in sys.path:
     sys.path.insert(0, os.path.join(PROJECT_ROOT, "src"))
 from measure import calibration as cal, measure as ms, compare as cp  # noqa: E402
+from review.model import MEASURABLE_CATEGORIES  # noqa: E402
 
 # 도면 캔버스와 같은 값 — 같은 창에서 번갈아 쓰므로 클릭 감도가 같아야 한다
 HIT_PX = 10
@@ -424,6 +425,8 @@ class MeasurePanel(QWidget):
         self.vsplit.setStretchFactor(1, 2)
         self.vsplit.setChildrenCollapsible(False)
         self.vsplit.setHandleWidth(6)
+        # 기본 손잡이는 배경과 같은 색이라 있는 줄도 모른다. 눈에 띄게 칠한다.
+        self.vsplit.setStyleSheet("QSplitter::handle{background:#c8ccd4;}QSplitter::handle:hover{background:#7f95c4;}QSplitter::handle:horizontal{width:6px;margin:2px 0;}QSplitter::handle:vertical{height:6px;margin:0 2px;}")
 
         lay = QVBoxLayout(self)
         lay.setContentsMargins(4, 4, 4, 4)
@@ -500,7 +503,6 @@ class MeasurePanel(QWidget):
         polys = [t['poly'] for t in self.doc.data['texts']]
         params = tp.scaled_params(tp.text_scale(polys))
         id2i = {l['id']: i for i, l in enumerate(self.doc.data['lines'])}
-        from review.model import MEASURABLE_CATEGORIES
         cat = {t['id']: t.get('category') for t in self.doc.data['texts']}
         self.doc.push_undo()
         n = {'traced': 0, 'partial': 0, 'fallback': 0, 'skip': 0}
@@ -520,6 +522,16 @@ class MeasurePanel(QWidget):
                                'quality': r['quality'], 'source': 'auto'}
             n[r['quality']] += 1
         self.doc.dirty = True
+        if sum(n.values()) == 0:
+            n_link = sum(1 for l in self.doc.data['links'] if l.get('line_ids'))
+            QMessageBox.information(
+                self, '측정점 추출',
+                '추출할 대상이 없습니다.\n\n'
+                f"· 선분에 연결된 치수: {n_link}개\n"
+                f"· 측정 가능 카테고리(치수/지름/각도/공차/나사): "
+                f"{sum(1 for t in self.doc.data['texts'] if t.get('category') in MEASURABLE_CATEGORIES)}개\n\n"
+                '매칭 모드에서 치수를 선분에 먼저 연결하세요.')
+            return
         self.statusMessage.emit(
             f"측정점 추출: 추적 {n['traced']} · 부분 {n['partial']} · "
             f"치수선대체 {n['fallback']} · 사람수정 유지 {n['skip']}  "
