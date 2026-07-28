@@ -638,16 +638,28 @@ class MeasurePanel(QWidget):
         marker = self.sp_marker.value()
         board = cal.make_board(2, 2, marker_mm=marker,
                                gap_mm=self.sp_pitch.value() - marker)
+
+        # 렌즈왜곡 보정을 원근 보정보다 먼저 먹인다(rectify_board 내부에서 순서
+        # 보장). 스마트폰은 배럴 왜곡이 있어 화면 가장자리가 바깥으로 늘어나는데,
+        # 호모그래피는 '평면의 원근'만 되돌리므로 광학적 곡률은 절대 펴지지 않는다.
+        # 긴 물체를 화면에 꽉 채워 찍으면 양 끝이 정확히 그 늘어나는 영역에 놓인다.
+        from measure.calibrate_camera import latest_calib
+        cam, cam_path = latest_calib()
         try:
-            r = cal.rectify_board(img, board, px_per_mm=8.0)
+            r = cal.rectify_board(
+                img, board, px_per_mm=8.0,
+                camera_matrix=(cam or {}).get('camera_matrix'),
+                dist_coeffs=(cam or {}).get('dist_coeffs'))
         except ValueError as e:
             QMessageBox.warning(self, 'ArUco 보드를 못 찾음', str(e))
             return
         self.calib = r
         self.canvas.set_photo(r['rectified'], r['px_per_mm'])
         self._sync_canvas()
+        lens = (f" · 렌즈보정 {os.path.basename(cam_path)}" if cam
+                else " · 렌즈보정 없음(권장: calibrate_camera.py)")
         msg = (f"마커 {r['n_markers']}/4 · 평균 {r['marker_px']:.0f}px · "
-               f"잔차 {r['residual_mm']:.2f}mm")
+               f"잔차 {r['residual_mm']:.2f}mm" + lens)
         self.lbl_calib.setText(msg)
         self.lbl_calib.setStyleSheet(
             'color:#a00;' if r['warnings'] or r['residual_mm'] > 0.3 else 'color:#080;')
@@ -656,6 +668,7 @@ class MeasurePanel(QWidget):
             self.doc.data['measure']['calibration'] = {
                 'marker_mm': marker, 'pitch_mm': self.sp_pitch.value(),
                 'px_per_mm': r['px_per_mm'], 'n_markers': r['n_markers'],
+                'lens_calib': (os.path.basename(cam_path) if cam else None),
                 'residual_mm': round(r['residual_mm'], 4),
             }
             self.doc.dirty = True
