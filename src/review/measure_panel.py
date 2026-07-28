@@ -72,6 +72,8 @@ class PhotoCanvas(QWidget):
     측정선 하나뿐이다.
     """
     measured = pyqtSignal(float, object, object)   # mm, p1, p2 (보정이미지 좌표)
+    activeChanged = pyqtSignal(str)                # 사진에서 다른 측정선을 잡았을 때
+    measureDeleted = pyqtSignal(str)
     statusMessage = pyqtSignal(str)
 
     def __init__(self, parent=None):
@@ -83,8 +85,11 @@ class PhotoCanvas(QWidget):
         self.rect_img = None       # 보정된 BGR (엣지 스냅용 원본 화소)
         self.px_per_mm = 8.0
         self.scale, self.offset = 1.0, QPointF(0, 0)
-        self.p1 = self.p2 = None   # 확정된 측정점(이미지 좌표)
-        self.mm = None
+        # 치수 하나당 측정선 하나를 들고 있는다. {text_id: (p1, p2, mm)}
+        # 단일 측정만 쥐고 있던 초기 버전은 다음 치수를 재는 순간 앞의 것이
+        # 화면에서 사라져, 여러 치수를 훑는 검수 흐름에 맞지 않았다.
+        self.items = {}
+        self.active = None         # 지금 편집 대상 text_id
         self._draw_start = None    # 새로 그리는 중인 첫 점
         self._hover = None
         self._drag_end = None      # 'p1' | 'p2'
@@ -96,7 +101,8 @@ class PhotoCanvas(QWidget):
         self.rect_img = rect_bgr
         self.px_per_mm = px_per_mm
         self.pixmap = bgr_to_pixmap(rect_bgr)
-        self.p1 = self.p2 = self.mm = self._draw_start = None
+        self.items = {}
+        self._draw_start = None
         self.fit()
         self.update()
 
@@ -119,11 +125,27 @@ class PhotoCanvas(QWidget):
         """클릭 허용 오차를 이미지 좌표로. 축소했을 때 무한정 커지지 않게 상한."""
         return min(base_px / max(self.scale, 1e-6), MAX_TOL_IMG_PX)
 
+    def set_items(self, items, active=None):
+        """{text_id: (p1, p2, mm)} 전체 교체. 문서의 기록과 화면을 맞출 때 쓴다."""
+        self.items = dict(items)
+        self.active = active
+        self.update()
+
+    def set_active(self, tid):
+        self.active = tid
+        self._draw_start = None
+        self.update()
+
     def hit_endpoint(self, ix, iy):
-        for name, q in (("p1", self.p1), ("p2", self.p2)):
-            if q is not None and np.hypot(ix - q[0], iy - q[1]) <= self._tol(HANDLE_PX + 3):
-                return name
-        return None
+        """반환 (text_id, 'p1'|'p2') 또는 (None, None). 활성 치수를 먼저 본다."""
+        tol = self._tol(HANDLE_PX + 3)
+        order = ([self.active] if self.active in self.items else []) +                 [k for k in self.items if k != self.active]
+        for tid in order:
+            p1, p2, _ = self.items[tid]
+            for name, q in (("p1", p1), ("p2", p2)):
+                if np.hypot(ix - q[0], iy - q[1]) <= tol:
+                    return tid, name
+        return None, None
 
     # ── 렌더링 ────────────────────────────────────────────
     def paintEvent(self, _):
@@ -140,21 +162,26 @@ class PhotoCanvas(QWidget):
                      int(self.pixmap.width() * self.scale),
                      int(self.pixmap.height() * self.scale), self.pixmap)
 
-        if self.p1 is not None and self.p2 is not None:
-            self._draw_line(p, self.p1, self.p2, QColor(20, 70, 230), True)
-            for name, q in (("p1", self.p1), ("p2", self.p2)):
-                self._draw_handle(p, q, self._drag_end == name)
-            if self.mm is not None:
-                self._draw_label(p, "%.2f mm" % self.mm)
-        elif self._draw_start is not None and self._hover is not None:
+        # 비활성 측정은 옅게 깔고 활성만 진하게 — 지금 무엇을 만지는지가 보여야 한다
+        for tid, (q1, q2, mm) in self.items.items():
+            act = (tid == self.active)
+            col = QColor(20, 70, 230) if act else QColor(120, 140, 175)
+            self._draw_line(p, q1, q2, col, True, thin=not act)
+            if act:
+                for name, q in (("p1", q1), ("p2", q2)):
+                    self._draw_handle(p, q, self._drag_end == (tid, name))
+            if mm is not None:
+                self._draw_label(p, "%.2f mm" % mm, q1, q2, col, bold=act)
+        if self._draw_start is not None and self._hover is not None:
             self._draw_line(p, self._draw_start, self._hover, QColor(255, 130, 0), False)
 
-    def _draw_line(self, p, a, b, col, solid):
+    def _draw_line(self, p, a, b, col, solid, thin=False):
         sa, sb = self.to_scr(*a), self.to_scr(*b)
         # 흰 밑선을 먼저 깔아야 사진 위 어떤 색에서도 보인다(도면 연결선과 같은 처리)
-        p.setPen(QPen(QColor(255, 255, 255, 190), 3))
+        p.setPen(QPen(QColor(255, 255, 255, 190), 2.5 if thin else 3))
         p.drawLine(sa, sb)
-        p.setPen(QPen(col, 1.6, Qt.SolidLine if solid else Qt.DashLine))
+        p.setPen(QPen(col, 1.0 if thin else 1.6,
+                      Qt.SolidLine if solid else Qt.DashLine))
         p.drawLine(sa, sb)
 
     def _draw_handle(self, p, q, active):
@@ -165,23 +192,25 @@ class PhotoCanvas(QWidget):
         p.drawEllipse(s, r, r)
         p.setBrush(Qt.NoBrush)
 
-    def _draw_label(self, p, text):
-        sa, sb = self.to_scr(*self.p1), self.to_scr(*self.p2)
+    def _draw_label(self, p, text, a, b, col, bold=True):
+        sa, sb = self.to_scr(*a), self.to_scr(*b)
         mid = QPointF((sa.x() + sb.x()) / 2 + 8, (sa.y() + sb.y()) / 2 - 6)
         f = QFont()
-        f.setPointSize(9)
-        f.setBold(True)
+        f.setPointSize(9 if bold else 8)
+        f.setBold(bold)
         p.setFont(f)
         p.setPen(QPen(QColor(255, 255, 255), 3))
         p.drawText(mid, text)
-        p.setPen(QPen(QColor(20, 70, 230), 1))
+        p.setPen(QPen(col, 1))
         p.drawText(mid, text)
 
     # ── 측정 확정 ─────────────────────────────────────────
     def _commit(self, p1, p2, snap=True):
+        if self.active is None:
+            self.statusMessage.emit('먼저 도면에서 비교할 치수를 클릭하세요')
+            return
         res = ms.measure_two_points(self.rect_img, p1, p2, self.px_per_mm, snap=snap)
-        self.p1, self.p2 = tuple(res["p1"]), tuple(res["p2"])
-        self.mm = res["mm"]
+        self.items[self.active] = (tuple(res["p1"]), tuple(res["p2"]), res["mm"])
         self.measured.emit(res["mm"], res["p1"], res["p2"])
         if snap:
             self.statusMessage.emit(
@@ -208,14 +237,17 @@ class PhotoCanvas(QWidget):
         if e.button() != Qt.LeftButton:
             return
 
-        end = self.hit_endpoint(ix, iy)
-        if end is not None:
-            self._drag_end = end
+        tid, end = self.hit_endpoint(ix, iy)
+        if tid is not None:
+            self._drag_end = (tid, end)
+            if tid != self.active:
+                self.active = tid
+                self.activeChanged.emit(tid)
             self.update()
             return
-        # 도면 캔버스와 같은 편의: 측정이 이미 있고 빈 곳을 눌렀으면 화면 이동.
-        # (새로 재려면 Del로 지우고 다시 찍는다 — 실수로 측정이 날아가지 않게)
-        if self._draw_start is None and self.p1 is not None:
+        # 도면 캔버스와 같은 편의: 활성 치수에 이미 측정이 있고 빈 곳을 눌렀으면
+        # 화면 이동. (다시 재려면 Del로 지우고 찍는다 — 실수로 날아가지 않게)
+        if self._draw_start is None and self.active in self.items:
             self._start_pan(e)
             return
         if self._draw_start is None:
@@ -239,10 +271,14 @@ class PhotoCanvas(QWidget):
             return
         ix, iy = self.to_img(e.pos())
         if self._drag_end is not None:
-            setattr(self, self._drag_end, (ix, iy))
-            if self.p1 is not None and self.p2 is not None:
-                self.mm = float(np.hypot(self.p2[0] - self.p1[0],
-                                         self.p2[1] - self.p1[1])) / self.px_per_mm
+            tid, name = self._drag_end
+            q1, q2, _ = self.items[tid]
+            if name == "p1":
+                q1 = (ix, iy)
+            else:
+                q2 = (ix, iy)
+            mm = float(np.hypot(q2[0] - q1[0], q2[1] - q1[1])) / self.px_per_mm
+            self.items[tid] = (q1, q2, mm)
             self.update()
             return
         if self._draw_start is not None:
@@ -258,11 +294,15 @@ class PhotoCanvas(QWidget):
             self.setCursor(Qt.OpenHandCursor if self._space else Qt.CrossCursor)
             return
         if self._drag_end is not None:
+            tid, _ = self._drag_end
             self._drag_end = None
             # 놓는 순간 다시 스냅해서 값을 확정한다. 끄는 동안 매번 스냅하면
             # 커서가 엣지에 끌려다녀 오히려 조준이 어렵다.
-            if self.p1 is not None and self.p2 is not None:
-                self._commit(self.p1, self.p2)
+            if tid in self.items:
+                prev, self.active = self.active, tid
+                q1, q2, _ = self.items[tid]
+                self._commit(q1, q2)
+                self.active = prev if prev is not None else tid
 
     def wheelEvent(self, e):
         if self.pixmap is None:
@@ -286,8 +326,11 @@ class PhotoCanvas(QWidget):
             self._draw_start = None
             self.update()
         elif k == Qt.Key_Delete:
-            self.p1 = self.p2 = self.mm = self._draw_start = None
-            self.statusMessage.emit("측정 지움 — 다시 두 점을 클릭하세요")
+            self._draw_start = None
+            if self.active in self.items:
+                del self.items[self.active]
+                self.measureDeleted.emit(self.active)
+                self.statusMessage.emit("이 치수의 측정을 지웠습니다")
             self.update()
 
     def keyReleaseEvent(self, e):
@@ -310,6 +353,8 @@ class MeasurePanel(QWidget):
         self.canvas = PhotoCanvas()
         self.canvas.measured.connect(self.on_measured)
         self.canvas.statusMessage.connect(self.statusMessage)
+        self.canvas.activeChanged.connect(self._on_canvas_active)
+        self.canvas.measureDeleted.connect(self._on_canvas_deleted)
 
         # ── 보드 설정 + 사진 열기 ──
         bar = QHBoxLayout()
@@ -395,10 +440,35 @@ class MeasurePanel(QWidget):
         self.active_text = None
         self.lbl_calib.setText('사진 없음')
         self.refresh_table()
+        self._sync_canvas()
+
+    def _sync_canvas(self):
+        """문서의 기록을 사진 캔버스에 반영. 여러 치수의 측정선이 동시에 보인다."""
+        items = {}
+        for r in self.doc.data.get('measure', {}).get('results', []) if self.doc else []:
+            pts = r.get('points')
+            if pts and len(pts) == 2:
+                items[r['text_id']] = (tuple(pts[0]), tuple(pts[1]), r['measured_mm'])
+        self.canvas.set_items(items, self.active_text)
+
+    def _on_canvas_active(self, tid):
+        self.active_text = tid
+        self.set_active_text(tid)
+
+    def _on_canvas_deleted(self, tid):
+        if self.doc is None:
+            return
+        self.doc.push_undo()
+        res = self.doc.data['measure'].get('results', [])
+        self.doc.data['measure']['results'] = [x for x in res if x['text_id'] != tid]
+        self.doc.dirty = True
+        self.refresh_table()
+        self.docChanged.emit()
 
     def set_active_text(self, tid):
         """도면 캔버스에서 치수를 고르면 호출된다."""
         self.active_text = tid
+        self.canvas.set_active(tid)
         if self.doc is None or tid is None:
             self.lbl_target.setText('도면에서 치수를 클릭하세요')
             return
@@ -472,6 +542,7 @@ class MeasurePanel(QWidget):
             return
         self.calib = r
         self.canvas.set_photo(r['rectified'], r['px_per_mm'])
+        self._sync_canvas()
         msg = (f"마커 {r['n_markers']}/4 · 평균 {r['marker_px']:.0f}px · "
                f"잔차 {r['residual_mm']:.2f}mm")
         self.lbl_calib.setText(msg)
@@ -525,6 +596,7 @@ class MeasurePanel(QWidget):
             {'action': 'measure_add', 'text_id': self.active_text})
         self.doc.dirty = True
         self.refresh_table()
+        self._sync_canvas()
         self.docChanged.emit()
 
     def delete_selected(self):
@@ -539,6 +611,7 @@ class MeasurePanel(QWidget):
             r for i, r in enumerate(res) if i not in rows]
         self.doc.dirty = True
         self.refresh_table()
+        self._sync_canvas()
         self.docChanged.emit()
 
     def refresh_table(self):
