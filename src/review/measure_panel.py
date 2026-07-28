@@ -247,11 +247,10 @@ class PhotoCanvas(QWidget):
                 self.activeChanged.emit(tid)
             self.update()
             return
-        # 도면 캔버스와 같은 편의: 활성 치수에 이미 측정이 있고 빈 곳을 눌렀으면
-        # 화면 이동. (다시 재려면 Del로 지우고 찍는다 — 실수로 날아가지 않게)
-        if self._draw_start is None and self.active in self.items:
-            self._start_pan(e)
-            return
+        # 측정이 이미 있어도 빈 곳 클릭은 '새로 재기'로 둔다.
+        # 한때 이 경우를 화면이동으로 돌렸는데, 한 번 그은 뒤로는 다시 그을 수
+        # 없어져(같은 치수를 고쳐 재는 것이 가장 흔한 동작인데) 못 쓰게 됐다.
+        # 화면이동은 Shift/Space/가운데버튼으로 충분하다.
         if self._draw_start is None:
             self._draw_start = (ix, iy)
             self.statusMessage.emit("반대쪽 끝을 클릭하세요 (우클릭 취소)")
