@@ -236,6 +236,51 @@ class ReviewDoc:
         c["verified"] = True
         self._log("arc_edit", arc_id=cid)
 
+    def absorb_lines_on_arc(self, cid, tol_px=None):
+        """이 호가 덮은 자리의 선분을 지운다. 반환: 지운 선분 id 목록.
+
+        사람이 원을 그려 씌우면 그 자리의 조각 선분은 이미 그 원이 표현하므로
+        남아 있을 이유가 없다. 남으면 화면에서 겹쳐 보이고, 치수 매칭 후보
+        풀에도 같은 형상이 두 번 들어간다.
+
+        되돌리기는 호출부에서 이미 push_undo를 했다고 보고 여기서는 하지
+        않는다 — 원 추가/이동과 흡수가 한 번의 Ctrl+Z로 함께 취소돼야 한다.
+        """
+        c = self.find("arcs", cid)
+        if c is None or not self.data["lines"]:
+            return []
+        import sys as _sys, os as _os
+        pdir = _os.path.join(_os.path.dirname(_os.path.dirname(
+            _os.path.abspath(__file__))), 'pipeline')
+        if pdir not in _sys.path:
+            _sys.path.insert(0, pdir)
+        import numpy as np
+        from line_detect import arc_detect
+
+        ids = [l["id"] for l in self.data["lines"]]
+        arr = np.array([[l["p1"][0], l["p1"][1], l["p2"][0], l["p2"][1]]
+                        for l in self.data["lines"]], dtype=np.float64)
+        on = arc_detect.lines_on_arc(
+            arr, {"cx": c["center"][0], "cy": c["center"][1], "r": c["r"],
+                  "start": c["start_deg"], "span": c["span_deg"]},
+            tol_px=2.0 if tol_px is None else tol_px)
+        gone = [ids[i] for i in np.where(on)[0]]
+        if not gone:
+            return []
+        dead = set(gone)
+        self.data["lines"] = [l for l in self.data["lines"] if l["id"] not in dead]
+        self.data["arrows"] = [a for a in self.data["arrows"]
+                               if a["line_id"] not in dead]
+        for link in self.data["links"]:
+            if any(x in dead for x in link["line_ids"]):
+                link["line_ids"] = [x for x in link["line_ids"] if x not in dead]
+                link["source"] = "human"
+            chain = link.get("measure_chain")
+            if chain and any(x in dead for x in chain):
+                link["measure_chain"] = [x for x in chain if x not in dead]
+        self._log("arc_absorb_lines", arc_id=cid, line_ids=gone)
+        return gone
+
     def toggle_arc_closed(self, cid):
         """부분 호 <-> 완전 원 전환. 원이 치수선에 끊겨 부분 호로만 잡히는
         경우가 흔해서, 사람이 한 번에 원으로 되돌릴 수 있어야 한다."""

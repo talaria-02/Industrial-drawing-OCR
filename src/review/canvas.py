@@ -678,8 +678,13 @@ class Canvas(QWidget):
         else:
             r = float(np.hypot(ix - self._draw_start[0], iy - self._draw_start[1]))
             cid = self.doc.add_arc(self._draw_start, max(2.0, r))
+            # 원을 씌운 자리의 조각 선분은 그 원이 이미 표현한다 — 남겨두면
+            # 겹쳐 보이고 매칭 후보에 같은 형상이 두 번 들어간다.
+            gone = self.doc.absorb_lines_on_arc(cid)
             self._draw_start = None
             self.sel_kind, self.sel_id = 'arc', cid
+            if gone:
+                self.statusMessage.emit(f'원이 덮은 선분 {len(gone)}개를 흡수했습니다 (Ctrl+Z로 취소)')
             self.docChanged.emit()
             self.selectionChanged.emit()
 
@@ -950,8 +955,17 @@ class Canvas(QWidget):
             self.setCursor(Qt.OpenHandCursor if self._space_held else Qt.ArrowCursor)
             return
         if self._drag is not None:
+            kind, oid = self._drag[0], self._drag[1]
             self._drag = None
             self.doc.dirty = True
+            # 원을 옮기거나 키운 뒤에도 새로 덮인 자리를 정리한다. 드래그 도중이
+            # 아니라 손을 뗀 뒤에만 지운다 — 끄는 동안 선분이 사라지면
+            # 어디까지 덮였는지 보이지 않는다.
+            if kind in ('arc_center', 'arc_radius', 'arc_start', 'arc_end'):
+                gone = self.doc.absorb_lines_on_arc(oid)
+                if gone:
+                    self.statusMessage.emit(
+                        f'원이 덮은 선분 {len(gone)}개를 흡수했습니다 (Ctrl+Z로 취소)')
             self.docChanged.emit()
 
     # ── 키보드 ────────────────────────────────────────────

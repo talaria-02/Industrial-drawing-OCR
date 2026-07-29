@@ -327,15 +327,163 @@ def extract_arcs(lines, gray, stroke_gap=None, min_radius=None):
     absorbed = set()
     for a in arcs:
         absorbed.update(a["members"])
+
+    # members만으로는 부족하다 — 체인 조건(간격 6px, 회전 일관성)을 만족하지
+    # 못한 현들은 체인에 못 들어갔을 뿐 여전히 그 원 위에 놓여 있다. 실측:
+    # 도면 8장에서 채택된 호 84개 위에 선분 71개가 그대로 남아 있었다(C-074는
+    # 호 5개에 잔존 16개). 화면에서는 원과 조각이 겹쳐 보이고, 매칭 후보 풀도
+    # 그만큼 오염된다. 그래서 기하 조건으로 한 번 더 훑는다.
+    #
+    # 훑기 전에 호의 각도구간을 먼저 늘린다. 남아 있던 조각을 조건별로 세어보니
+    # 60%(216/358)가 '원 위에 있고 기울기도 맞는데 호의 구간 밖'이었다. 구간이
+    # 짧게 잡힌 것이 주원인이었으므로, 그걸 지우면 그 자리의 잉크가 사라진다.
+    tol = max(2.0, 1.25 * float(stroke_gap)
+              if stroke_gap and np.isfinite(stroke_gap) else 2.0)
+    n_extended = 0
+    for a in arcs:
+        if _extend_span_with_fragments(a, lines, gray, tol):
+            n_extended += 1
+
+    n_swept = 0
+    for a in arcs:
+        on = lines_on_arc(lines, a, tol_px=tol)
+        for i in np.where(on)[0]:
+            if i not in absorbed:
+                absorbed.add(int(i))
+                n_swept += 1
+
     keep = np.ones(len(lines), dtype=bool)
     if absorbed:
         keep[np.fromiter(absorbed, dtype=np.int64)] = False
 
-    stats.update({"n_arcs": len(arcs), "n_absorbed": int(len(absorbed)),
+    stats.update({"n_swept_on_arc": n_swept, "n_span_extended": n_extended,
+                  "n_arcs": len(arcs), "n_absorbed": int(len(absorbed)),
                   "n_rejected_by_ink": rejected,
                   "absorbed_pct": float(len(absorbed) / max(1, len(lines)) * 100),
                   "n_full_circles": int(sum(1 for a in arcs if a["span"] >= 300))})
     return lines[keep], arcs, stats
+
+
+TANGENT_TOL_DEG = 20.0
+
+
+def _extend_span_with_fragments(arc, lines, gray, tol_px):
+    """호의 각도구간을 같은 원 위의 조각까지 넓힌다. 넓혔으면 True.
+
+    [왜 필요한가]
+    구간을 짧게 잡으면 나머지 조각이 '구간 밖'이라 흡수되지 않고 남는다. 실측:
+    남은 조각 358개 중 216개가 원 위에 있고 기울기도 맞는데 구간 밖이었다.
+    그걸 그냥 지우면 호가 안 그리는 자리의 잉크가 사라지므로, 지우기 전에
+    호를 그 자리까지 늘리는 것이 맞다.
+
+    [늘려도 되는지는 잉크가 정한다]
+    구간을 함부로 늘리면 아무것도 그려지지 않은 자리에 호가 생긴다. 그래서
+    늘릴 구간마다 _ink_fraction으로 잉크를 확인하고, 통과한 것만 반영한다 —
+    호 채택에 쓰던 것과 같은 안전장치다.
+    """
+    if len(lines) == 0 or arc["span"] >= 354.0:
+        return False
+    on = lines_on_arc(lines, arc, tol_px=tol_px, angle_margin_deg=360.0)
+    if not on.any():
+        return False
+
+    covered = [(0.0, arc["span"])]          # arc["start"] 기준 상대각
+    for x1, y1, x2, y2 in lines[on]:
+        a1 = (np.degrees(np.arctan2(y1 - arc["cy"], x1 - arc["cx"]))
+              - arc["start"]) % 360.0
+        a2 = (np.degrees(np.arctan2(y2 - arc["cy"], x2 - arc["cx"]))
+              - arc["start"]) % 360.0
+        lo, hi = min(a1, a2), max(a1, a2)
+        if hi - lo > 180.0:                 # 0/360 경계를 넘은 조각
+            lo, hi = hi, lo + 360.0
+        covered.append((lo, hi))
+
+    covered.sort()
+    span = arc["span"]
+    changed = False
+    for lo, hi in covered:
+        if hi <= span:
+            continue
+        gap_lo = max(lo, span)
+        frac = _ink_fraction(arc["cx"], arc["cy"], arc["r"],
+                             arc["start"] + gap_lo, max(hi - gap_lo, 1.0), gray)
+        if frac < MIN_INK_FRACTION:
+            continue
+        span = min(hi, 360.0)
+        changed = True
+    if changed:
+        arc["span"] = float(span)
+        arc["closed"] = bool(span >= 300.0)
+    return changed
+
+
+def lines_on_arc(lines, arc, tol_px=2.0, n_samples=5, angle_margin_deg=6.0,
+                 tangent_tol_deg=TANGENT_TOL_DEG):
+    """호 위에 놓인 선분 마스크. 원이 덮은 자리의 조각을 지우는 데 쓴다.
+
+    조건 두 개다.
+      ① 가까이 있다   — 선분의 두 끝점이 원에서 tol_px 이내
+      ② 기울기가 같다 — 선분 방향이 그 자리 접선 방향과 tangent_tol_deg 이내
+
+    [왜 끝점만 보는가]
+    현은 중앙이 원 안쪽으로 처진다(r=100, 30도 현이면 3.4px). 모든 샘플을 같은
+    허용치로 재면 이 처짐이 '링 두께만큼 떨어진 오프셋'과 섞여, 처짐을 담으려
+    허용치를 키우면 별개의 동심원까지 먹는다. 처짐은 끝점에서 0이므로 끝점만
+    재면 두 가지가 분리된다. 중간이 얼마나 처졌는지는 ②가 대신 본다.
+
+    [tol_px를 획두께에서 잡는 이유]
+    링은 두 경계로 검출되므로 반대편 경계에서 나온 조각은 링 두께만큼(실측
+    2.67px) 원에서 떨어져 앉는다. 2px 고정으로는 그게 하나도 안 걸렸다.
+    반대로 획두께보다 확실히 먼 동심원은 별개의 형상이라 남아야 한다.
+
+    [기울기 조건이 길이 상한을 대신한다]
+    구멍을 가로지르는 지름선이나 긴 현은 끝점이 원 위에 있어도 방향이 접선과
+    크게 다르다. 예전에는 '60도 넘는 현은 제외' 같은 상한을 따로 뒀는데,
+    기울기를 보면 그 상한이 저절로 나온다 — 현이 벌어질수록 접선과의 각도차가
+    그 절반씩 커지므로, 기본값 15도는 30도보다 벌어진 현을 남긴다는 뜻이다.
+    조건을 하나 줄이면서 지름선도 그대로 지킨다.
+
+    [접선은 원리상 구별되지 않는다]
+    원에 접하는 짧은 직선은 위 두 조건을 똑같이 만족한다. 링의 조각인지
+    의도적으로 그린 접선인지는 이 정보만으로 가를 수 없다. 잘못 지워도 그
+    자리의 잉크는 호가 대신 표현하고, 사람이 그린 원에는 Ctrl+Z가 있다.
+
+    arc: {cx, cy, r, start, span} 또는 {center, r, start_deg, span_deg}
+    """
+    L = np.asarray(lines, dtype=np.float64)
+    if len(L) == 0:
+        return np.zeros(0, dtype=bool)
+    cx = arc.get("cx", arc.get("center", [0, 0])[0])
+    cy = arc.get("cy", arc.get("center", [0, 0])[1])
+    r = float(arc["r"])
+    start = float(arc.get("start", arc.get("start_deg", 0.0)))
+    span = float(arc.get("span", arc.get("span_deg", 360.0)))
+    if r <= 0:
+        return np.zeros(len(L), dtype=bool)
+
+    ts = np.linspace(0.0, 1.0, n_samples)[None, :, None]
+    pts = L[:, None, :2] + (L[:, None, 2:] - L[:, None, :2]) * ts
+    dx, dy = pts[:, :, 0] - cx, pts[:, :, 1] - cy
+    rad = np.hypot(dx, dy)
+
+    tol = max(float(tol_px), r * 0.01)
+    on = (np.abs(rad[:, 0] - r) <= tol) & (np.abs(rad[:, -1] - r) <= tol)
+
+    # 선분 방향 vs 접선 방향. 반드시 '끝점에서' 재야 한다 — 현의 방향은 중점
+    # 에서의 접선 방향과 항상 정확히 같아서(중심에서 내린 수선이 현을 이등분
+    # 하므로) 중점에서 재면 어떤 현이든 통과해 조건이 무의미해진다. 끝점에서는
+    # 벌어진 각의 절반만큼 차이가 나므로 이것이 곧 판별이 된다.
+    seg = np.degrees(np.arctan2(L[:, 3] - L[:, 1], L[:, 2] - L[:, 0])) % 180.0
+    for k in (0, -1):
+        tangent = (np.degrees(np.arctan2(dy[:, k], dx[:, k])) + 90.0) % 180.0
+        d = np.abs(seg - tangent)
+        on &= np.minimum(d, 180.0 - d) <= tangent_tol_deg
+
+    if span < 360.0 - angle_margin_deg:
+        ang = np.degrees(np.arctan2(dy, dx)) % 360.0
+        rel = (ang - start) % 360.0
+        on &= (rel <= span + angle_margin_deg).all(axis=1)
+    return on
 
 
 def draw_arcs(vis, arcs, color=(0, 0, 255), thickness=2, mark_center=True):
