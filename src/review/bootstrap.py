@@ -157,6 +157,7 @@ def build_review(img_path, progress=None):
     from line_detect import arrowhead_template as at
     from line_detect import targets as TG
     from line_detect import arc_detect
+    from line_detect import refine
 
     pipe, det_model, det_post, det_ops, rec_model, rec_post, rec_ops = _load_models(progress)
 
@@ -201,6 +202,12 @@ def build_review(img_path, progress=None):
     # 텍스트 영역 안에 완전히 들어간 선분은 글자 획이므로 제외
     _, text_bboxes = TG.build_targets_and_text_bboxes(ocr_json)
     lines = mn.filter_lines_in_text_regions(raw_lines, text_bboxes)
+
+    # ── 2-a) 점선·글자에 끊긴 선 잇기 ─────────────────────
+    # 여기서 돌리는 이유: 글자상자가 있어야 '치수선이 숫자에 가려 끊긴 것'을
+    # 잇는 근거가 생긴다. 그리고 원/호 추출보다 먼저 해야 중심선이 조각난
+    # 상태로 호 체인에 끌려들어가지 않는다.
+    lines, dash_stats = refine.merge_dash_trains(lines, text_boxes=text_bboxes)
 
     # ── 2-b) 원/호 추출 ───────────────────────────────────
     # 반드시 텍스트 제외 뒤에 돌린다. 글자 О/0/6은 둥글어서 원 검출기가 곧잘
