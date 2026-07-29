@@ -32,6 +32,9 @@ MAX_SPLITS_PER_LINE = 6
 EXTEND_RATIO = 0.30
 # 끝점을 교차점으로 끌어당기는 허용치(글자높이 비율).
 SNAP_RATIO = 0.20
+# 분할로 만들 조각의 최소 길이(글자높이 비율). 이보다 짧아질 분할은 하지 않는다.
+# 화면에서 클릭으로 집을 수 있는 크기여야 사람이 고칠 수 있다.
+MIN_FRAG_RATIO = 0.35
 
 
 def _intersect(a, b):
@@ -109,16 +112,48 @@ def find_intersections(lines, text_h, min_angle_deg=MIN_CROSS_ANGLE_DEG):
     return cuts
 
 
-def split_lines(lines, text_h, max_splits=MAX_SPLITS_PER_LINE):
+def _thin_cuts(ts, seg_len, min_frag):
+    """조각이 min_frag보다 짧아지지 않도록 분할점을 솎는다.
+
+    [왜 필요한가]
+    치수선·치수보조선·외형선이 모퉁이 근처에서 몇 px 안에 함께 만나면 교차점이
+    여러 개 생기고, 그대로 쪼개면 2~5px짜리 토막이 나온다. 실측: 도면 하나에서
+    분할 결과 5629개 중 8px 미만이 435개, 최솟값 2.0px였다. 그 크기는 화면에서
+    클릭 판정(HIT_PX)보다 작아 손으로 고칠 수가 없다 — 단계를 나눠 사람이
+    수정하게 만든 취지가 무너진다.
+
+    솎는 규칙: 앞에서부터 훑어 직전 경계와 min_frag 이상 떨어진 분할점만 남기고,
+    마지막 분할점이 끝에서 min_frag보다 가까우면 버린다. 가까운 교차점 여럿은
+    결국 하나로 합쳐지므로, 노드 위치는 몇 px 흔들리지만 조각은 잡을 수 있다.
+    """
+    kept = []
+    prev_px = 0.0
+    for t in ts:
+        px = t * seg_len
+        if px - prev_px < min_frag:
+            continue
+        if seg_len - px < min_frag:
+            continue
+        kept.append(t)
+        prev_px = px
+    return kept
+
+
+def split_lines(lines, text_h, max_splits=MAX_SPLITS_PER_LINE, min_frag_px=None):
     """교차점에서 선분을 쪼갠다. 반환 (new_lines, origin_idx, stats).
 
     origin_idx[k] = 새 선분 k가 원래 어느 선분에서 나왔는지 — 기존 id 참조를
     유지하려면 이 대응이 필요하다.
+
+    min_frag_px: 이보다 짧아질 분할은 하지 않는다. None이면 글자높이에서 잡는다
+    (축척이 2.7배 차이나므로 고정 px을 쓰면 도면마다 다시 어긋난다).
     """
     L = np.asarray(lines, float)
+    if min_frag_px is None:
+        min_frag_px = max(8.0, text_h * MIN_FRAG_RATIO)
     cuts = find_intersections(L, text_h)
     out, origin = [], []
-    n_split = n_skipped = 0
+    n_split = n_skipped = n_thinned = 0
     for i in range(len(L)):
         ts = sorted(set(round(t, 4) for t in cuts.get(i, [])))
         if not ts:
@@ -126,18 +161,23 @@ def split_lines(lines, text_h, max_splits=MAX_SPLITS_PER_LINE):
         if len(ts) > max_splits:
             # 해칭에 뒤덮인 선분 — 쪼개면 조각만 늘고 쓸 데가 없다
             out.append(L[i]); origin.append(i); n_skipped += 1; continue
+        seg_len = float(np.hypot(L[i, 2] - L[i, 0], L[i, 3] - L[i, 1]))
+        ts2 = _thin_cuts(ts, seg_len, min_frag_px)
+        n_thinned += len(ts) - len(ts2)
+        if not ts2:
+            out.append(L[i]); origin.append(i); continue
         p, q = L[i, :2], L[i, 2:]
         prev = 0.0
-        for t in ts + [1.0]:
+        for t in ts2 + [1.0]:
             a = p + (q - p) * prev
             b = p + (q - p) * t
-            if np.linalg.norm(b - a) >= 2.0:
-                out.append(np.concatenate([a, b])); origin.append(i)
+            out.append(np.concatenate([a, b])); origin.append(i)
             prev = t
         n_split += 1
     return (np.array(out, float) if out else np.zeros((0, 4)), origin,
             {"n_in": len(L), "n_out": len(out), "n_split": n_split,
-             "n_skipped_dense": n_skipped})
+             "n_skipped_dense": n_skipped, "n_cuts_thinned": n_thinned,
+             "min_frag_px": float(min_frag_px)})
 
 
 def snap_endpoints(lines, text_h, tol_ratio=SNAP_RATIO):
@@ -151,10 +191,22 @@ def snap_endpoints(lines, text_h, tol_ratio=SNAP_RATIO):
     groups = tree.query_ball_tree(tree, tol)
     moved = 0
     seen = np.zeros(len(pts), bool)
+    n = len(L)
     for k, grp in enumerate(groups):
         if seen[k] or len(grp) < 2:
             continue
         idx = [g for g in grp if not seen[g]]
+        # 한 선분의 두 끝점을 같은 점으로 모으면 그 선분이 길이 0으로 붕괴한다.
+        # 짧은 선분(모따기·tick)은 양 끝이 tol 안에 함께 들어오므로 실제로
+        # 일어났다 — 분할 단계에서 길이 0px 조각으로 나타났다. 선분마다
+        # 끝점 하나만 이 묶음에 넣는다.
+        picked, one_per_line = set(), []
+        for gi in idx:
+            if gi % n in picked:
+                continue
+            picked.add(gi % n)
+            one_per_line.append(gi)
+        idx = one_per_line
         if len(idx) < 2:
             continue
         c = pts[idx].mean(axis=0)
