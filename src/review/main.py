@@ -463,6 +463,7 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage(
             f"분할 {st['n_in']} -> {st['n_out']}선분 (쪼갬 {st['n_split']} · "
             f"해칭보존 {st['n_skipped_dense']} · 스냅 {st['n_snapped_pts']}점 · "
+            f"너무짧아 생략 {st['n_cuts_thinned']}컷(<{st['min_frag_px']:.0f}px) · "
             f"접점 {len(self.doc.junctions())}개)", 8000)
         self.update_undo_buttons()
 
